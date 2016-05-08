@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>AJAX with ruby on rails</title>
+  <meta name="description" content="As for the Software Engineering Project module in this semester I’m building a feed reader(similar to Google reader) using ruby on rails. And for this projec...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://unknownland.github.io/2013/08/21/ajax-with-ruby-on-rails/">
+  <link rel="alternate" type="application/rss+xml" title="_UnKn0wN LaNd_" href="http://unknownland.github.io/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">_UnKn0wN LaNd_</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">AJAX with ruby on rails</h1>
+    <p class="post-meta"><time datetime="2013-08-21T17:28:00+05:30" itemprop="datePublished">Aug 21, 2013</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>As for the Software Engineering Project module in this semester I’m building a feed reader(similar to Google reader) using ruby on rails. And for this project I’ve been using AJAX heavily and Below is a simple tutorial to use AJAX with RoR.</p>
+
+<p>So here’s the scenario. A list of feed subscriptions is displayed and when a user clicks on a item in that list, AJAX request is sent to the server to fetch the feed items(posts) of that feed and it is displayed inside the DIV tag with the id “feedlistcontainer”. Let’s assume the corresponding modelname is userfeed.rb and the controller is userfeeds_controller.rb</p>
+
+<figure class="code-highlight-figure"><figcaption class="code-highlight-caption"><span class="code-highlight-caption-title">app/views/userfeeds/index.html.haml</span></figcaption><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">%div</span><span class="nc">.row</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">  <span class="nt">%div</span><span class="nc">.col-md-9.col-md-push-3</span>
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="nt">%div</span><span class="p">&#x7b;</span><span class="s2">"id"</span> <span class="o">=&gt;</span> <span class="s2">"feedlistcontainer"</span><span class="p">&#x7d;</span>
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">       <span class="p">=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"_feedlist"</span>
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">  <span class="nt">%div</span><span class="nc">.col-md-3.col-md-pull-9</span>
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="nt">%div</span><span class="nc">.row</span>
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">      <span class="nt">%p</span> Your Subscriptions
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">      <span class="nt">%div</span><span class="nc">.list-group</span>
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">      <span class="p">-</span> <span class="k">if</span> <span class="vi">@feeditems</span><span class="p">.</span><span class="nf">nil?</span>
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line">        <span class="nt">%p</span> No subscriptions available
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line">      <span class="p">-</span> <span class="k">else</span>
+</div></div><div data-line="12" class="code-highlight-row numbered"><div class="code-highlight-line">        <span class="p">-</span> <span class="vi">@feeditems</span><span class="p">.</span><span class="nf">each_with_index</span> <span class="k">do</span> <span class="o">|</span><span class="n">feeditem</span><span class="p">,</span><span class="n">index</span><span class="o">|</span>
+</div></div><div data-line="13" class="code-highlight-row numbered"><div class="code-highlight-line">          <span class="c">/ %span.badge 14</span>
+</div></div><div data-line="14" class="code-highlight-row numbered"><div class="code-highlight-line">          <span class="p">=</span> <span class="n">link_to</span> <span class="n">feeditem</span><span class="p">.</span><span class="nf">feed_name</span><span class="p">,</span> <span class="n">show_feed_list_path</span><span class="p">(</span><span class="ss">:feed_id</span> <span class="o">=&gt;</span> <span class="n">feeditem</span><span class="p">.</span><span class="nf">id</span><span class="p">),</span> <span class="ss">:class</span> <span class="o">=&gt;</span><span class="s2">"list-group-item"</span><span class="p">,</span> <span class="ss">remote: </span><span class="kp">true</span></div></div></pre></div></figure>
+
+<figure class="code-highlight-figure"><figcaption class="code-highlight-caption"><span class="code-highlight-caption-title">app/views/userfeeds/_feedlist.html.haml</span></figcaption><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="nt">%div</span><span class="nc">.panel-group</span><span class="p">&#x7b;</span><span class="s2">"id"</span> <span class="o">=&gt;</span> <span class="s2">"accordion"</span><span class="p">&#x7d;</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">  <span class="p">-</span> <span class="k">if</span> <span class="vi">@feeditem_list</span><span class="p">.</span><span class="nf">nil?</span>
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="nt">%p</span> no item here
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">  <span class="p">-</span> <span class="k">else</span>
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="p">-</span> <span class="vi">@feeditem_list</span><span class="p">.</span><span class="nf">each_with_index</span> <span class="k">do</span> <span class="o">|</span><span class="n">feeditem</span><span class="p">,</span> <span class="n">index</span><span class="o">|</span>
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">      <span class="p">-</span> <span class="vg">$item_id</span> <span class="o">=</span> <span class="n">feeditem</span><span class="p">.</span><span class="nf">id</span>
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">      <span class="nt">%div</span><span class="nc">.panel</span><span class="p">&#x7b;</span><span class="s2">"id"</span> <span class="o">=&gt;</span> <span class="s2">"panel</span><span class="si">#&#x7b;</span><span class="vg">$item_id</span><span class="si">&#x7d;</span>"&#x7d;
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">        <span class="nt">%div</span><span class="nc">.panel-heading</span>
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">          <span class="nt">%h4</span><span class="nc">.panel-title</span>
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line">            <span class="nt">%a</span><span class="nc">.accordion-toggle</span><span class="s2">&#x7b;"</span><span class="n">data</span><span class="o">-</span><span class="n">toggle</span><span class="s2">" =&gt; "</span><span class="n">collapse</span><span class="s2">", "</span><span class="n">data</span><span class="o">-</span><span class="n">parent</span><span class="s2">" =&gt; "</span><span class="c1">#accordion", "href" =&gt; "#feed#&#x7b;$item_id&#x7d;</span>"&#x7d;
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line">              <span class="p">=</span> <span class="n">feeditem</span><span class="p">.</span><span class="nf">post_title</span>
+</div></div><div data-line="12" class="code-highlight-row numbered"><div class="code-highlight-line">        <span class="nt">%div</span><span class="nc">.panel-collapse.collapse</span><span class="p">&#x7b;</span><span class="s2">"id"</span> <span class="o">=&gt;</span> <span class="s2">"feed</span><span class="si">#&#x7b;</span><span class="vg">$item_id</span><span class="si">&#x7d;</span>"&#x7d;
+</div></div><div data-line="13" class="code-highlight-row numbered"><div class="code-highlight-line">          <span class="nt">%div</span><span class="nc">.panel-body</span>
+</div></div><div data-line="14" class="code-highlight-row numbered"><div class="code-highlight-line">              <span class="nt">%p</span><span class="p">=</span><span class="s2"> feeditem.post_body.html_safe</span></div></div></pre></div></figure>
+
+<p>Keep in mind that I’ve used bootstrap 3 with the project, hence different class names for DIV tags. So above index.html.haml renders feed list inside “div.col-md-3.col-md-pull-9” tag. The userfeeds_controller initializes the @feeditems variable with an iteratable object of “feeds” which was returned to it by a model. Then it iterates over that object and for each entry it creates a link with remote link. Notify the “remote: true” syntax. That is the syntax which specifies that this is not a regular link, but it is an AJAX call. By clicking on that link, it will generate a GET remote rquest to show_feed_list_path and it will populate param hash with “:feed_id =&gt; feeditem.id” value. We have to add below code in the routes.rb file defining the show_feed_list_path</p>
+
+<figure class="code-highlight-figure"><figcaption class="code-highlight-caption"><span class="code-highlight-caption-title">routes.rb</span></figcaption><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="n">get</span> <span class="s2">"show_feed_list"</span><span class="p">,</span> <span class="ss">to: </span><span class="s2">"userfeeds#show_feed_list"</span></div></div></pre></div></figure>
+
+<p>And also feed items are rendered inside “div{“id” =&gt; “feedlistcontainer”}” tag. I’ve used an accordion to diplay the post list(feed items). The @feeditem_list will be initialized by the userfeeds_controller after the AJAX call.</p>
+
+<p>Below is the userfeed_controller code corresponding to the above view template</p>
+
+<figure class="code-highlight-figure"><figcaption class="code-highlight-caption"><span class="code-highlight-caption-title">app/controllers/userfeeds_controller.rb</span></figcaption><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line"><span class="k">def</span> <span class="nf">index</span>
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="vi">@feeditems</span> <span class="o">=</span> <span class="no">Userfeed</span><span class="p">.</span><span class="nf">getUserFeedList</span><span class="p">(</span><span class="n">currentuser</span><span class="p">.</span><span class="nf">userid</span><span class="p">)</span>
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">  <span class="k">end</span>
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">  <span class="k">def</span> <span class="nf">show_feed_list</span>
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="n">feed_id</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="ss">:feed_id</span><span class="p">]</span>
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="vi">@feeditem_list</span> <span class="o">=</span> <span class="no">Userfeed</span><span class="p">.</span><span class="nf">get_feed_list</span><span class="p">(</span><span class="n">feed_id</span><span class="p">)</span>
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="n">respond_to</span> <span class="k">do</span> <span class="o">|</span><span class="nb">format</span><span class="o">|</span>
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line">      <span class="nb">format</span><span class="p">.</span><span class="nf">js</span>   <span class="c1"># show_feed_list.js.haml</span>
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line">    <span class="k">end</span>
+</div></div><div data-line="12" class="code-highlight-row numbered"><div class="code-highlight-line">  <span class="k">end</span></div></div></pre></div></figure>
+
+<p>What this code does is in the index method it initialized the @feeditems variable with an iteratable object which contains a list of feed subscriptions of a particular user.”Userfeed.getUserFeedList(currentuser.userid)” method call can be different depending on how the Models are defined in the application. But the general ide is that @feeditems variable is initialized with a feed list somehow.</p>
+
+<p>The After the ajax call show_feed_list method gets called. We extract the ID of the feed from param hash and using that we initialize @feeditem_list variable with an iteratable object of posts(feed items) in that particular feed. Again “Userfeed.get_feed_list(feed_id)” can be different. All we have to do is somehow initialize the @feeditem_list with corresponding post list.</p>
+
+<p>Then it will pass this @feeditem_list to a file name “show_feed_list.js.haml”. Remember RoR uses convention over configuration. So that’s why it is passing the @feeditem_list to a javascript file with the same name of the method “show_feed_list”.</p>
+
+<figure class="code-highlight-figure"><figcaption class="code-highlight-caption"><span class="code-highlight-caption-title">app/views/userfeeds/show_feed_list.js.haml</span></figcaption><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line">$('#feedlistcontainer').html("<span class="si">#&#x7b;</span><span class="n">j</span><span class="p">(</span><span class="n">render</span><span class="p">(</span><span class="s2">"feedlist"</span><span class="p">,</span> <span class="ss">:feeditem_list</span> <span class="o">=&gt;</span> <span class="vi">@feeditem_list</span><span class="p">))</span><span class="si">&#x7d;</span>")</div></div></pre></div></figure>
+
+<p>Above is the content of the java script file. It will render the _feedlist.html.haml inside the DIV tag with id “feedlistcontainer” and pass the @feeditem_list variable from controller to the _feedlist.html.haml template. And that’s it. We don’t need extensive knowledge on java script or JQuery at all.</p>
+
+  </div>
+  <div class="wrapper">
+        <div id="disqus_thread"></div> <script type="text/javascript"> var disqus_shortname = 'sajithblog'; var disqus_url = 'http://unknownland.github.io/2013/08/21/ajax-with-ruby-on-rails/'; var disqus_identifier = 'http://unknownland.github.io/2013/08/21/ajax-with-ruby-on-rails/'; var disqus_title = 'AJAX with ruby on rails'; (function () { var s = document.createElement('script'); s.async = true; s.type = 'text/javascript'; s.src = '//sajithblog.disqus.com/embed.js'; (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s); }()); </script> <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+
+</article>
+
+      </div>
+  <!--     <div class="wrapper">
+      <a href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-url="http://unknownland.github.io/2013/08/21/ajax-with-ruby-on-rails/" data-text="AJAX with ruby on rails by @sajithdilshan -" data-dnt="true">Twitter</a> <div class="fb-like" data-href="http://unknownland.github.io/2013/08/21/ajax-with-ruby-on-rails/" data-layout="button" data-action="like" data-show-faces="false" data-colorscheme="light" data-kid-directed-site="false" data-share="false"></div> <a class="facebook-share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://unknownland.github.io/2013/08/21/ajax-with-ruby-on-rails/" title="Share on Facebook">Facebook</a> 
+      </div> -->
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">_UnKn0wN LaNd_</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-3">
+        <ul class="contact-list">
+          <li><a href="mailto:sajithdilshan@gmail.com">sajithdilshan@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/sajithdilshan"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">sajithdilshan</span></a>
+
+          </li>
+          
+
+          
+        </ul>
+      </div>
+
+    
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

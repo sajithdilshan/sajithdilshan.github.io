@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Path finding with BFS</title>
+  <meta name="description" content="So as a part of the programming challenge module I did last semester, we were supposed to build a game which is similar to the Nintendo Tank war game. This w...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://unknownland.github.io/2013/08/04/path-finding-with-bfs/">
+  <link rel="alternate" type="application/rss+xml" title="_UnKn0wN LaNd_" href="http://unknownland.github.io/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">_UnKn0wN LaNd_</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Path finding with BFS</h1>
+    <p class="post-meta"><time datetime="2013-08-04T19:21:00+05:30" itemprop="datePublished">Aug 4, 2013</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>So as a part of the programming challenge module I did last semester, we were supposed to build a game which is similar to the Nintendo Tank war game. This was a group project and <a href="https://twitter.com/TharinduRusira">Tharindu</a> and I designed and build the game. What we had to do was to build a client who can communicate with a server. All together five clients can connect with the server simultaneously and the server sends global updates about the position of each clients, positions of coin piles, etc on each second. the clients has to process this global update and send its next move to the server before the next global update is arrived from the server. More details about the server specification is available <a href="https://docs.google.com/file/d/0B0SvcTAspdLrNHdJalc5elpiM28/edit">here</a>.</p>
+
+<p>So the main objective of the game is to collect as many coin piles as possible. The game is played on a 2D cell matrix as you can see on the below image. So what we had to do first was to create a suitable data structure which can be used by the path finding algorithm efficiently.</p>
+
+<p><img src="https://dl.dropboxusercontent.com/u/30358512/Untitled.jpg" alt="Tanks War GUI" /></p>
+
+<!-- more -->
+
+<p>So for each cell we created a class called “Cell”. It has two constructors. A cell can be initialized either by giving its ID or it’s x,y coordinates. It has a list of adjacent neighbor cells(up,down,left,right). A “parent” variable, which is used in path finding algorithm and boolean variables to set if the cell is an obstacle or a coin pile. The Constant “ConfigData.Map_size” is either the number of columns or number of rows in the square matrix.</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line">class Cell
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">    &#x7b;
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">        // implements a cell in the terrain
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">        public int positionX &#x7b; get; set; &#x7d;
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">        public int positionY &#x7b; get; set; &#x7d;
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">        public int id &#x7b; get; set; &#x7d;                 //id of the Cell
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">        // INTITIALIZE CELL BY THE ID
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">        public Cell(int cellid)
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line">        &#x7b;
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line">            this.id = cellid;
+</div></div><div data-line="12" class="code-highlight-row numbered"><div class="code-highlight-line">            //calculate positionX and positionY based on id and MAP_SIZE
+</div></div><div data-line="13" class="code-highlight-row numbered"><div class="code-highlight-line">            double X = Convert.ToDouble(id / ConfigData.MAP_SIZE);
+</div></div><div data-line="14" class="code-highlight-row numbered"><div class="code-highlight-line">            double Y = Convert.ToDouble(id % ConfigData.MAP_SIZE);
+</div></div><div data-line="15" class="code-highlight-row numbered"><div class="code-highlight-line">            this.positionX = (int)Math.Floor(X);
+</div></div><div data-line="16" class="code-highlight-row numbered"><div class="code-highlight-line">            this.positionY = (int)Math.Floor(Y);
+</div></div><div data-line="17" class="code-highlight-row numbered"><div class="code-highlight-line">        &#x7d;
+</div></div><div data-line="18" class="code-highlight-row numbered"><div class="code-highlight-line">        //  INITIALIZE A CELL BY &lt;X,Y&gt; CO-ORDINTES
+</div></div><div data-line="19" class="code-highlight-row numbered"><div class="code-highlight-line">        public Cell(int x, int y)
+</div></div><div data-line="20" class="code-highlight-row numbered"><div class="code-highlight-line">        &#x7b;
+</div></div><div data-line="21" class="code-highlight-row numbered"><div class="code-highlight-line">            this.positionX = x;
+</div></div><div data-line="22" class="code-highlight-row numbered"><div class="code-highlight-line">            this.positionY = y;
+</div></div><div data-line="23" class="code-highlight-row numbered"><div class="code-highlight-line">            this.id = x * ConfigData.MAP_SIZE + y;
+</div></div><div data-line="24" class="code-highlight-row numbered"><div class="code-highlight-line">        &#x7d;
+</div></div><div data-line="25" class="code-highlight-row numbered"><div class="code-highlight-line">        public Cell parent &#x7b; get; set; &#x7d;					//parent cell
+</div></div><div data-line="26" class="code-highlight-row numbered"><div class="code-highlight-line">        public List&lt;Cell&gt; neighbours = new List&lt;Cell&gt;();    //Cell list of neighbours
+</div></div><div data-line="27" class="code-highlight-row numbered"><div class="code-highlight-line">        public bool is_water &#x7b; get; set; &#x7d;// true if water
+</div></div><div data-line="28" class="code-highlight-row numbered"><div class="code-highlight-line">        public bool is_stone &#x7b; get; set; &#x7d;       //true if stone
+</div></div><div data-line="29" class="code-highlight-row numbered"><div class="code-highlight-line">        public bool is_brick &#x7b; get; set; &#x7d;     //true if brick
+</div></div><div data-line="30" class="code-highlight-row numbered"><div class="code-highlight-line">        public bool is_coin &#x7b; get; set; &#x7d;      //true if coin pile is in the cell
+</div></div><div data-line="31" class="code-highlight-row numbered"><div class="code-highlight-line"> &#x7d;</div></div></pre></div></figure>
+
+<p>And then we have a “World” class which is composed of “Cell” objects. In the constructor of the “World” class a 2D array of “Cell” objects is initialized and for each cell in the 2D array, the neighboring cell is added to the neighbor’s list. We can get any cell in the 2D array either by its x,y coordinates or the cell ID.</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line">class World
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">    &#x7b;
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">        // GAME WILL BE PLAYED IN THIS MATRIX
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">        private Cell[,] map = new Cell[ConfigData.MAP_SIZE, ConfigData.MAP_SIZE];
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">        /*
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">         * 0 20 40 . . . 380
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line">         * 1 21 41 . . . .
+</div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">         * 2 22 42 .   . .
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line">         * 3 23 43 .   . .
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line">         * 4 24 44     . .
+</div></div><div data-line="12" class="code-highlight-row numbered"><div class="code-highlight-line">         * . . .       . .
+</div></div><div data-line="13" class="code-highlight-row numbered"><div class="code-highlight-line">         * . . .       . 398
+</div></div><div data-line="14" class="code-highlight-row numbered"><div class="code-highlight-line">         * . . .   . . . 399
+</div></div><div data-line="15" class="code-highlight-row numbered"><div class="code-highlight-line">         */
+</div></div><div data-line="16" class="code-highlight-row numbered"><div class="code-highlight-line">        public World() &#x7b; 
+</div></div><div data-line="17" class="code-highlight-row numbered"><div class="code-highlight-line">            //INITIALIZE CELLS IN THE MAP
+</div></div><div data-line="18" class="code-highlight-row numbered"><div class="code-highlight-line">            for (int i = 0; i &lt; ConfigData.MAP_SIZE; i++)
+</div></div><div data-line="19" class="code-highlight-row numbered"><div class="code-highlight-line">            &#x7b;
+</div></div><div data-line="20" class="code-highlight-row numbered"><div class="code-highlight-line">                for (int j = 0; j &lt; ConfigData.MAP_SIZE; j++)
+</div></div><div data-line="21" class="code-highlight-row numbered"><div class="code-highlight-line">                &#x7b;
+</div></div><div data-line="22" class="code-highlight-row numbered"><div class="code-highlight-line">                    map[i, j] = new Cell(i*ConfigData.MAP_SIZE+j);                   
+</div></div><div data-line="23" class="code-highlight-row numbered"><div class="code-highlight-line">                &#x7d; 
+</div></div><div data-line="24" class="code-highlight-row numbered"><div class="code-highlight-line">            &#x7d;
+</div></div><div data-line="25" class="code-highlight-row numbered"><div class="code-highlight-line">            //adds the neighbor cells
+</div></div><div data-line="26" class="code-highlight-row numbered"><div class="code-highlight-line">            for (int k = 0; k &lt; ConfigData.MAP_SIZE; k++)
+</div></div><div data-line="27" class="code-highlight-row numbered"><div class="code-highlight-line">            &#x7b;
+</div></div><div data-line="28" class="code-highlight-row numbered"><div class="code-highlight-line">                for (int n = 0; n &lt; ConfigData.MAP_SIZE; n++)
+</div></div><div data-line="29" class="code-highlight-row numbered"><div class="code-highlight-line">                &#x7b;
+</div></div><div data-line="30" class="code-highlight-row numbered"><div class="code-highlight-line">                    if (n - 1 &gt; 0)     //left neighbour
+</div></div><div data-line="31" class="code-highlight-row numbered"><div class="code-highlight-line">                        map[k, n].neighbours.Add(map[k, n - 1]);
+</div></div><div data-line="32" class="code-highlight-row numbered"><div class="code-highlight-line">                    if (k - 1 &gt; 0) //up neighbour
+</div></div><div data-line="33" class="code-highlight-row numbered"><div class="code-highlight-line">                        map[k, n].neighbours.Add(map[k - 1, n]);
+</div></div><div data-line="34" class="code-highlight-row numbered"><div class="code-highlight-line">                    if (n + 1 &lt; ConfigData.MAP_SIZE)   //right neighbour
+</div></div><div data-line="35" class="code-highlight-row numbered"><div class="code-highlight-line">                        map[k, n].neighbours.Add(map[k, n + 1]);
+</div></div><div data-line="36" class="code-highlight-row numbered"><div class="code-highlight-line">                    if (k + 1 &lt; ConfigData.MAP_SIZE)   //down neighbour
+</div></div><div data-line="37" class="code-highlight-row numbered"><div class="code-highlight-line">                        map[k, n].neighbours.Add(map[k + 1, n]);
+</div></div><div data-line="38" class="code-highlight-row numbered"><div class="code-highlight-line">                &#x7d;
+</div></div><div data-line="39" class="code-highlight-row numbered"><div class="code-highlight-line">            &#x7d;
+</div></div><div data-line="40" class="code-highlight-row numbered"><div class="code-highlight-line">        &#x7d;
+</div></div><div data-line="41" class="code-highlight-row numbered"><div class="code-highlight-line">        public Cell[,] getMap() &#x7b; return map; &#x7d;
+</div></div><div data-line="42" class="code-highlight-row numbered"><div class="code-highlight-line">        // GET A CELL BY ITS ID
+</div></div><div data-line="43" class="code-highlight-row numbered"><div class="code-highlight-line">        public Cell getCell(int cellid)
+</div></div><div data-line="44" class="code-highlight-row numbered"><div class="code-highlight-line">        &#x7b;
+</div></div><div data-line="45" class="code-highlight-row numbered"><div class="code-highlight-line">            double X = Convert.ToDouble(cellid / ConfigData.MAP_SIZE);
+</div></div><div data-line="46" class="code-highlight-row numbered"><div class="code-highlight-line">            double Y = Convert.ToDouble(cellid % ConfigData.MAP_SIZE);
+</div></div><div data-line="47" class="code-highlight-row numbered"><div class="code-highlight-line">            int x = (int)Math.Floor(X);
+</div></div><div data-line="48" class="code-highlight-row numbered"><div class="code-highlight-line">            int y = (int)Math.Floor(Y);
+</div></div><div data-line="49" class="code-highlight-row numbered"><div class="code-highlight-line">            return map[x, y];
+</div></div><div data-line="50" class="code-highlight-row numbered"><div class="code-highlight-line">        &#x7d;
+</div></div><div data-line="51" class="code-highlight-row numbered"><div class="code-highlight-line">        // GET A CELL BY ITS &lt;X,Y&gt; CO-ORDINATES
+</div></div><div data-line="52" class="code-highlight-row numbered"><div class="code-highlight-line">        public Cell getCell(int x, int y)
+</div></div><div data-line="53" class="code-highlight-row numbered"><div class="code-highlight-line">        &#x7b;
+</div></div><div data-line="54" class="code-highlight-row numbered"><div class="code-highlight-line">            return map[x, y];
+</div></div><div data-line="55" class="code-highlight-row numbered"><div class="code-highlight-line">        &#x7d;
+</div></div><div data-line="56" class="code-highlight-row numbered"><div class="code-highlight-line">	&#x7d;</div></div></pre></div></figure>
+
+<p>Then comes the interesting part. We used Breath First Search algorithm to find the nearest cell which contains a coin pile. In the constructor of the class “BFS” a world object is initialized. findNextMove() method returns the ID of the next cell where the tank client should move. This method requires the cell ID of the current tank’s position. Then the Cell object corresponding to that position from the world  object is assigned to the “start” variable.</p>
+
+<p>The BFS algorithm works as follows. Until the queue which contains all the possible goal cells is empty, each cell in the queue is dequeued and scanned for it’s neighboring cells. If those neighbors are obstacle cells(water,brick,stone) then those cells are marked as visited, but doesn’t added to the queue. If a neighboring cell is not an obstacle and doesn’t contain a coin pile either, then that cell is marked as visited, set its parent cell as the current cell and added to the queue. If a cell with a coin pile is found, then using the “parent” variable in each cell, a back tracking loop will return the ID of the next cell where the tank should move. If the queue is empty(i.e. no coin pile is found) then after while loop finishes, it will return -1, which is not a valid cell ID.</p>
+
+<figure class="code-highlight-figure"><div class="code-highlight"><pre class="code-highlight-pre"><div data-line="1" class="code-highlight-row numbered"><div class="code-highlight-line">class BFS
+</div></div><div data-line="2" class="code-highlight-row numbered"><div class="code-highlight-line">    &#x7b;
+</div></div><div data-line="3" class="code-highlight-row numbered"><div class="code-highlight-line">        private World world;
+</div></div><div data-line="4" class="code-highlight-row numbered"><div class="code-highlight-line">        private int currentPos;
+</div></div><div data-line="5" class="code-highlight-row numbered"><div class="code-highlight-line">        private int mapSize = ConfigData.MAP_SIZE * ConfigData.MAP_SIZE;
+</div></div><div data-line="6" class="code-highlight-row numbered"><div class="code-highlight-line">        private Cell start;
+</div></div><div data-line="7" class="code-highlight-row numbered"><div class="code-highlight-line">        private int id =-1;
+</div></div><div data-line="8" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="9" class="code-highlight-row numbered"><div class="code-highlight-line">        public BFS(World w)
+</div></div><div data-line="10" class="code-highlight-row numbered"><div class="code-highlight-line">        &#x7b;
+</div></div><div data-line="11" class="code-highlight-row numbered"><div class="code-highlight-line">            this.world = w;
+</div></div><div data-line="12" class="code-highlight-row numbered"><div class="code-highlight-line">        &#x7d;
+</div></div><div data-line="13" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="14" class="code-highlight-row numbered"><div class="code-highlight-line">        public int findNextMove(int currP)
+</div></div><div data-line="15" class="code-highlight-row numbered"><div class="code-highlight-line">        &#x7b;
+</div></div><div data-line="16" class="code-highlight-row numbered"><div class="code-highlight-line">            this.currentPos = currP;
+</div></div><div data-line="17" class="code-highlight-row numbered"><div class="code-highlight-line">            this.start = world.getCell(currentPos);
+</div></div><div data-line="18" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="19" class="code-highlight-row numbered"><div class="code-highlight-line">            //if the tank is on a coin pile then that coin pile will vanish
+</div></div><div data-line="20" class="code-highlight-row numbered"><div class="code-highlight-line">            start.is_coin = false;
+</div></div><div data-line="21" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="22" class="code-highlight-row numbered"><div class="code-highlight-line">            Queue&lt;Cell&gt; queue = new Queue&lt;Cell&gt;();
+</div></div><div data-line="23" class="code-highlight-row numbered"><div class="code-highlight-line">            bool[] mark = new bool[mapSize];        // boolean array to store if a cell is visited
+</div></div><div data-line="24" class="code-highlight-row numbered"><div class="code-highlight-line">            //enque the current position cell
+</div></div><div data-line="25" class="code-highlight-row numbered"><div class="code-highlight-line">            queue.Enqueue(start);
+</div></div><div data-line="26" class="code-highlight-row numbered"><div class="code-highlight-line">            // marks current position as visited
+</div></div><div data-line="27" class="code-highlight-row numbered"><div class="code-highlight-line">            mark[start.id] = true;
+</div></div><div data-line="28" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="29" class="code-highlight-row numbered"><div class="code-highlight-line">            bool found = false;
+</div></div><div data-line="30" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="31" class="code-highlight-row numbered"><div class="code-highlight-line">            //untill a path is found
+</div></div><div data-line="32" class="code-highlight-row numbered"><div class="code-highlight-line">            while (queue.Count != 0)
+</div></div><div data-line="33" class="code-highlight-row numbered"><div class="code-highlight-line">            &#x7b;
+</div></div><div data-line="34" class="code-highlight-row numbered"><div class="code-highlight-line">                Cell current = queue.Dequeue();
+</div></div><div data-line="35" class="code-highlight-row numbered"><div class="code-highlight-line">                //scans all the neighbour cells of the current cell
+</div></div><div data-line="36" class="code-highlight-row numbered"><div class="code-highlight-line">                foreach (Cell neighbour in current.neighbours)
+</div></div><div data-line="37" class="code-highlight-row numbered"><div class="code-highlight-line">                &#x7b;
+</div></div><div data-line="38" class="code-highlight-row numbered"><div class="code-highlight-line">                    // if a coin pile or life pack is found BFS algorithm will break and return that cell id
+</div></div><div data-line="39" class="code-highlight-row numbered"><div class="code-highlight-line">                    if (neighbour.is_coin|| neighbour.is_Life)
+</div></div><div data-line="40" class="code-highlight-row numbered"><div class="code-highlight-line">                    &#x7b;
+</div></div><div data-line="41" class="code-highlight-row numbered"><div class="code-highlight-line">                        found = true;
+</div></div><div data-line="42" class="code-highlight-row numbered"><div class="code-highlight-line"> </div></div><div data-line="43" class="code-highlight-row numbered"><div class="code-highlight-line">                        Cell curr = neighbour;
+</div></div><div data-line="44" class="code-highlight-row numbered"><div class="code-highlight-line">                        //backtracks the cell id of next cell where the tank should move
+</div></div><div data-line="45" class="code-highlight-row numbered"><div class="code-highlight-line">                        while (curr.parent != start)
+</div></div><div data-line="46" class="code-highlight-row numbered"><div class="code-highlight-line">                        &#x7b;
+</div></div><div data-line="47" class="code-highlight-row numbered"><div class="code-highlight-line">                            curr = curr.parent;
+</div></div><div data-line="48" class="code-highlight-row numbered"><div class="code-highlight-line">                        &#x7d;
+</div></div><div data-line="49" class="code-highlight-row numbered"><div class="code-highlight-line">                        id = curr.id;
+</div></div><div data-line="50" class="code-highlight-row numbered"><div class="code-highlight-line">                        break;
+</div></div><div data-line="51" class="code-highlight-row numbered"><div class="code-highlight-line">                    &#x7d; 
+</div></div><div data-line="52" class="code-highlight-row numbered"><div class="code-highlight-line">                    if (neighbour.is_brick || neighbour.is_stone || neighbour.is_water)
+</div></div><div data-line="53" class="code-highlight-row numbered"><div class="code-highlight-line">                    &#x7b;
+</div></div><div data-line="54" class="code-highlight-row numbered"><div class="code-highlight-line">                        mark[neighbour.id] = true;
+</div></div><div data-line="55" class="code-highlight-row numbered"><div class="code-highlight-line">                    &#x7d;
+</div></div><div data-line="56" class="code-highlight-row numbered"><div class="code-highlight-line">                    //if neighbour is not a blocked cell it will be added to the queue
+</div></div><div data-line="57" class="code-highlight-row numbered"><div class="code-highlight-line">                    if (!mark[neighbour.id])
+</div></div><div data-line="58" class="code-highlight-row numbered"><div class="code-highlight-line">                    &#x7b;
+</div></div><div data-line="59" class="code-highlight-row numbered"><div class="code-highlight-line">                        mark[neighbour.id] = true;
+</div></div><div data-line="60" class="code-highlight-row numbered"><div class="code-highlight-line">                        neighbour.parent = current;
+</div></div><div data-line="61" class="code-highlight-row numbered"><div class="code-highlight-line">                        queue.Enqueue(neighbour);
+</div></div><div data-line="62" class="code-highlight-row numbered"><div class="code-highlight-line">                    &#x7d;                   
+</div></div><div data-line="63" class="code-highlight-row numbered"><div class="code-highlight-line">                &#x7d;
+</div></div><div data-line="64" class="code-highlight-row numbered"><div class="code-highlight-line">                // if a goal is found "while" loop will break 
+</div></div><div data-line="65" class="code-highlight-row numbered"><div class="code-highlight-line">                if (found)
+</div></div><div data-line="66" class="code-highlight-row numbered"><div class="code-highlight-line">                    break;
+</div></div><div data-line="67" class="code-highlight-row numbered"><div class="code-highlight-line">            &#x7d;
+</div></div><div data-line="68" class="code-highlight-row numbered"><div class="code-highlight-line">            return id  
+</div></div><div data-line="69" class="code-highlight-row numbered"><div class="code-highlight-line">	&#x7d;</div></div></pre></div></figure>
+
+<p>This algorithm is best suited when the search space(size of the “World” 2D array) is small (typically less than 2500 cells). BFS is guaranteed to  find the closest goal (if a goal exists). If there is no goal, BFS will go through the entire search space, thus the size of the queue will increase by 3 cells on each iteration (assuming there are no obstacles). This pitfall can be avoided by using AStar algorithm. But for a small search space BFS is more than enough. The full project can be downloaded from the <a href="https://bitbucket.org/elitecoders/tankgame">Bitbucket repository</a>.</p>
+
+  </div>
+  <div class="wrapper">
+        <div id="disqus_thread"></div> <script type="text/javascript"> var disqus_shortname = 'sajithblog'; var disqus_url = 'http://unknownland.github.io/2013/08/04/path-finding-with-bfs/'; var disqus_identifier = 'http://unknownland.github.io/2013/08/04/path-finding-with-bfs/'; var disqus_title = 'Path finding with BFS'; (function () { var s = document.createElement('script'); s.async = true; s.type = 'text/javascript'; s.src = '//sajithblog.disqus.com/embed.js'; (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s); }()); </script> <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+
+</article>
+
+      </div>
+  <!--     <div class="wrapper">
+      <a href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-url="http://unknownland.github.io/2013/08/04/path-finding-with-bfs/" data-text="Path finding with BFS by @sajithdilshan -" data-dnt="true">Twitter</a> <div class="fb-like" data-href="http://unknownland.github.io/2013/08/04/path-finding-with-bfs/" data-layout="button" data-action="like" data-show-faces="false" data-colorscheme="light" data-kid-directed-site="false" data-share="false"></div> <a class="facebook-share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://unknownland.github.io/2013/08/04/path-finding-with-bfs/" title="Share on Facebook">Facebook</a> 
+      </div> -->
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">_UnKn0wN LaNd_</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-3">
+        <ul class="contact-list">
+          <li><a href="mailto:sajithdilshan@gmail.com">sajithdilshan@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/sajithdilshan"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">sajithdilshan</span></a>
+
+          </li>
+          
+
+          
+        </ul>
+      </div>
+
+    
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
