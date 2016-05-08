@@ -1,0 +1,55 @@
+<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'>class World
+</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>    &#x7b;
+</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>        // GAME WILL BE PLAYED IN THIS MATRIX
+</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>        private Cell[,] map = new Cell[ConfigData.MAP_SIZE, ConfigData.MAP_SIZE];
+</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>        /*
+</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'>         * 0 20 40 . . . 380
+</div></div><div data-line='8' class='code-highlight-row numbered'><div class='code-highlight-line'>         * 1 21 41 . . . .
+</div></div><div data-line='9' class='code-highlight-row numbered'><div class='code-highlight-line'>         * 2 22 42 .   . .
+</div></div><div data-line='10' class='code-highlight-row numbered'><div class='code-highlight-line'>         * 3 23 43 .   . .
+</div></div><div data-line='11' class='code-highlight-row numbered'><div class='code-highlight-line'>         * 4 24 44     . .
+</div></div><div data-line='12' class='code-highlight-row numbered'><div class='code-highlight-line'>         * . . .       . .
+</div></div><div data-line='13' class='code-highlight-row numbered'><div class='code-highlight-line'>         * . . .       . 398
+</div></div><div data-line='14' class='code-highlight-row numbered'><div class='code-highlight-line'>         * . . .   . . . 399
+</div></div><div data-line='15' class='code-highlight-row numbered'><div class='code-highlight-line'>         */
+</div></div><div data-line='16' class='code-highlight-row numbered'><div class='code-highlight-line'>        public World() &#x7b; 
+</div></div><div data-line='17' class='code-highlight-row numbered'><div class='code-highlight-line'>            //INITIALIZE CELLS IN THE MAP
+</div></div><div data-line='18' class='code-highlight-row numbered'><div class='code-highlight-line'>            for (int i = 0; i &lt; ConfigData.MAP_SIZE; i++)
+</div></div><div data-line='19' class='code-highlight-row numbered'><div class='code-highlight-line'>            &#x7b;
+</div></div><div data-line='20' class='code-highlight-row numbered'><div class='code-highlight-line'>                for (int j = 0; j &lt; ConfigData.MAP_SIZE; j++)
+</div></div><div data-line='21' class='code-highlight-row numbered'><div class='code-highlight-line'>                &#x7b;
+</div></div><div data-line='22' class='code-highlight-row numbered'><div class='code-highlight-line'>                    map[i, j] = new Cell(i*ConfigData.MAP_SIZE+j);                   
+</div></div><div data-line='23' class='code-highlight-row numbered'><div class='code-highlight-line'>                &#x7d; 
+</div></div><div data-line='24' class='code-highlight-row numbered'><div class='code-highlight-line'>            &#x7d;
+</div></div><div data-line='25' class='code-highlight-row numbered'><div class='code-highlight-line'>            //adds the neighbor cells
+</div></div><div data-line='26' class='code-highlight-row numbered'><div class='code-highlight-line'>            for (int k = 0; k &lt; ConfigData.MAP_SIZE; k++)
+</div></div><div data-line='27' class='code-highlight-row numbered'><div class='code-highlight-line'>            &#x7b;
+</div></div><div data-line='28' class='code-highlight-row numbered'><div class='code-highlight-line'>                for (int n = 0; n &lt; ConfigData.MAP_SIZE; n++)
+</div></div><div data-line='29' class='code-highlight-row numbered'><div class='code-highlight-line'>                &#x7b;
+</div></div><div data-line='30' class='code-highlight-row numbered'><div class='code-highlight-line'>                    if (n - 1 > 0)     //left neighbour
+</div></div><div data-line='31' class='code-highlight-row numbered'><div class='code-highlight-line'>                        map[k, n].neighbours.Add(map[k, n - 1]);
+</div></div><div data-line='32' class='code-highlight-row numbered'><div class='code-highlight-line'>                    if (k - 1 > 0) //up neighbour
+</div></div><div data-line='33' class='code-highlight-row numbered'><div class='code-highlight-line'>                        map[k, n].neighbours.Add(map[k - 1, n]);
+</div></div><div data-line='34' class='code-highlight-row numbered'><div class='code-highlight-line'>                    if (n + 1 &lt; ConfigData.MAP_SIZE)   //right neighbour
+</div></div><div data-line='35' class='code-highlight-row numbered'><div class='code-highlight-line'>                        map[k, n].neighbours.Add(map[k, n + 1]);
+</div></div><div data-line='36' class='code-highlight-row numbered'><div class='code-highlight-line'>                    if (k + 1 &lt; ConfigData.MAP_SIZE)   //down neighbour
+</div></div><div data-line='37' class='code-highlight-row numbered'><div class='code-highlight-line'>                        map[k, n].neighbours.Add(map[k + 1, n]);
+</div></div><div data-line='38' class='code-highlight-row numbered'><div class='code-highlight-line'>                &#x7d;
+</div></div><div data-line='39' class='code-highlight-row numbered'><div class='code-highlight-line'>            &#x7d;
+</div></div><div data-line='40' class='code-highlight-row numbered'><div class='code-highlight-line'>        &#x7d;
+</div></div><div data-line='41' class='code-highlight-row numbered'><div class='code-highlight-line'>        public Cell[,] getMap() &#x7b; return map; &#x7d;
+</div></div><div data-line='42' class='code-highlight-row numbered'><div class='code-highlight-line'>        // GET A CELL BY ITS ID
+</div></div><div data-line='43' class='code-highlight-row numbered'><div class='code-highlight-line'>        public Cell getCell(int cellid)
+</div></div><div data-line='44' class='code-highlight-row numbered'><div class='code-highlight-line'>        &#x7b;
+</div></div><div data-line='45' class='code-highlight-row numbered'><div class='code-highlight-line'>            double X = Convert.ToDouble(cellid / ConfigData.MAP_SIZE);
+</div></div><div data-line='46' class='code-highlight-row numbered'><div class='code-highlight-line'>            double Y = Convert.ToDouble(cellid % ConfigData.MAP_SIZE);
+</div></div><div data-line='47' class='code-highlight-row numbered'><div class='code-highlight-line'>            int x = (int)Math.Floor(X);
+</div></div><div data-line='48' class='code-highlight-row numbered'><div class='code-highlight-line'>            int y = (int)Math.Floor(Y);
+</div></div><div data-line='49' class='code-highlight-row numbered'><div class='code-highlight-line'>            return map[x, y];
+</div></div><div data-line='50' class='code-highlight-row numbered'><div class='code-highlight-line'>        &#x7d;
+</div></div><div data-line='51' class='code-highlight-row numbered'><div class='code-highlight-line'>        // GET A CELL BY ITS &lt;X,Y> CO-ORDINATES
+</div></div><div data-line='52' class='code-highlight-row numbered'><div class='code-highlight-line'>        public Cell getCell(int x, int y)
+</div></div><div data-line='53' class='code-highlight-row numbered'><div class='code-highlight-line'>        &#x7b;
+</div></div><div data-line='54' class='code-highlight-row numbered'><div class='code-highlight-line'>            return map[x, y];
+</div></div><div data-line='55' class='code-highlight-row numbered'><div class='code-highlight-line'>        &#x7d;
+</div></div><div data-line='56' class='code-highlight-row numbered'><div class='code-highlight-line'>	&#x7d;</div></div></pre></div></figure>

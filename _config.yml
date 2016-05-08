@@ -1,0 +1,64 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+title: _UnKn0wN LaNd_
+email: sajithdilshan@gmail.com
+description: > # this means to ignore newlines until "baseurl:"
+ I try to learn something new each and everyday, whether it be about a new exoplanet, a 3D printed organ or a new Linux terminal command.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "http://unknownland.github.io" # the base hostname & protocol for your site
+github_username:  sajithdilshan
+# ------------------------------------------------------------------
+disqus:
+  shortname: sajithblog                            # Your site's disqus identifier
+  comments_link_text: Comments                     # Text label for comments link
+  comments_disabled_link_text: Comments disabled   # Set to '' to not output a comments link when disabled
+
+twitter:
+  username:            sajithdilshan      # Add your Twitter handle
+  tweet_count:         false              # Show number of shares on Twitter
+  size:                normal             # Or large
+  embedded_link_color:                    # Set link color for embedded tweets
+
+  follow_count:        false              # Show number of followers
+  tweet_message:       ":title by :username :hashtags - :url" # With Tweet button Twitter add the URL last
+  tweet_link_text:     Twitter            # Configure the link text
+  tweet_link_title:    Share on Twitter   # Share link title
+  profile_link_text:   Follow :username
+  profile_link_title:  Follow :username on Twitter  # Profile link title text
+
+facebook:
+  app_id:                            # For a nicer (no js) sharing experience
+  profile_id:                        # For follow button or profile link
+  action:              like          # Or recommend
+  share:               false         # Also add a share button
+  layout:              button        # Choices: standard, box_count, button_count, button
+  show_faces:          false
+  colorscheme:         light         # Or dark
+  kid_directed_site:   false         # Is your site directed at kids under 13?
+
+  share_link_text:     Facebook            # Text for plain-old link
+  share_link_title:    Share on Facebook   # Share link title text
+  profile_link_text:   Friend on Facebook
+  profile_link_title:  Friend on Facebook  # Profile link title text
+
+  comment_count:       5             # Number of facebook comments to show by default
+  comments_link_text:     Comments
+  disabled_comments_text: Comments disabled  # Set to '' to output nothing when comments are disabled
+# --------------------------------------------------------------------
+
+# Build settings
+markdown: kramdown
+
+gems: 
+  - octopress-image-tag
+  - octopress-codeblock
+  - octopress-quote-tag
+  - octopress-social
+
+permalink: /:year/:month/:day/:title/

@@ -1,0 +1,62 @@
+<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'>class BFS
+</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>    &#x7b;
+</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>        private World world;
+</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>        private int currentPos;
+</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>        private int mapSize = ConfigData.MAP_SIZE * ConfigData.MAP_SIZE;
+</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>        private Cell start;
+</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'>        private int id =-1;
+</div></div><div data-line='8' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='9' class='code-highlight-row numbered'><div class='code-highlight-line'>        public BFS(World w)
+</div></div><div data-line='10' class='code-highlight-row numbered'><div class='code-highlight-line'>        &#x7b;
+</div></div><div data-line='11' class='code-highlight-row numbered'><div class='code-highlight-line'>            this.world = w;
+</div></div><div data-line='12' class='code-highlight-row numbered'><div class='code-highlight-line'>        &#x7d;
+</div></div><div data-line='13' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='14' class='code-highlight-row numbered'><div class='code-highlight-line'>        public int findNextMove(int currP)
+</div></div><div data-line='15' class='code-highlight-row numbered'><div class='code-highlight-line'>        &#x7b;
+</div></div><div data-line='16' class='code-highlight-row numbered'><div class='code-highlight-line'>            this.currentPos = currP;
+</div></div><div data-line='17' class='code-highlight-row numbered'><div class='code-highlight-line'>            this.start = world.getCell(currentPos);
+</div></div><div data-line='18' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='19' class='code-highlight-row numbered'><div class='code-highlight-line'>            //if the tank is on a coin pile then that coin pile will vanish
+</div></div><div data-line='20' class='code-highlight-row numbered'><div class='code-highlight-line'>            start.is_coin = false;
+</div></div><div data-line='21' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='22' class='code-highlight-row numbered'><div class='code-highlight-line'>            Queue&lt;Cell> queue = new Queue&lt;Cell>();
+</div></div><div data-line='23' class='code-highlight-row numbered'><div class='code-highlight-line'>            bool[] mark = new bool[mapSize];        // boolean array to store if a cell is visited
+</div></div><div data-line='24' class='code-highlight-row numbered'><div class='code-highlight-line'>            //enque the current position cell
+</div></div><div data-line='25' class='code-highlight-row numbered'><div class='code-highlight-line'>            queue.Enqueue(start);
+</div></div><div data-line='26' class='code-highlight-row numbered'><div class='code-highlight-line'>            // marks current position as visited
+</div></div><div data-line='27' class='code-highlight-row numbered'><div class='code-highlight-line'>            mark[start.id] = true;
+</div></div><div data-line='28' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='29' class='code-highlight-row numbered'><div class='code-highlight-line'>            bool found = false;
+</div></div><div data-line='30' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='31' class='code-highlight-row numbered'><div class='code-highlight-line'>            //untill a path is found
+</div></div><div data-line='32' class='code-highlight-row numbered'><div class='code-highlight-line'>            while (queue.Count != 0)
+</div></div><div data-line='33' class='code-highlight-row numbered'><div class='code-highlight-line'>            &#x7b;
+</div></div><div data-line='34' class='code-highlight-row numbered'><div class='code-highlight-line'>                Cell current = queue.Dequeue();
+</div></div><div data-line='35' class='code-highlight-row numbered'><div class='code-highlight-line'>                //scans all the neighbour cells of the current cell
+</div></div><div data-line='36' class='code-highlight-row numbered'><div class='code-highlight-line'>                foreach (Cell neighbour in current.neighbours)
+</div></div><div data-line='37' class='code-highlight-row numbered'><div class='code-highlight-line'>                &#x7b;
+</div></div><div data-line='38' class='code-highlight-row numbered'><div class='code-highlight-line'>                    // if a coin pile or life pack is found BFS algorithm will break and return that cell id
+</div></div><div data-line='39' class='code-highlight-row numbered'><div class='code-highlight-line'>                    if (neighbour.is_coin|| neighbour.is_Life)
+</div></div><div data-line='40' class='code-highlight-row numbered'><div class='code-highlight-line'>                    &#x7b;
+</div></div><div data-line='41' class='code-highlight-row numbered'><div class='code-highlight-line'>                        found = true;
+</div></div><div data-line='42' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='43' class='code-highlight-row numbered'><div class='code-highlight-line'>                        Cell curr = neighbour;
+</div></div><div data-line='44' class='code-highlight-row numbered'><div class='code-highlight-line'>                        //backtracks the cell id of next cell where the tank should move
+</div></div><div data-line='45' class='code-highlight-row numbered'><div class='code-highlight-line'>                        while (curr.parent != start)
+</div></div><div data-line='46' class='code-highlight-row numbered'><div class='code-highlight-line'>                        &#x7b;
+</div></div><div data-line='47' class='code-highlight-row numbered'><div class='code-highlight-line'>                            curr = curr.parent;
+</div></div><div data-line='48' class='code-highlight-row numbered'><div class='code-highlight-line'>                        &#x7d;
+</div></div><div data-line='49' class='code-highlight-row numbered'><div class='code-highlight-line'>                        id = curr.id;
+</div></div><div data-line='50' class='code-highlight-row numbered'><div class='code-highlight-line'>                        break;
+</div></div><div data-line='51' class='code-highlight-row numbered'><div class='code-highlight-line'>                    &#x7d; 
+</div></div><div data-line='52' class='code-highlight-row numbered'><div class='code-highlight-line'>                    if (neighbour.is_brick || neighbour.is_stone || neighbour.is_water)
+</div></div><div data-line='53' class='code-highlight-row numbered'><div class='code-highlight-line'>                    &#x7b;
+</div></div><div data-line='54' class='code-highlight-row numbered'><div class='code-highlight-line'>                        mark[neighbour.id] = true;
+</div></div><div data-line='55' class='code-highlight-row numbered'><div class='code-highlight-line'>                    &#x7d;
+</div></div><div data-line='56' class='code-highlight-row numbered'><div class='code-highlight-line'>                    //if neighbour is not a blocked cell it will be added to the queue
+</div></div><div data-line='57' class='code-highlight-row numbered'><div class='code-highlight-line'>                    if (!mark[neighbour.id])
+</div></div><div data-line='58' class='code-highlight-row numbered'><div class='code-highlight-line'>                    &#x7b;
+</div></div><div data-line='59' class='code-highlight-row numbered'><div class='code-highlight-line'>                        mark[neighbour.id] = true;
+</div></div><div data-line='60' class='code-highlight-row numbered'><div class='code-highlight-line'>                        neighbour.parent = current;
+</div></div><div data-line='61' class='code-highlight-row numbered'><div class='code-highlight-line'>                        queue.Enqueue(neighbour);
+</div></div><div data-line='62' class='code-highlight-row numbered'><div class='code-highlight-line'>                    &#x7d;                   
+</div></div><div data-line='63' class='code-highlight-row numbered'><div class='code-highlight-line'>                &#x7d;
+</div></div><div data-line='64' class='code-highlight-row numbered'><div class='code-highlight-line'>                // if a goal is found "while" loop will break 
+</div></div><div data-line='65' class='code-highlight-row numbered'><div class='code-highlight-line'>                if (found)
+</div></div><div data-line='66' class='code-highlight-row numbered'><div class='code-highlight-line'>                    break;
+</div></div><div data-line='67' class='code-highlight-row numbered'><div class='code-highlight-line'>            &#x7d;
+</div></div><div data-line='68' class='code-highlight-row numbered'><div class='code-highlight-line'>            return id  
+</div></div><div data-line='69' class='code-highlight-row numbered'><div class='code-highlight-line'>	&#x7d;</div></div></pre></div></figure>
