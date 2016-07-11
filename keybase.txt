@@ -1,0 +1,69 @@
+==================================================================
+https://keybase.io/sajithdilshan
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://sajith.me
+  * I am sajithdilshan (https://keybase.io/sajithdilshan) on keybase.
+  * I have a public key with fingerprint 09B9 9761 9E61 C2B0 FC6F  BD30 97BC 481A AAB5 C1A4
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "01013dfd24cf95e3ea6c4b060a84a801c733384e5bdd6b20fb4a6e6fbee722e9ec2e0a",
+            "fingerprint": "09b997619e61c2b0fc6fbd3097bc481aaab5c1a4",
+            "host": "keybase.io",
+            "key_id": "97bc481aaab5c1a4",
+            "kid": "01013dfd24cf95e3ea6c4b060a84a801c733384e5bdd6b20fb4a6e6fbee722e9ec2e0a",
+            "uid": "cc2d31f6924ed6f7cbdbcb43cdb47d19",
+            "username": "sajithdilshan"
+        },
+        "service": {
+            "hostname": "sajith.me",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1468262523,
+    "expire_in": 157680000,
+    "prev": "ef2034134e8d51957113d05587d0090da7f3b0cdc4b811e6ba86d02d0ad57eb8",
+    "seqno": 5,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.53
+Comment: https://keybase.io/crypto
+
+yMIkAnicrVJbSBRRGN41jTIM6UJYkDERKGx15nZmZnspCikikoxMsdZzG3dSZ9ed
+8VK2kIkW9qCVZFCtUUgURNHNjIyyeupi0I3EbpagogRl2UvRGamHoMfOyznnP9/3
+ne//+O+lTfGl+nsHZjx9Pd75xv/gztFKX379UG2tgCN0pxCsFUrZ5MbKKHPcUKlF
+haAARCDK1KSSQkxDZTJDkCgYQIB0BelAJJosy7rCVEwpxBIwsYIggyZmTJMkZjAi
+MYCEgGBadgmLRWOW7XqyBjYMDYoGgyKRMDAJp1AZGBomii4ihLBKRKRwYjjieAxu
+DiOHLbMivMYvoUl7/8D/Z9+Vk3KESFQWTWhICqPQ1AimmGBFJhQrGhUND+iwmI3K
+GUc7aIflhqlV5oSRLcQDAn+qsgjz0vXa+Qu2jJ8DQjQWcSMkUsbLYdeNBj2WuzPq
+waoZDv0WCGHLpjxITqhiMceK2EJQ5EjiWp6iqEBdgpIqyQGB1UStGAtZHkLVoA74
+8r5hVVySmRKQFVFWmE5V0VA1kYcFVFXXKAAGoEgzZQwI5ZHposggRjqkQKIAUVVj
+WBe8lirsiBBUuU1U4jVjldjIrYwxId5zuyjZ50/1TU1J8gbMlzo9/c/YncLTfKfb
+xrvPNc5tcbIHR9svtcU/fhq4t3L9tMxRN7MA/ihdsv/YhsUdM3Obm8czBg4N9+d1
+zqp7tHrjzYxvew6dufCzoqdp7+6kd+nBK0E96zh8W3F36LxiF4ILseYTc+7UBW6V
+rijoiefW3PiceGUUtqYVvFzb3pVo7en8uY0tyHmf0jTSlxp62JBj5i0/Wbzm4tiM
+pq6z87ud3oZCOLbjfv3j5a3DT1YNf31WcjWriE04KdfLOzK2J9QPS5P7Dwwu/JAb
+P/e8fKI81LJ/3ru+9sTsXW+3VmcV9RJ/InfLi4P5cN2tsFXf1HgkJy59GemvKT5c
+m93XDRdt3vQ9O+6/tg/FLy/5BQMrTTg=
+=4Zwo
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/sajithdilshan
+
+==================================================================
+
