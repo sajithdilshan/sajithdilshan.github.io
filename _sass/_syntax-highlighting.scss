@@ -2,11 +2,25 @@
  * Syntax highlighting styles
  */
 .highlight {
-    background: #fff;
+
+
+
+
+
+
+
     @extend %vertical-rhythm;
 
     .highlighter-rouge & {
-      background: #eef;
+
+text-shadow: white 0 1px 0;
+    background-color: #f9fafb;
+    background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgi…pZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fcfdfd), color-stop(100%, #f9fafb));
+    background: -moz-linear-gradient(top, #fcfdfd, #f9fafb);
+    background: -webkit-linear-gradient(top, #fcfdfd, #f9fafb);
+    background: linear-gradient(to bottom, #fcfdfd, #f9fafb);
+
     }
 
     .c     { color: #998; font-style: italic } // Comment
