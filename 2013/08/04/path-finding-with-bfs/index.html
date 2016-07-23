@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
+<head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Path finding with BFS</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
   <meta name="description" content="So as a part of the programming challenge module I did last semester, we were supposed to build a game which is similar to the Nintendo Tank war game. This w...">
 
   <link rel="stylesheet" href="/css/main.css">
@@ -15,11 +18,11 @@
 </head>
 
 
-  <body>
+<body>
 
-    <header class="site-header">
+<header class="site-header">
 
-  <div class="wrapper">
+  <div class="wrapper site-header-wrapper">
 
     <a class="site-title" href="/">_here be dragons_</a>
 
@@ -52,17 +55,22 @@
 </header>
 
 
-    <div class="page-content">
-      <div class="wrapper">
+<div class="page-content">
+    <div class="wrapper content-wrapper">
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
-  <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Path finding with BFS</h1>
-    <p class="post-meta"><time datetime="2013-08-04T19:21:00+05:30" itemprop="datePublished">Aug 4, 2013</time></p>
-  </header>
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Path finding with BFS</h1>
+        <p class="post-meta">
+            <time datetime="2013-08-04T19:21:00+05:30" itemprop="datePublished">Aug 4,
+                2013
+            </time>
+            
+        </p>
+    </header>
 
-  <div class="post-content" itemprop="articleBody">
-    <p>So as a part of the programming challenge module I did last semester, we were supposed to build a game which is similar to the Nintendo Tank war game. This was a group project and <a href="https://twitter.com/TharinduRusira">Tharindu</a> and I designed and build the game. What we had to do was to build a client who can communicate with a server. All together five clients can connect with the server simultaneously and the server sends global updates about the position of each clients, positions of coin piles, etc on each second. the clients has to process this global update and send its next move to the server before the next global update is arrived from the server. More details about the server specification is available <a href="https://docs.google.com/file/d/0B0SvcTAspdLrNHdJalc5elpiM28/edit">here</a>.</p>
+    <div class="post-content" itemprop="articleBody">
+        <p>So as a part of the programming challenge module I did last semester, we were supposed to build a game which is similar to the Nintendo Tank war game. This was a group project and <a href="https://twitter.com/TharinduRusira">Tharindu</a> and I designed and build the game. What we had to do was to build a client who can communicate with a server. All together five clients can connect with the server simultaneously and the server sends global updates about the position of each clients, positions of coin piles, etc on each second. the clients has to process this global update and send its next move to the server before the next global update is arrived from the server. More details about the server specification is available <a href="https://docs.google.com/file/d/0B0SvcTAspdLrNHdJalc5elpiM28/edit">here</a>.</p>
 
 <p>So the main objective of the game is to collect as many coin piles as possible. The game is played on a 2D cell matrix as you can see on the below image. So what we had to do first was to create a suitable data structure which can be used by the path finding algorithm efficiently.</p>
 
@@ -230,20 +238,17 @@
 
 <p>This algorithm is best suited when the search space(size of the “World” 2D array) is small (typically less than 2500 cells). BFS is guaranteed to  find the closest goal (if a goal exists). If there is no goal, BFS will go through the entire search space, thus the size of the queue will increase by 3 cells on each iteration (assuming there are no obstacles). This pitfall can be avoided by using AStar algorithm. But for a small search space BFS is more than enough. The full project can be downloaded from the <a href="https://bitbucket.org/elitecoders/tankgame">Bitbucket repository</a>.</p>
 
-  </div>
-  <div class="wrapper">
+    </div>
+    <div class="wrapper">
         <div id="disqus_thread"></div> <script type="text/javascript"> var disqus_shortname = 'sajithblog'; var disqus_url = 'http://sajithdilshan.github.io/2013/08/04/path-finding-with-bfs/'; var disqus_identifier = 'http://sajithdilshan.github.io/2013/08/04/path-finding-with-bfs/'; var disqus_title = 'Path finding with BFS'; (function () { var s = document.createElement('script'); s.async = true; s.type = 'text/javascript'; s.src = '//sajithblog.disqus.com/embed.js'; (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s); }()); </script> <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-  </div>
+    </div>
 
 </article>
 
-      </div>
-  <!--     <div class="wrapper">
-      <a href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-url="http://sajithdilshan.github.io/2013/08/04/path-finding-with-bfs/" data-text="Path finding with BFS by @sajithdilshan -" data-dnt="true">Twitter</a> <div class="fb-like" data-href="http://sajithdilshan.github.io/2013/08/04/path-finding-with-bfs/" data-layout="button" data-action="like" data-show-faces="false" data-colorscheme="light" data-kid-directed-site="false" data-share="false"></div> <a class="facebook-share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://sajithdilshan.github.io/2013/08/04/path-finding-with-bfs/" title="Share on Facebook">Facebook</a> 
-      </div> -->
     </div>
+</div>
 
-    <footer class="site-footer">
+<!--<footer class="site-footer">
 
   <div class="wrapper">
 
@@ -276,8 +281,8 @@
   </div>
 
 </footer>
+-->
 
-
-  </body>
+</body>
 
 </html>
