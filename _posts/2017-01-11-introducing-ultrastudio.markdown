@@ -16,7 +16,7 @@ With UltraStudio, developing a mediation sequence—or **integration flow**, as 
 
 UltraStudio comes with hundreds of resources to kickstart your integration project, including a lot of sample projects to help you understand the new development flow. With a wide range of connectors for JMS, HTTP, FIX, AS2, SFTP, AMQP and other protocols, and processors to manipulate the messages flowing through the UltraESB-X, developing integration flows has become easier and more intuitive than ever.
 
-Having said that, if you feel like writing your own processor or connector, you can simply go ahead and do it within your IDE itself since the underlying Project-X framework supports extensibility by nature. Further, you can run the flow you have created within the IDE, and trace the details of the message which went through each component to debug any possible issues in your flow as well.
+Having said that, if you feel like writing your own processor or connector, you can simply go ahead and do it within your IDE itself since the underlying <a href="http://blog.ruwan.org/2017/01/the-x_10.html" target="_blank">Project-X</a> framework supports extensibility by nature. Further, you can run the flow you have created within the IDE, and trace the details of the message which went through each component to debug any possible issues in your flow as well.
 
 Last but not the least, have a sneak peek at the following screencast on how to develop, run and test an integration project with the new UltraStudio by AdroitLogic!
 
