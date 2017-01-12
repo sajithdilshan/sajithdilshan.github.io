@@ -6,9 +6,45 @@
 </description>
     <link>http://sajithdilshan.github.io/</link>
     <atom:link href="http://sajithdilshan.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 23 Jul 2016 15:15:11 +0530</pubDate>
-    <lastBuildDate>Sat, 23 Jul 2016 15:15:11 +0530</lastBuildDate>
-    <generator>Jekyll v3.1.3</generator>
+    <pubDate>Thu, 12 Jan 2017 10:16:07 +0530</pubDate>
+    <lastBuildDate>Thu, 12 Jan 2017 10:16:07 +0530</lastBuildDate>
+    <generator>Jekyll v3.3.1</generator>
+    
+      <item>
+        <title>Introducing UltraStudio</title>
+        <description>&lt;p&gt;For the past couple of months, we at AdroitLogic have been quite busy developing our brand new product stack. Now, after months of tiresome efforts, we are excited to present to you &lt;strong&gt;UltraStudio&lt;/strong&gt;, the new Graphical Integration Development Environment we have built to make the UltraESB-X project developer’s life easier.&lt;/p&gt;
+
+&lt;p&gt;UltraStudio is a fully featured integration flow development environment for UltraESB-X. It is built on top of the world’s best IDE, IntelliJ IDEA, so you could have the best of both worlds. If you are already using IntelliJ IDEA, you can integrate UltraStudio into your IDE with just a few clicks.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://dl.dropboxusercontent.com/u/30358512/blog/ultrastudio.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;With UltraStudio, developing a mediation sequence—or &lt;strong&gt;integration flow&lt;/strong&gt;, as we call it now—is just a matter of playing around with building blocks—&lt;strong&gt;connectors&lt;/strong&gt; and &lt;strong&gt;processors&lt;/strong&gt;. Want to expose a HTTP endpoint? Just drag-and-drop a HTTP ingress connector from the palette and configure it. Want to convert the inbound XML message to JSON? Add an XML-to-JSON transformer and attach it to the connector. With the super-simple graphical UI, a complex flow that takes hours of design and hundreds of lines of code could come to life within a matter of minutes.&lt;/p&gt;
+
+&lt;p&gt;UltraStudio comes with hundreds of resources to kickstart your integration project, including a lot of sample projects to help you understand the new development flow. With a wide range of connectors for JMS, HTTP, FIX, AS2, SFTP, AMQP and other protocols, and processors to manipulate the messages flowing through the UltraESB-X, developing integration flows has become easier and more intuitive than ever.&lt;/p&gt;
+
+&lt;p&gt;Having said that, if you feel like writing your own processor or connector, you can simply go ahead and do it within your IDE itself since the underlying Project-X framework supports extensibility by nature. Further, you can run the flow you have created within the IDE, and trace the details of the message which went through each component to debug any possible issues in your flow as well.&lt;/p&gt;
+
+&lt;p&gt;Last but not the least, have a sneak peek at the following screencast on how to develop, run and test an integration project with the new UltraStudio by AdroitLogic!&lt;/p&gt;
+
+&lt;div class=&quot;videoWrapper&quot;&gt;
+&lt;iframe width=&quot;760&quot; height=&quot;430&quot; src=&quot;https://www.youtube.com/embed/OSjfSwMv0Xo&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Thu, 12 Jan 2017 12:44:04 +0530</pubDate>
+        <link>http://sajithdilshan.github.io/2017/01/12/introducing-ultrastudio/</link>
+        <guid isPermaLink="true">http://sajithdilshan.github.io/2017/01/12/introducing-ultrastudio/</guid>
+        
+        
+        <category>UltraStudio</category>
+        
+        <category>Project-X</category>
+        
+        <category>UltraESB-X</category>
+        
+        <category>IntelliJIDEA</category>
+        
+      </item>
     
       <item>
         <title>Network Configuration with VirtualBox</title>
@@ -305,7 +341,7 @@
 
 &lt;p&gt;Then it will pass this @feeditem_list to a file name “show_feed_list.js.haml”. Remember RoR uses convention over configuration. So that’s why it is passing the @feeditem_list to a javascript file with the same name of the method “show_feed_list”.&lt;/p&gt;
 
-&lt;figure class=&quot;code-highlight-figure&quot;&gt;&lt;figcaption class=&quot;code-highlight-caption&quot;&gt;&lt;span class=&quot;code-highlight-caption-title&quot;&gt;app/views/userfeeds/show_feed_list.js.haml&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;code-highlight&quot;&gt;&lt;pre class=&quot;code-highlight-pre&quot;&gt;&lt;div data-line=&quot;1&quot; class=&quot;code-highlight-row numbered&quot;&gt;&lt;div class=&quot;code-highlight-line&quot;&gt;$(&#39;#feedlistcontainer&#39;).html(&quot;&lt;span class=&quot;si&quot;&gt;#&amp;#x7b;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;feedlist&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:feeditem_list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;vi&quot;&gt;@feeditem_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;&amp;#x7d;&lt;/span&gt;&quot;)&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
+&lt;figure class=&quot;code-highlight-figure&quot;&gt;&lt;figcaption class=&quot;code-highlight-caption&quot;&gt;&lt;span class=&quot;code-highlight-caption-title&quot;&gt;app/views/userfeeds/show_feed_list.js.haml&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;code-highlight&quot;&gt;&lt;pre class=&quot;code-highlight-pre&quot;&gt;&lt;div data-line=&quot;1&quot; class=&quot;code-highlight-row numbered&quot;&gt;&lt;div class=&quot;code-highlight-line&quot;&gt;$('#feedlistcontainer').html(&quot;&lt;span class=&quot;si&quot;&gt;#&amp;#x7b;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;feedlist&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:feeditem_list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;vi&quot;&gt;@feeditem_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;&amp;#x7d;&lt;/span&gt;&quot;)&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
 
 &lt;p&gt;Above is the content of the java script file. It will render the _feedlist.html.haml inside the DIV tag with id “feedlistcontainer” and pass the @feeditem_list variable from controller to the _feedlist.html.haml template. And that’s it. We don’t need extensive knowledge on java script or JQuery at all.&lt;/p&gt;
 </description>
