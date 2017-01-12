@@ -6,8 +6,8 @@
 </description>
     <link>http://sajithdilshan.github.io/</link>
     <atom:link href="http://sajithdilshan.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 12 Jan 2017 10:16:07 +0530</pubDate>
-    <lastBuildDate>Thu, 12 Jan 2017 10:16:07 +0530</lastBuildDate>
+    <pubDate>Thu, 12 Jan 2017 10:35:24 +0530</pubDate>
+    <lastBuildDate>Thu, 12 Jan 2017 10:35:24 +0530</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
     
       <item>
@@ -22,7 +22,7 @@
 
 &lt;p&gt;UltraStudio comes with hundreds of resources to kickstart your integration project, including a lot of sample projects to help you understand the new development flow. With a wide range of connectors for JMS, HTTP, FIX, AS2, SFTP, AMQP and other protocols, and processors to manipulate the messages flowing through the UltraESB-X, developing integration flows has become easier and more intuitive than ever.&lt;/p&gt;
 
-&lt;p&gt;Having said that, if you feel like writing your own processor or connector, you can simply go ahead and do it within your IDE itself since the underlying Project-X framework supports extensibility by nature. Further, you can run the flow you have created within the IDE, and trace the details of the message which went through each component to debug any possible issues in your flow as well.&lt;/p&gt;
+&lt;p&gt;Having said that, if you feel like writing your own processor or connector, you can simply go ahead and do it within your IDE itself since the underlying &lt;a href=&quot;http://blog.ruwan.org/2017/01/the-x_10.html&quot; target=&quot;_blank&quot;&gt;Project-X&lt;/a&gt; framework supports extensibility by nature. Further, you can run the flow you have created within the IDE, and trace the details of the message which went through each component to debug any possible issues in your flow as well.&lt;/p&gt;
 
 &lt;p&gt;Last but not the least, have a sneak peek at the following screencast on how to develop, run and test an integration project with the new UltraStudio by AdroitLogic!&lt;/p&gt;
 
