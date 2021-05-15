@@ -748,8 +748,9 @@
 /* Basic */
 
 	body {
-		/*background: linear-gradient(160deg, #02CCBA 0%, #AA7ECD 100%);*/
-		background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+		background: linear-gradient(-45deg, #f3f8ff, #c6cfff, #deecff, #e8d3ff);
+		background-size: 400% 400%;
+		animation: gradient 15s ease infinite;
 		font-family: 'Source Sans Pro', sans-serif;
 		font-weight: 300;
 		color: #777777;
@@ -765,6 +766,18 @@
 			-ms-animation: none !important;
 			animation: none !important;
 		}
+
+	@keyframes gradient {
+		0% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 50%;
+		}
+		100% {
+			background-position: 0% 50%;
+		}
+	}
 
 	input, textarea, select {
 		font-family: 'Source Sans Pro', sans-serif;
@@ -1352,7 +1365,6 @@
 			#main {
 				width: 45em;
 				background: #ffffff;
-				box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.25);
 			}
 
 			.panel {
