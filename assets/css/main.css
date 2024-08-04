@@ -1112,11 +1112,16 @@ ol.default li {
 }
 
 .contact-row {
-    text-align: center;
+    text-align: left;
 }
 
 
 /* Me */
+
+#contact-links {
+    top: 82% !important;
+    text-align: center;
+}
 
 #me .pic {
     position: relative;
