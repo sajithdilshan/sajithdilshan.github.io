@@ -1274,6 +1274,19 @@ ol.default li {
         padding-bottom: 6em;
     }
 
+    /* bgblur */
+
+    #bgblur {
+        background: -webkit-linear-gradient(356deg, #58cdff, #229bff, #df62db, #fb6159, #ffa109);
+        background: linear-gradient(94deg, #58cdff, #229bff, #df62db, #fb6159, #ffa109);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: -5;
+        -webkit-filter: blur(100px);
+        filter: blur(100px);     
+    }
+
     /* Nav */
     #nav {
         text-align: center;
