@@ -917,7 +917,7 @@ section > :last-child, section:last-child, article > :last-child, article:last-c
 }
 
 header > p {
-    color: #aaa;
+    color: #6e6e73bd;
 }
 
 /* Image */
@@ -1117,6 +1117,16 @@ ol.default li {
 
 
 /* Me */
+
+#hname {
+    background: -webkit-linear-gradient(356deg, #0090F7, #BA62FC, #F2416B, #F55600);
+    background: linear-gradient(94deg, #0090F7, #BA62FC, #F2416B, #F55600);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    line-height: 1.2;
+}
 
 #contact-links {
     top: 82% !important;
@@ -1468,7 +1478,7 @@ ol.default li {
         font-size: 1.1em;
         letter-spacing: -0.015em;
         margin-top: 0;
-        width: 23em;
+        width: 25em;
     }
 
     /* Footer */
