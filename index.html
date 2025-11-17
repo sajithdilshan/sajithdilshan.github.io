@@ -39,6 +39,22 @@
               >lemon.markets</a
             >.
           </p>
+          <div class="contact-tags">
+            <a
+              class="tag"
+              href="https://www.linkedin.com/in/sajithdilshan/"
+              target="_blank"
+              rel="noreferrer"
+              >LinkedIn</a
+            >
+            <a
+              class="tag"
+              href="#"
+              data-email="sajithdilshan"
+              data-domain="gmail.com"
+              >email</a
+            >
+          </div>
         </section>
         <div class="profile-photo">
           <span class="glow"></span>
@@ -51,6 +67,14 @@
     </footer>
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
+      const emailTag = document.querySelector(".tag[data-email]");
+      if (emailTag) {
+        const user = emailTag.getAttribute("data-email");
+        const domain = emailTag.getAttribute("data-domain");
+        const address = `${user}&#64;${domain}`;
+        emailTag.innerHTML = `Email &middot; ${address}`;
+        emailTag.setAttribute("href", `mailto:${user}@${domain}`);
+      }
     </script>
   </body>
 </html>
