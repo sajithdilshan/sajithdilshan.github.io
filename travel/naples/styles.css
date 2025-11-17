@@ -69,10 +69,6 @@ body {
   padding: 4rem 0 2rem;
 }
 
-.hero__content {
-  max-width: 780px;
-}
-
 .hero__meta {
   margin-top: 1.5rem;
   display: flex;
