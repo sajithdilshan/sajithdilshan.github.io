@@ -46,7 +46,8 @@ galleryItems.forEach((figure) => {
     const img = figure.querySelector("img");
     const caption = figure.querySelector("figcaption");
     if (!img) return;
-    openLightbox(img.src, img.alt, caption ? caption.textContent : "");
+    const fullSrc = figure.dataset.full || img.dataset.full || img.src;
+    openLightbox(fullSrc, img.alt, caption ? caption.textContent : "");
   });
 });
 
