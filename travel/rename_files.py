@@ -51,7 +51,7 @@ def rename_files_sequentially(directory, extension, prefix="", start_number=1, d
     # Rename files
     renamed_count = 0
     for i, file_path in enumerate(files, start=start_number):
-        new_name = f"{prefix}{i}{extension}"
+        new_name = f"{prefix}{i}{extension.upper()}"
         new_path = dir_path / new_name
         
         # Skip if the file already has the target name
