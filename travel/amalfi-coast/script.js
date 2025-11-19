@@ -28,6 +28,28 @@ const closeLightbox = () => {
 
 const galleryItems = document.querySelectorAll(".gallery-item");
 
+// Preload all images immediately when page loads
+const preloadImages = () => {
+  galleryItems.forEach((figure) => {
+    const img = figure.querySelector("img");
+    if (img && img.src) {
+      // Preload the thumbnail (already in src)
+      const thumbnailPreload = new Image();
+      thumbnailPreload.src = img.src;
+
+      // Preload the full-size image from data-full attribute
+      const fullSrc = figure.dataset.full;
+      if (fullSrc) {
+        const fullImagePreload = new Image();
+        fullImagePreload.src = fullSrc;
+      }
+    }
+  });
+};
+
+// Start preloading images as soon as the DOM is ready
+preloadImages();
+
 const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
