@@ -18,13 +18,13 @@ def parse_args() -> argparse.Namespace:
   parser.add_argument(
       "--source-dir",
       type=Path,
-      default=Path("./naples/images"),
+      default=Path("./amalfi-coast/images"),
       help="Directory containing the original images.",
   )
   parser.add_argument(
       "--output-dir",
       type=Path,
-      default=Path("./naples/images/thumbnails"),
+      default=Path("./amalfi-coast/images/thumbnails"),
       help="Directory where thumbnails will be written.",
   )
   parser.add_argument(
