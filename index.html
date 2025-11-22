@@ -1,80 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sajith Edirisinghe | Portfolio</title>
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <link
-      rel="preconnect"
-      href="https://fonts.googleapis.com"
-      crossorigin
-    />
-    <link
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <main class="hero">
-      <div class="profile-card">
-        <section class="profile-copy">
-          <p class="intro-label">Hello, I'm</p>
-          <h1 id="hname">Sajith Edirisinghe</h1>
-          <p class="profile-text">
-            Originally from the beautiful island of Sri Lanka, I'm currently
-            residing in Berlin, Germany. I earned my Bachelor's Degree in
-            Computer Science and Engineering from the
-            <a href="http://www.mrt.ac.lk/web/" target="_blank" rel="noreferrer"
-              >University of Moratuwa</a
-            >
-            in 2015. Nowadays, I work as a Senior Software Engineer at
-            <a href="https://www.lemon.markets/" target="_blank" rel="noreferrer"
-              >lemon.markets</a
-            >.
-          </p>
-          <div class="contact-tags">
-            <a
-              class="tag"
-              href="https://www.linkedin.com/in/sajithdilshan/"
-              target="_blank"
-              rel="noreferrer"
-              >LinkedIn</a
-            >
-            <a
-              class="tag"
-              href="#"
-              data-email="sajithdilshan"
-              data-domain="gmail.com"
-              >email</a
-            >
-          </div>
-        </section>
-        <div class="profile-photo">
-          <span class="glow"></span>
-          <img src="images/sajith.jpg" alt="Portrait of Sajith Edirisinghe" />
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sajith Edirisinghe | Portfolio</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <main class="hero">
+    <div class="profile-card">
+      <section class="profile-copy">
+        <p class="intro-label">Hello, I'm</p>
+        <h1 id="hname">Sajith Edirisinghe</h1>
+        <p class="profile-text">
+          Originally from the beautiful island of Sri Lanka, I'm currently
+          residing in Berlin, Germany. I earned my Bachelor's Degree in
+          Computer Science and Engineering from the
+          <a href="http://www.mrt.ac.lk/web/" target="_blank" rel="noreferrer">University of Moratuwa</a>
+          in 2015. Nowadays, I work as a Senior Software Engineer at
+          <a href="https://www.lemon.markets/" target="_blank" rel="noreferrer">lemon.markets</a>.
+        </p>
+        <div class="contact-tags">
+          <a class="tag" href="https://www.linkedin.com/in/sajithdilshan/" target="_blank" rel="noreferrer">💼
+            LinkedIn</a>
+          <a class="tag" href="#" data-email="sajithdilshan" data-domain="gmail.com">email</a>
+          <a class="tag" href="travel/index.html">📸 travel photography</a>
         </div>
+      </section>
+      <div class="profile-photo">
+        <span class="glow"></span>
+        <img src="images/sajith.jpg" alt="Portrait of Sajith Edirisinghe" />
       </div>
-    </main>
-    <footer class="site-footer">
-      &copy; <span id="year"></span> Sajith Edirisinghe. All rights reserved.
-    </footer>
-    <script>
-      document.getElementById("year").textContent = new Date().getFullYear();
-      const emailTag = document.querySelector(".tag[data-email]");
-      if (emailTag) {
-        const user = emailTag.getAttribute("data-email");
-        const domain = emailTag.getAttribute("data-domain");
-        const address = `${user}&#64;${domain}`;
-        emailTag.innerHTML = `Email &middot; ${address}`;
-        emailTag.setAttribute("href", `mailto:${user}@${domain}`);
-      }
-    </script>
-  </body>
+    </div>
+  </main>
+  <footer class="site-footer">
+    &copy; <span id="year"></span> Sajith Edirisinghe. All rights reserved.
+  </footer>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    const emailTag = document.querySelector(".tag[data-email]");
+    if (emailTag) {
+      const user = emailTag.getAttribute("data-email");
+      const domain = emailTag.getAttribute("data-domain");
+      const address = `${user}&#64;${domain}`;
+      emailTag.innerHTML = `✉️ ${address}`;
+      emailTag.setAttribute("href", `mailto:${user}@${domain}`);
+    }
+  </script>
+</body>
+
 </html>
