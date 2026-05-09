@@ -86,3 +86,5 @@ document.addEventListener("keydown", (event) => {
     closeLightbox();
   }
 });
+
+document.getElementById("year").textContent = new Date().getFullYear();

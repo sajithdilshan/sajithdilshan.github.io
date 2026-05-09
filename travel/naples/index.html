@@ -4,38 +4,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SE: Capturing Naples: random moments</title>
+  <title>SE: Capturing Naples</title>
   <link rel="icon" type="image/png" href="../../images/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <div class="aurora"></div>
+  <a href="../index.html" class="back-link">&larr; All galleries</a>
   <div class="page">
     <header class="hero">
-      <div class="hero__content">
-        <p class="eyebrow"></p>
-        <h1>Capturing Naples</h1>
-        <p class="lead">
-          This gallery brings together some of my favorite photos from my time in Naples—street corners, crowded alleys,
-          quiet moments, museum pieces
-          that caught my eye, and a few of the city's famous landmarks. It's a mix of small details and wider scenes,
-          basically the things I noticed while walking
-          around and exploring. These images are a snapshot of how Naples felt to me during the trip.
-        </p>
-        <div class="hero__meta">
-          <span>📍 Naples, Italy</span>
-          <span>📸 Shot on Fujifilm X-E5</span>
-          <span>📆 September 2025</span>
-        </div>
+      <h1>Capturing Naples</h1>
+      <p class="lead">
+        Street corners, crowded alleys, quiet moments, museum pieces that caught my eye, and a few of the city's
+        famous landmarks. A mix of small details and wider scenes — the things I noticed while walking around
+        and exploring.
+      </p>
+      <div class="hero__meta">
+        <span>Naples, Italy</span>
+        <span>Fujifilm X-E5</span>
+        <span>September 2025</span>
       </div>
     </header>
 
     <main class="shell">
-      <section class="panel gallery-panel">
+      <section class="gallery-panel">
         <div class="gallery-grid">
           <figure class="gallery-item gallery-item--large" data-full="./images/1.JPG">
             <img src="./images/thumbnails/1.JPG" />
@@ -186,16 +181,12 @@
     </main>
 
     <footer class="footer">
-      <p>
-        © 2025 Sajith Edirisinghe. All rights reserved.
-      </p>
+      <p>&copy; <span id="year"></span> Sajith Edirisinghe</p>
     </footer>
   </div>
 
   <div class="lightbox" data-lightbox hidden>
-    <button class="lightbox__close" data-lightbox-close aria-label="Close">
-      ✕
-    </button>
+    <button class="lightbox__close" data-lightbox-close aria-label="Close">&#10005;</button>
     <img src="" data-lightbox-image />
     <p class="lightbox__caption" data-lightbox-caption></p>
   </div>
