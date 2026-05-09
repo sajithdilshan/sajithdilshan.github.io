@@ -2,267 +2,242 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SE: Travel Gallery - Explore the World</title>
-    <link rel="icon" type="image/png" href="../images/favicon.png" />
-    <meta name="description"
-        content="Explore breathtaking destinations around the world through our curated travel photo gallery">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;600&display=swap"
-        rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SE: Travel Gallery</title>
+  <link rel="icon" type="image/png" href="../images/favicon.png" />
+  <meta name="description" content="Travel photography by Sajith Edirisinghe">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <style>
+    :root {
+      --bg: #f0f4ff;
+      --card-bg: #ffffff;
+      --text: #1a1a2e;
+      --text-soft: #4a4a68;
+      --accent: #6c5ce7;
+      --accent-2: #0984e3;
+      --accent-3: #00b894;
+      --chip-bg: #f3f0ff;
+      --chip-border: #e4dff7;
+      --shadow: 0 20px 60px rgba(108, 92, 231, 0.08), 0 4px 20px rgba(0, 0, 0, 0.04);
+      --overlay-from: rgba(26, 26, 46, 0.95);
+      --overlay-mid: rgba(26, 26, 46, 0.6);
+    }
 
-        :root {
-            --text-light: hsl(0, 0%, 98%);
-            --text-muted: hsl(0, 0%, 70%);
-            --card-bg: hsl(220, 26%, 18%);
-        }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f0f1a;
+        --card-bg: #1a1a2e;
+        --text: #f0f0f5;
+        --text-soft: #a0a0b8;
+        --accent: #a29bfe;
+        --accent-2: #74b9ff;
+        --accent-3: #55efc4;
+        --chip-bg: #252540;
+        --chip-border: #33335a;
+        --shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 4px 20px rgba(0, 0, 0, 0.2);
+        --overlay-from: rgba(15, 15, 26, 0.95);
+        --overlay-mid: rgba(15, 15, 26, 0.6);
+      }
+    }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            min-height: 100vh;
-            background: radial-gradient(circle at 15% -10%, #512B81, #35155D 60%),
-                radial-gradient(circle at 80% 20%, #4477CE, #8CABFF 70%);
-            color: var(--text-light);
-            overflow-x: hidden;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        .aurora {
-            position: fixed;
-            inset: -20vh;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.35), transparent),
-                conic-gradient(from 90deg,
-                    rgba(255, 158, 181, 0.5),
-                    rgba(62, 201, 194, 0.4),
-                    rgba(255, 210, 127, 0.4),
-                    rgba(255, 158, 181, 0.5));
-            filter: blur(130px);
-            opacity: 0.85;
-            pointer-events: none;
-            animation: pulse 18s linear infinite;
-        }
+    body {
+      font-family: "Outfit", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      -webkit-font-smoothing: antialiased;
+    }
 
-        @keyframes pulse {
-            0% {
-                transform: translate3d(0, 0, 0) scale(1);
-            }
+    .back-link {
+      position: fixed;
+      top: 1.5rem;
+      left: 1.5rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-soft);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      border-radius: 100px;
+      background: var(--chip-bg);
+      border: 1px solid var(--chip-border);
+      transition: color 0.2s, transform 0.2s;
+      z-index: 100;
+    }
 
-            50% {
-                transform: translate3d(3vmax, -2vmax, 0) scale(1.05);
-            }
+    .back-link:hover {
+      color: var(--text);
+      transform: translateX(-2px);
+    }
 
-            100% {
-                transform: translate3d(0, 0, 0) scale(1);
-            }
-        }
+    .page-title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      background: linear-gradient(115deg, #ff8a00, #ff3e55, #9145ff, #32c8ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
 
-        .showcases {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 400px));
-            gap: 2rem;
-            padding: 2rem;
-            max-width: 900px;
-            margin: 0 auto;
-            justify-content: center;
-        }
+    .showcases {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+      gap: 1.5rem;
+      max-width: 860px;
+      width: 100%;
+    }
 
-        .showcase-card {
-            position: relative;
-            display: block;
-            border-radius: 20px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-            text-decoration: none;
-            color: inherit;
-        }
+    .showcase-card {
+      position: relative;
+      display: block;
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--card-bg);
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
+    }
 
-        .showcase-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.8);
-        }
+    .showcase-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 48px rgba(108, 92, 231, 0.12), 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
 
-        .showcase-image {
-            width: 100%;
-            height: 350px;
-            object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+    .showcase-image {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-        .showcase-card:hover .showcase-image {
-            transform: scale(1.1);
-        }
+    .showcase-card:hover .showcase-image {
+      transform: scale(1.04);
+    }
 
-        .showcase-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 2rem;
-            background: linear-gradient(to top,
-                    hsla(220, 26%, 10%, 0.98) 0%,
-                    hsla(220, 26%, 10%, 0.8) 60%,
-                    transparent 100%);
-            transition: all 0.4s ease;
-        }
+    .showcase-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.75rem;
+      background: linear-gradient(to top, var(--overlay-from) 0%, var(--overlay-mid) 60%, transparent 100%);
+    }
 
-        .showcase-card:hover .showcase-overlay {
-            background: linear-gradient(to top,
-                    hsla(220, 26%, 10%, 1) 0%,
-                    hsla(220, 26%, 10%, 0.9) 70%,
-                    transparent 100%);
-        }
+    .showcase-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
 
-        .showcase-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--text-light);
-        }
+    .showcase-subtitle {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.7);
+    }
 
-        .showcase-subtitle {
-            font-size: 0.95rem;
-            font-weight: 300;
-            color: var(--text-muted);
-            letter-spacing: 0.05em;
-        }
+    .showcase-cta {
+      display: inline-block;
+      margin-top: 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--accent-3);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
 
-        .showcase-cta {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 0.7rem 1.4rem;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: var(--text-light);
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            letter-spacing: 0.05em;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.3s ease;
-        }
+    .showcase-card:hover .showcase-cta {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-        .showcase-card:hover .showcase-cta {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .footer {
+      margin-top: 3rem;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
 
-        /* Tablet and below */
-        @media (max-width: 1024px) {
-            .showcases {
-                gap: 2rem;
-                padding: 1.5rem;
-            }
+    @media (max-width: 600px) {
+      body {
+        padding: 1.5rem;
+      }
 
-            .showcase-image {
-                height: 350px;
-            }
-        }
+      .back-link {
+        top: 1rem;
+        left: 1rem;
+      }
 
-        /* Mobile devices */
-        @media (max-width: 768px) {
-            .hero {
-                padding: 2rem 1rem 1.5rem;
-            }
+      .page-title {
+        margin-top: 3rem;
+      }
 
-            .showcases {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                padding: 1rem;
-            }
+      .showcase-image {
+        height: 220px;
+      }
 
-            .showcase-card {
-                border-radius: 16px;
-            }
-
-            .showcase-image {
-                height: 280px;
-            }
-
-            .showcase-overlay {
-                padding: 1.5rem;
-            }
-
-            .showcase-title {
-                font-size: 2rem;
-            }
-
-            .showcase-subtitle {
-                font-size: 0.9rem;
-            }
-
-            .showcase-cta {
-                padding: 0.6rem 1.2rem;
-                font-size: 0.85rem;
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Small mobile devices */
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-
-            .showcase-image {
-                height: 240px;
-            }
-
-            .showcase-title {
-                font-size: 1.6rem;
-            }
-
-            .showcase-overlay {
-                padding: 1.25rem;
-            }
-        }
-    </style>
+      .showcase-cta {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <div class="aurora"></div>
-    <div class="showcases">
-        <a href="./naples/index.html" class="showcase-card">
-            <img src="./thumbnails/naples.png" alt="Naples cityscape with Mount Vesuvius" class="showcase-image">
-            <div class="showcase-overlay">
-                <h2 class="showcase-title">Naples</h2>
-                <p class="showcase-subtitle">Ancient streets, vibrant culture & volcanic majesty</p>
-                <span class="showcase-cta">Explore Gallery →</span>
-            </div>
-        </a>
+  <a href="../index.html" class="back-link">&larr; Home</a>
 
-        <a href="./amalfi-coast/index.html" class="showcase-card">
-            <img src="./thumbnails/amalfi-coast.png" alt="Amalfi Coast colorful cliffside villages"
-                class="showcase-image">
-            <div class="showcase-overlay">
-                <h2 class="showcase-title">Amalfi Coast</h2>
-                <p class="showcase-subtitle">Dramatic cliffs, azure waters & coastal charm</p>
-                <span class="showcase-cta">Explore Gallery →</span>
-            </div>
-        </a>
-    </div>
+  <h1 class="page-title">Travel</h1>
 
+  <div class="showcases">
+    <a href="./naples/index.html" class="showcase-card">
+      <img src="./thumbnails/naples.png" alt="Naples cityscape with Mount Vesuvius" class="showcase-image">
+      <div class="showcase-overlay">
+        <h2 class="showcase-title">Naples</h2>
+        <p class="showcase-subtitle">Ancient streets, vibrant culture & volcanic majesty</p>
+        <span class="showcase-cta">Explore gallery &rarr;</span>
+      </div>
+    </a>
+
+    <a href="./amalfi-coast/index.html" class="showcase-card">
+      <img src="./thumbnails/amalfi-coast.png" alt="Amalfi Coast colorful cliffside villages" class="showcase-image">
+      <div class="showcase-overlay">
+        <h2 class="showcase-title">Amalfi Coast</h2>
+        <p class="showcase-subtitle">Dramatic cliffs, azure waters & coastal charm</p>
+        <span class="showcase-cta">Explore gallery &rarr;</span>
+      </div>
+    </a>
+  </div>
+
+  <footer class="footer">
+    &copy; <span id="year"></span> Sajith Edirisinghe
+  </footer>
+
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 </body>
 
 </html>
