@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SE: Blog</title>
+  <link rel="icon" type="image/png" href="../images/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f0f4ff;
+      --card-bg: #ffffff;
+      --text: #1a1a2e;
+      --text-soft: #4a4a68;
+      --accent: #6c5ce7;
+      --link: #6c5ce7;
+      --link-hover: #5a4bd6;
+      --chip-bg: #f3f0ff;
+      --chip-border: #e4dff7;
+      --chip-hover: #ece7ff;
+      --shadow: 0 12px 40px rgba(108, 92, 231, 0.06), 0 2px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f0f1a;
+        --card-bg: #1a1a2e;
+        --text: #f0f0f5;
+        --text-soft: #a0a0b8;
+        --accent: #a29bfe;
+        --link: #a29bfe;
+        --link-hover: #c4bfff;
+        --chip-bg: #252540;
+        --chip-border: #33335a;
+        --chip-hover: #2f2f55;
+        --shadow: 0 12px 40px rgba(0, 0, 0, 0.25), 0 2px 12px rgba(0, 0, 0, 0.15);
+      }
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Outfit", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .back-link {
+      position: fixed;
+      top: 1.5rem;
+      left: 1.5rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-soft);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      border-radius: 100px;
+      background: var(--chip-bg);
+      border: 1px solid var(--chip-border);
+      transition: color 0.2s, transform 0.2s;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .back-link:hover {
+      color: var(--text);
+      transform: translateX(-2px);
+    }
+
+    .page {
+      width: min(680px, 100%);
+      margin-top: 4rem;
+    }
+
+    .page-title {
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 3rem;
+      background: linear-gradient(115deg, #ff8a00, #ff3e55, #9145ff, #32c8ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .year-section {
+      margin-bottom: 2.5rem;
+    }
+
+    .year-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--chip-border);
+    }
+
+    .post-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .post-item a {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--chip-border);
+      text-decoration: none;
+      color: var(--text);
+      transition: color 0.2s;
+    }
+
+    .post-item:last-child a {
+      border-bottom: none;
+    }
+
+    .post-item a:hover {
+      color: var(--accent);
+    }
+
+    .post-title {
+      font-weight: 500;
+      font-size: 1.05rem;
+    }
+
+    .post-date {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--text-soft);
+      white-space: nowrap;
+    }
+
+    .footer {
+      margin-top: auto;
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 1.5rem;
+      }
+
+      .page {
+        margin-top: 3.5rem;
+      }
+
+      .back-link {
+        top: 1rem;
+        left: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="../index.html" class="back-link">&larr; Home</a>
+
+  <div class="page">
+    <h1 class="page-title">Blog</h1>
+
+    <section class="year-section">
+      <h2 class="year-label">2026</h2>
+      <ul class="post-list">
+        <li class="post-item">
+          <a href="./2026/hedonic_treadmill.html">
+            <span class="post-title">Hedonic Treadmill</span>
+            <span class="post-date">May 17, 2026</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <footer class="footer">
+    &copy; <span id="year"></span> Sajith Edirisinghe
+  </footer>
+
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SE: Hedonic Treadmill</title>
+  <link rel="icon" type="image/png" href="../../images/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f0f4ff;
+      --card-bg: #ffffff;
+      --text: #1a1a2e;
+      --text-soft: #4a4a68;
+      --accent: #6c5ce7;
+      --link: #6c5ce7;
+      --link-hover: #5a4bd6;
+      --chip-bg: #f3f0ff;
+      --chip-border: #e4dff7;
+      --shadow: 0 20px 60px rgba(108, 92, 231, 0.08), 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f0f1a;
+        --card-bg: #1a1a2e;
+        --text: #f0f0f5;
+        --text-soft: #a0a0b8;
+        --accent: #a29bfe;
+        --link: #a29bfe;
+        --link-hover: #c4bfff;
+        --chip-bg: #252540;
+        --chip-border: #33335a;
+        --shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 4px 20px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Outfit", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .back-link {
+      position: fixed;
+      top: 1.5rem;
+      left: 1.5rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-soft);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      border-radius: 100px;
+      background: var(--chip-bg);
+      border: 1px solid var(--chip-border);
+      transition: color 0.2s, transform 0.2s;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .back-link:hover {
+      color: var(--text);
+      transform: translateX(-2px);
+    }
+
+    article {
+      width: min(680px, 100%);
+      margin-top: 4rem;
+    }
+
+    .post-meta {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-title {
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 2rem;
+      background: linear-gradient(115deg, #ff8a00, #ff3e55, #9145ff, #32c8ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .post-body p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--text-soft);
+      margin-bottom: 1.5rem;
+    }
+
+    .post-body a {
+      color: var(--link);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .post-body a:hover {
+      color: var(--link-hover);
+      text-decoration: underline;
+    }
+
+    .footer {
+      margin-top: auto;
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 1.5rem;
+      }
+
+      article {
+        margin-top: 3.5rem;
+      }
+
+      .back-link {
+        top: 1rem;
+        left: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="../index.html" class="back-link">&larr; All posts</a>
+
+  <article>
+    <p class="post-meta">May 17, 2026</p>
+    <h1 class="post-title">Hedonic Treadmill</h1>
+    <div class="post-body">
+      <p>
+        Last October, I had a real epiphany using Claude Code at work. Suddenly, that initial inertia of starting
+        something — whether it's drafting a JIRA ticket, structuring a PR, or just brainstorming — completely vanished.
+      </p>
+      <p>
+        I started using Claude exclusively in plan mode, and within minutes, I'd have full clarity on exactly what I
+        wanted to do and how to do it. With the release of the Opus model, I felt 100% more productive because I stopped
+        spending time on menial tasks like manual coding or documentation. Instead, I shifted my focus to architecting,
+        problem solving, and reviewing code to make it perfect. I even wrote two PyCharm plugins to unify my workflow
+        (one to manage <a href="https://github.com/sajithdilshan/agent-cli-plugin" target="_blank" rel="noreferrer">Claude Code sessions as a first class citizen</a> and another to <a href="https://github.com/sajithdilshan/markitdown-plugin" target="_blank" rel="noreferrer">render Markdown</a> in a less eye
+        straining way) so I don't have to leave the IDE.
+      </p>
+      <p>
+        However, the novelty is starting to wear off. Six months ago, I would have truly admired how efficient and
+        productive the current version of myself has become, but now I just take it for granted. It has become the new
+        normal, and I'm finding myself bored and stuck in a vicious cycle of constantly needing to reach the next level.
+      </p>
+    </div>
+  </article>
+
+  <footer class="footer">
+    &copy; <span id="year"></span> Sajith Edirisinghe
+  </footer>
+
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+
+</html>
