@@ -93,12 +93,15 @@
     .page-title {
       font-size: clamp(2rem, 5vw, 2.75rem);
       font-weight: 700;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .page-subtitle {
+      font-size: 1rem;
+      color: var(--text-soft);
       margin-bottom: 3rem;
-      background: linear-gradient(115deg, #ff8a00, #ff3e55, #9145ff, #32c8ff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
     }
 
     .year-section {
@@ -120,37 +123,70 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 1rem;
     }
 
     .post-item a {
       display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid var(--chip-border);
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1rem;
+      border: 1px solid var(--chip-border);
+      border-radius: 16px;
+      background: var(--card-bg);
       text-decoration: none;
       color: var(--text);
-      transition: color 0.2s;
-    }
-
-    .post-item:last-child a {
-      border-bottom: none;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s, border-color 0.2s;
     }
 
     .post-item a:hover {
-      color: var(--accent);
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+
+    .post-thumb {
+      flex: 0 0 88px;
+      width: 88px;
+      height: 88px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .post-thumb svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .post-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      min-width: 0;
     }
 
     .post-title {
-      font-weight: 500;
-      font-size: 1.05rem;
+      font-weight: 600;
+      font-size: 1.15rem;
+      letter-spacing: -0.01em;
+    }
+
+    .post-excerpt {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text-soft);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .post-date {
-      font-size: 0.8rem;
-      font-weight: 400;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
       color: var(--text-soft);
       white-space: nowrap;
     }
@@ -184,14 +220,67 @@
 
   <div class="page">
     <h1 class="page-title">Blog</h1>
+    <p class="page-subtitle">Notes on software, systems, and the occasional tangent.</p>
 
     <section class="year-section">
       <h2 class="year-label">2026</h2>
       <ul class="post-list">
         <li class="post-item">
+          <a href="./2026/six_months_with_claude_code.html">
+            <span class="post-thumb">
+              <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flowing pipeline thumbnail">
+                <defs>
+                  <linearGradient id="t2" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#ff8a00" />
+                    <stop offset="0.4" stop-color="#ff3e55" />
+                    <stop offset="0.7" stop-color="#9145ff" />
+                    <stop offset="1" stop-color="#32c8ff" />
+                  </linearGradient>
+                </defs>
+                <rect width="100" height="100" fill="var(--chip-bg)" />
+                <g fill="none" stroke="url(#t2)" stroke-linecap="round">
+                  <path d="M8 66 C 30 44, 44 44, 56 50 S 82 62, 92 34" stroke-width="2.5" opacity="0.9" />
+                  <path d="M8 76 C 30 58, 44 58, 56 62 S 82 72, 92 48" stroke-width="2" opacity="0.5" />
+                </g>
+                <g fill="url(#t2)">
+                  <circle cx="30" cy="49" r="3" />
+                  <circle cx="56" cy="50" r="3.5" />
+                  <circle cx="82" cy="55" r="3" />
+                </g>
+              </svg>
+            </span>
+            <span class="post-info">
+              <span class="post-date">Jun 24, 2026 &middot; 5 min</span>
+              <span class="post-title">Six Months with Claude Code</span>
+              <span class="post-excerpt">How my developer workflow changed after six months of leaning on Claude Code for nearly every part of the job.</span>
+            </span>
+          </a>
+        </li>
+        <li class="post-item">
           <a href="./2026/hedonic_treadmill.html">
-            <span class="post-title">Hedonic Treadmill</span>
-            <span class="post-date">May 17, 2026</span>
+            <span class="post-thumb">
+              <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Looping arcs thumbnail">
+                <defs>
+                  <linearGradient id="t1" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#ff8a00" />
+                    <stop offset="0.4" stop-color="#ff3e55" />
+                    <stop offset="0.7" stop-color="#9145ff" />
+                    <stop offset="1" stop-color="#32c8ff" />
+                  </linearGradient>
+                </defs>
+                <rect width="100" height="100" fill="var(--chip-bg)" />
+                <g fill="none" stroke="url(#t1)" stroke-linecap="round">
+                  <ellipse cx="50" cy="50" rx="40" ry="14" stroke-width="1.5" opacity="0.4" />
+                  <ellipse cx="50" cy="50" rx="28" ry="10" stroke-width="2" opacity="0.7" />
+                  <ellipse cx="50" cy="50" rx="14" ry="5" stroke-width="2.5" />
+                </g>
+              </svg>
+            </span>
+            <span class="post-info">
+              <span class="post-date">May 17, 2026 &middot; 3 min</span>
+              <span class="post-title">Hedonic Treadmill</span>
+              <span class="post-excerpt">Six months after Claude Code changed how I work, the novelty is wearing off — and the new normal feels strangely flat.</span>
+            </span>
           </a>
         </li>
       </ul>

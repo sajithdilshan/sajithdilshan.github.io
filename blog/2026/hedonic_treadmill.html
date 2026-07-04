@@ -55,7 +55,20 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2rem;
+      padding: 0 0 2rem;
+    }
+
+    .hero {
+      width: 100%;
+      height: clamp(220px, 34vw, 380px);
+      display: block;
+      overflow: hidden;
+    }
+
+    .hero svg {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
 
     .back-link {
@@ -85,33 +98,33 @@
 
     article {
       width: min(680px, 100%);
-      margin-top: 4rem;
+      margin-top: 3rem;
+      padding: 0 2rem;
     }
 
     .post-meta {
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-soft);
       margin-bottom: 0.75rem;
     }
 
     .post-title {
-      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-size: clamp(2.1rem, 5vw, 3rem);
       font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-      margin-bottom: 2rem;
-      background: linear-gradient(115deg, #ff8a00, #ff3e55, #9145ff, #32c8ff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 2.25rem;
+      color: var(--text);
     }
 
     .post-body p {
-      font-size: 1.1rem;
-      line-height: 1.8;
-      color: var(--text-soft);
-      margin-bottom: 1.5rem;
+      font-size: 1.2rem;
+      line-height: 1.85;
+      color: var(--text);
+      margin-bottom: 1.6rem;
     }
 
     .post-body a {
@@ -134,12 +147,9 @@
     }
 
     @media (max-width: 600px) {
-      body {
-        padding: 1.5rem;
-      }
-
       article {
-        margin-top: 3.5rem;
+        margin-top: 2rem;
+        padding: 0 1.5rem;
       }
 
       .back-link {
@@ -153,8 +163,30 @@
 <body>
   <a href="../index.html" class="back-link">&larr; All posts</a>
 
+  <div class="hero">
+    <svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Abstract looping arcs">
+      <defs>
+        <linearGradient id="heroGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#ff8a00" />
+          <stop offset="0.4" stop-color="#ff3e55" />
+          <stop offset="0.7" stop-color="#9145ff" />
+          <stop offset="1" stop-color="#32c8ff" />
+        </linearGradient>
+      </defs>
+      <rect width="1200" height="400" fill="var(--card-bg)" />
+      <g fill="none" stroke="url(#heroGrad)" stroke-linecap="round" opacity="0.9">
+        <ellipse cx="600" cy="200" rx="520" ry="150" stroke-width="2" opacity="0.25" />
+        <ellipse cx="600" cy="200" rx="420" ry="120" stroke-width="2.5" opacity="0.4" />
+        <ellipse cx="600" cy="200" rx="320" ry="92" stroke-width="3" opacity="0.6" />
+        <ellipse cx="600" cy="200" rx="220" ry="64" stroke-width="3.5" opacity="0.8" />
+        <ellipse cx="600" cy="200" rx="120" ry="36" stroke-width="4" />
+      </g>
+      <circle cx="720" cy="164" r="7" fill="url(#heroGrad)" />
+    </svg>
+  </div>
+
   <article>
-    <p class="post-meta">May 17, 2026</p>
+    <p class="post-meta">May 17, 2026 &middot; 3 min read</p>
     <h1 class="post-title">Hedonic Treadmill</h1>
     <div class="post-body">
       <p>

@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SE: Six Months with Claude Code</title>
+  <link rel="icon" type="image/png" href="../../images/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f0f4ff;
+      --card-bg: #ffffff;
+      --text: #1a1a2e;
+      --text-soft: #4a4a68;
+      --accent: #6c5ce7;
+      --link: #6c5ce7;
+      --link-hover: #5a4bd6;
+      --chip-bg: #f3f0ff;
+      --chip-border: #e4dff7;
+      --shadow: 0 20px 60px rgba(108, 92, 231, 0.08), 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f0f1a;
+        --card-bg: #1a1a2e;
+        --text: #f0f0f5;
+        --text-soft: #a0a0b8;
+        --accent: #a29bfe;
+        --link: #a29bfe;
+        --link-hover: #c4bfff;
+        --chip-bg: #252540;
+        --chip-border: #33335a;
+        --shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 4px 20px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Outfit", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 0 2rem;
+    }
+
+    .hero {
+      width: 100%;
+      height: clamp(220px, 34vw, 380px);
+      display: block;
+      overflow: hidden;
+    }
+
+    .hero svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .back-link {
+      position: fixed;
+      top: 1.5rem;
+      left: 1.5rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-soft);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      border-radius: 100px;
+      background: var(--chip-bg);
+      border: 1px solid var(--chip-border);
+      transition: color 0.2s, transform 0.2s;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .back-link:hover {
+      color: var(--text);
+      transform: translateX(-2px);
+    }
+
+    article {
+      width: min(680px, 100%);
+      margin-top: 3rem;
+      padding: 0 2rem;
+    }
+
+    .post-meta {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-soft);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-title {
+      font-size: clamp(2.1rem, 5vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 2.25rem;
+      color: var(--text);
+    }
+
+    .post-body p {
+      font-size: 1.2rem;
+      line-height: 1.85;
+      color: var(--text);
+      margin-bottom: 1.6rem;
+    }
+
+    .post-body ol {
+      margin: 0 0 1.6rem 1.4rem;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .post-body li {
+      font-size: 1.2rem;
+      line-height: 1.75;
+      color: var(--text);
+      padding-left: 0.4rem;
+    }
+
+    .post-body strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .post-body a {
+      color: var(--link);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .post-body a:hover {
+      color: var(--link-hover);
+      text-decoration: underline;
+    }
+
+    .post-body code {
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+      font-size: 0.9em;
+      background: var(--chip-bg);
+      border: 1px solid var(--chip-border);
+      border-radius: 6px;
+      padding: 0.1em 0.4em;
+    }
+
+    .workflow {
+      position: relative;
+      margin: 0.5rem 0 1.6rem;
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      column-gap: 1.25rem;
+    }
+
+    /* the vertical rail sits under the icon column */
+    .workflow::before {
+      content: "";
+      position: absolute;
+      left: 35px;
+      top: 12px;
+      bottom: 12px;
+      width: 3px;
+      border-radius: 3px;
+      background: var(--chip-border);
+    }
+
+    .wf-progress {
+      position: absolute;
+      left: 35px;
+      top: 12px;
+      width: 3px;
+      height: 0;
+      border-radius: 3px;
+      background: linear-gradient(180deg, #ff8a00, #ff3e55, #9145ff, #32c8ff);
+      transition: height 0.25s linear;
+    }
+
+    .wf-step {
+      display: contents;
+    }
+
+    .wf-icon {
+      position: relative;
+      z-index: 1;
+      grid-column: 1;
+      width: 72px;
+      align-self: start;
+      display: grid;
+      place-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .wf-dot {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--chip-bg);
+      border: 2px solid var(--chip-border);
+      color: var(--text-soft);
+      transition: color 0.35s ease, background 0.35s ease, border-color 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .wf-step.is-active .wf-dot {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+      transform: scale(1.1);
+      box-shadow: 0 0 0 6px rgba(108, 92, 231, 0.15);
+    }
+
+    .wf-dot svg {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .wf-body {
+      grid-column: 2;
+      margin-bottom: 1rem;
+      align-self: start;
+      padding-top: 0.35rem;
+      opacity: 0.5;
+      transition: opacity 0.35s ease;
+    }
+
+    .wf-step.is-active .wf-body {
+      opacity: 1;
+    }
+
+    .wf-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+    }
+
+    .wf-desc {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--text-soft);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .wf-body { opacity: 1; }
+      .wf-dot { transition: none; }
+    }
+
+    @media (max-width: 600px) {
+      .workflow {
+        grid-template-columns: 52px 1fr;
+        column-gap: 0.9rem;
+      }
+      .workflow::before,
+      .wf-progress { left: 25px; }
+      .wf-icon { width: 52px; }
+      .wf-dot { width: 44px; height: 44px; }
+      .wf-dot svg { width: 20px; height: 20px; }
+    }
+
+    .post-figure {
+      margin: 0 0 1.6rem;
+    }
+
+    .post-figure img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 14px;
+      border: 1px solid var(--chip-border);
+      box-shadow: var(--shadow);
+      cursor: zoom-in;
+      transition: transform 0.2s;
+    }
+
+    .post-figure img:hover {
+      transform: scale(1.01);
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      background: rgba(10, 10, 20, 0.85);
+      backdrop-filter: blur(6px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+      cursor: zoom-out;
+    }
+
+    .lightbox.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .lightbox img {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 12px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+      transform: scale(0.96);
+      transition: transform 0.25s ease;
+    }
+
+    .lightbox.open img {
+      transform: scale(1);
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 1.25rem;
+      right: 1.5rem;
+      width: 42px;
+      height: 42px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-size: 1.5rem;
+      line-height: 1;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: background 0.2s;
+    }
+
+    .lightbox-close:hover {
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .footer {
+      margin-top: auto;
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    @media (max-width: 600px) {
+      article {
+        margin-top: 2rem;
+        padding: 0 1.5rem;
+      }
+
+      .back-link {
+        top: 1rem;
+        left: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="../index.html" class="back-link">&larr; All posts</a>
+
+  <div class="hero">
+    <svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A laptop screen showing PyCharm with a file tree, Python code editor, and the agent-cli-plugin chat panel">
+      <defs>
+        <linearGradient id="heroGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#c4bfff" />
+          <stop offset="0.5" stop-color="#a29bfe" />
+          <stop offset="1" stop-color="#6c5ce7" />
+        </linearGradient>
+      </defs>
+      <rect width="1200" height="400" fill="#141225" />
+
+      <!-- window top bar (full width) -->
+      <rect x="0" y="0" width="1200" height="34" fill="#1a1830" />
+      <g fill="#5a5680"><circle cx="24" cy="17" r="6"/><circle cx="46" cy="17" r="6"/><circle cx="68" cy="17" r="6"/></g>
+
+      <!-- left pane: file tree -->
+      <rect x="0" y="34" width="256" height="366" fill="#17152b" />
+      <g font-family="'Outfit', sans-serif">
+        <rect x="24" y="58" width="22" height="22" rx="5" fill="#28c840" />
+        <text x="28" y="74" font-size="13" font-weight="700" fill="#fff">PC</text>
+        <text x="56" y="74" font-size="15" font-weight="600" fill="#e8e6f5">PyCharm</text>
+        <g font-size="14" fill="#a09cc0">
+          <text x="28" y="116">&#128449; python.py</text>
+          <text x="28" y="148">&#128193; agent_lib</text>
+          <text x="28" y="180">&#128193; commands</text>
+          <text x="28" y="212">&#128193; plugins</text>
+          <text x="44" y="244" fill="#c4bfff">&#128193; skills</text>
+        </g>
+      </g>
+
+      <!-- center: code editor -->
+      <rect x="256" y="34" width="512" height="366" fill="#141225" />
+      <rect x="256" y="34" width="512" height="32" fill="#1c1935" />
+      <rect x="256" y="34" width="120" height="32" fill="#141225" />
+      <rect x="256" y="62" width="120" height="4" fill="#a29bfe" />
+      <text x="276" y="55" font-family="'Outfit', sans-serif" font-size="14" fill="#e8e6f5">python.py</text>
+      <text x="392" y="55" font-family="'Outfit', sans-serif" font-size="14" fill="#6a6690">utils.py</text>
+      <g font-family="ui-monospace, 'SF Mono', Menlo, monospace" font-size="14">
+        <g fill="#4d4a70" text-anchor="end">
+          <text x="300" y="110">1</text>
+          <text x="300" y="138">2</text>
+          <text x="300" y="166">3</text>
+          <text x="300" y="210">12</text>
+          <text x="300" y="238">13</text>
+          <text x="300" y="266">14</text>
+        </g>
+        <text x="320" y="110"><tspan fill="#a29bfe">def</tspan><tspan fill="#82e0c8"> test_function</tspan><tspan fill="#c9c6e0">():</tspan></text>
+        <text x="344" y="138"><tspan fill="#a29bfe">def</tspan><tspan fill="#82e0c8"> __init__</tspan><tspan fill="#c9c6e0">(self):</tspan></text>
+        <text x="344" y="166"><tspan fill="#c9c6e0">print(</tspan><tspan fill="#e0a55f">"Received hello"</tspan><tspan fill="#c9c6e0">)</tspan></text>
+        <text x="320" y="210"><tspan fill="#a29bfe">def</tspan><tspan fill="#82e0c8"> _close</tspan><tspan fill="#c9c6e0">(self):</tspan></text>
+        <text x="344" y="238"><tspan fill="#c9c6e0">out = </tspan><tspan fill="#e0a55f">"Writing code is neat"</tspan></text>
+        <text x="344" y="266"><tspan fill="#a29bfe">return</tspan><tspan fill="#c9c6e0"> _.close(cli)</tspan></text>
+      </g>
+
+      <!-- right: chat panel -->
+      <rect x="768" y="34" width="432" height="366" fill="#17152b" />
+      <rect x="768" y="34" width="432" height="34" fill="#1c1935" />
+      <text x="792" y="56" font-family="'Outfit', sans-serif" font-size="14" font-weight="600" fill="#e8e6f5">agent-cli-plugin</text>
+      <g fill="#5a5680"><circle cx="1150" cy="51" r="4"/><circle cx="1166" cy="51" r="4"/><circle cx="1178" cy="46" r="4" fill="none" stroke="#5a5680" stroke-width="1.5"/></g>
+
+      <g font-family="'Outfit', sans-serif">
+        <!-- bubble 1 -->
+        <circle cx="800" cy="108" r="14" fill="url(#heroGrad)" />
+        <text x="800" y="114" font-size="15" font-weight="700" fill="#141225" text-anchor="middle">A</text>
+        <rect x="824" y="92" width="352" height="54" rx="12" fill="#221f3d" />
+        <text x="842" y="114" font-size="13.5" font-weight="600" fill="#c4bfff">Claude Code</text>
+        <text x="842" y="134" font-size="13" fill="#a09cc0">Ready to implement your Jira tickets.</text>
+
+        <!-- bubble 2 -->
+        <circle cx="800" cy="184" r="14" fill="url(#heroGrad)" />
+        <text x="800" y="190" font-size="15" font-weight="700" fill="#141225" text-anchor="middle">A</text>
+        <rect x="824" y="168" width="352" height="54" rx="12" fill="#221f3d" />
+        <text x="842" y="190" font-size="13.5" font-weight="600" fill="#c4bfff">CLAUDE</text>
+        <text x="842" y="210" font-size="13" fill="#a09cc0">Reviewing the implementation plan now.</text>
+
+        <!-- input area -->
+        <rect x="792" y="332" width="384" height="46" rx="12" fill="#141225" stroke="#2a2745" stroke-width="1.5" />
+        <text x="810" y="360" font-size="13.5" fill="#6a6690">Type a message...</text>
+        <rect x="1146" y="345" width="20" height="20" rx="6" fill="url(#heroGrad)" />
+        <path d="M1151 355 l10 0 M1157 350 l5 5 -5 5" stroke="#141225" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+      </g>
+
+      <!-- glowing flow lines -->
+      <g filter="url(#glow)">
+        <path d="M340 160 C 300 160, 240 238, 130 238" fill="none" stroke="#28c840" stroke-width="3" stroke-linecap="round" opacity="0.9" />
+        <circle cx="340" cy="160" r="6" fill="#28c840" />
+        <circle cx="130" cy="238" r="6" fill="#28c840" />
+        <path d="M824 200 C 700 200, 620 250, 500 250" fill="none" stroke="#a29bfe" stroke-width="3" stroke-linecap="round" opacity="0.9" />
+        <circle cx="824" cy="200" r="6" fill="#a29bfe" />
+        <circle cx="500" cy="250" r="6" fill="#a29bfe" />
+      </g>
+      <defs>
+        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="2.5" result="b" />
+          <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+    </svg>
+  </div>
+
+  <article>
+    <p class="post-meta">Jun 24, 2026 &middot; 5 min read</p>
+    <h1 class="post-title">Six Months with Claude Code: How My Developer Workflow Changed</h1>
+    <div class="post-body">
+      <p>
+        Since October 2025, I have been using Claude Code extensively for work. In the beginning, there was definitely
+        a learning curve, and I had to adjust my workflow around it. I remember back when I worked as a Kotlin developer
+        at my previous company, I used GitHub Copilot primarily for autocomplete in IntelliJ IDEA. Later on, I used
+        ChatGPT to generate small code blocks and scripts, but most of the time, I was still coding manually by myself.
+      </p>
+      <p>
+        But with the release of Claude Opus, everything changed. The model was so impressive that, little by little, I
+        started using it for brainstorming, researching, breaking down initiatives into smaller tasks, creating and
+        refining Jira tickets, implementing and testing code, automatically opening PRs, and even handling code reviews.
+      </p>
+      <p>
+        However, one thing that really bothered me was the lack of a unified IDE where I could seamlessly use Anthropic
+        models. I tried Cursor, Zed, and Claude Code in the terminal, but as a Python developer, I found myself
+        constantly switching back and forth between PyCharm and other tools. Maybe it's because I'm so used to JetBrains
+        IDEs and compared to PyCharm, other editors felt quite inadequate.
+      </p>
+      <p>
+        Having previously developed plugins and even a whole custom distribution of IntelliJ IDEA at a former company, I
+        already knew how to write an IntelliJ plugin. So, I embarked on writing the
+        <a href="https://sajith.me/agent-cli-plugin/" target="_blank" rel="noreferrer"><code>agent-cli-plugin</code></a>.
+        With Claude Code acting as my "code monkey," it was incredibly fast to come up with an MVP in just a few hours.
+        I've added functionalities and extended it support other CLI agents over time, but now I use it as my primary
+        tool to interact with Claude Code inside PyCharm. My main goal was to get proper rendering, and in my opinion, it
+        looks way better than running Claude Code in PyCharm's default terminal.
+      </p>
+      <figure class="post-figure">
+        <img src="./images/plugin.png" alt="agent-cli-plugin rendering a Claude Code session inside PyCharm" loading="lazy" />
+      </figure>
+      <p>
+        When it comes to my day-to-day processes, I use Claude Code for almost every aspect of my work. Recently, I've
+        settled into the following workflow:
+      </p>
+
+      <div class="workflow">
+        <span class="wf-progress" aria-hidden="true"></span>
+
+        <div class="wf-step">
+          <span class="wf-icon"><span class="wf-dot">
+            <svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 2a6 6 0 0 0-4 10c.7.7 1 1.3 1 2h6c0-.7.3-1.3 1-2A6 6 0 0 0 12 2Z"/></svg>
+          </span></span>
+          <div class="wf-body">
+            <div class="wf-title">Brainstorm &amp; Research</div>
+            <p class="wf-desc">I gather all requirements for a given initiative and create a Markdown file with all the
+              information. This file ends up being a mix of LLM generated content and manual adjustments, serving as the
+              core knowledge base for the entire initiative.</p>
+          </div>
+        </div>
+
+        <div class="wf-step">
+          <span class="wf-icon"><span class="wf-dot">
+            <svg viewBox="0 0 24 24"><path d="M4 5h16M4 5v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V5M8 10h8M8 14h5"/></svg>
+          </span></span>
+          <div class="wf-body">
+            <div class="wf-title">Breakdown &amp; Ticket Creation</div>
+            <p class="wf-desc">I break down the initiative into smaller, implementation and testing ready chunks based on
+              the codebase, saving them as smaller Jira tickets in another Markdown file. I've built a custom Claude
+              skill to format these tickets exactly how I need them. After reviewing and refining them one by one via
+              Claude Code, I use another skill to publish them directly to Jira via the Atlassian MCP.</p>
+          </div>
+        </div>
+
+        <div class="wf-step">
+          <span class="wf-icon"><span class="wf-dot">
+            <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0M16 6a3 3 0 0 1 0 5M18 20a6 6 0 0 0-3-5.2"/></svg>
+          </span></span>
+          <div class="wf-body">
+            <div class="wf-title">Team Alignment</div>
+            <p class="wf-desc">I present the tickets to my team for further refinement and estimation before pulling them
+              into the sprint.</p>
+          </div>
+        </div>
+
+        <div class="wf-step">
+          <span class="wf-icon"><span class="wf-dot">
+            <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7M16 15l2 2 4-4"/></svg>
+          </span></span>
+          <div class="wf-body">
+            <div class="wf-title">Implementation Planning</div>
+            <p class="wf-desc">Once I pick up a ticket, a dedicated Claude Code skill fetches it and generates a detailed
+              implementation plan in a Markdown file. Because the Jira tickets are so well specified, the model gets the
+              plan right most of the time, and I rarely have to make any modifications.</p>
+          </div>
+        </div>
+
+        <div class="wf-step">
+          <span class="wf-icon"><span class="wf-dot">
+            <svg viewBox="0 0 24 24"><path d="M12 3 4 7v5c0 4 3 7 8 9 5-2 8-5 8-9V7l-8-4ZM9 12l2 2 4-4"/></svg>
+          </span></span>
+          <div class="wf-body">
+            <div class="wf-title">Sandboxed Execution</div>
+            <p class="wf-desc">I execute the plan in a sandboxed Claude Code session. I created a small
+              <a href="https://github.com/sajithdilshan/claude-crate" target="_blank" rel="noreferrer"><code>claude-crate</code></a>
+              Docker image containing bare minimal tools and Claude Code, mounting the project directory at container
+              startup. Inside this container, Claude Code runs with the <code>--dangerously-skip-permissions</code> flag.
+              I use my <code>agent-cli-plugin</code> within PyCharm to launch this sandbox. Because the host machine's
+              codebase is mounted, I can watch file changes happen in real time inside PyCharm. The best part is that
+              while it implements code, writes tests, and finishes the task, I can focus on something else without Claude
+              constantly interrupting me for permissions. Any destructive changes are isolated to the container, and
+              worst case scenario, I can just do a clean git checkout. Note that in this sandbox mode, no MCPs or extra
+              skills are configured. It's a purely bare bones Claude Code session.</p>
+          </div>
+        </div>
+
+        <div class="wf-step">
+          <span class="wf-icon"><span class="wf-dot">
+            <svg viewBox="0 0 24 24"><circle cx="7" cy="6" r="2.5"/><circle cx="7" cy="18" r="2.5"/><circle cx="17" cy="18" r="2.5"/><path d="M7 8.5v7M17 15.5c0-4-4-2.5-4-7"/></svg>
+          </span></span>
+          <div class="wf-body">
+            <div class="wf-title">Review &amp; PR</div>
+            <p class="wf-desc">Once the implementation is done, I use another skill to run a code review on the changes
+              made on the host machine. If tweaks are needed, I use the same session I used for the implementation plan
+              on the host. Finally, I spin up a PR using a skill powered by the GitHub MCP.</p>
+          </div>
+        </div>
+      </div>
+      <p>
+        Beyond this core workflow, I have various skills for testing, PR code reviews, debugging alerts, and more. With
+        all of this in place, I feel like my productivity has easily doubled. Recently, I even built an experimental
+        personal assistant agent named Jarvis. It has access to my Gmail, Slack, GitHub, Atlassian, and Google Calendar
+        to perform simple tasks based on pre configured permissions. I've also integrated long-term memory and an
+        interactive chat. Because it periodically polls data via these MCPs and updates its memory, I can truly use it as
+        an assistant to retrieve information, dig up context from past emails, or reference old Slack discussions. It's
+        still in the early stages, but the longer I use it, the more personalized and context aware it becomes.
+      </p>
+      <p>
+        Thinking back, it's mind blowing that all of this happened in less than a year. I already have a few more ideas
+        for agentic use cases to push my productivity even further, and I honestly wonder where we will all be by the end
+        of this year, or even by next summer.
+      </p>
+    </div>
+  </article>
+
+  <footer class="footer">
+    &copy; <span id="year"></span> Sajith Edirisinghe
+  </footer>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Expanded image">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+    <img id="lightboxImg" src="" alt="" />
+  </div>
+
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+  <script>
+    (function () {
+      var wf = document.querySelector(".workflow");
+      if (!wf) return;
+      var steps = Array.prototype.slice.call(wf.querySelectorAll(".wf-step"));
+      var progress = wf.querySelector(".wf-progress");
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce) {
+        steps.forEach(function (s) { s.classList.add("is-active"); });
+        if (progress) progress.style.height = "100%";
+        return;
+      }
+
+      function update() {
+        var mid = window.innerHeight / 2;
+        var active = -1;
+        var closest = Infinity;
+        steps.forEach(function (step, i) {
+          var r = step.querySelector(".wf-icon").getBoundingClientRect();
+          var c = r.top + r.height / 2;
+          var d = Math.abs(c - mid);
+          if (c - r.height / 2 < mid && d < closest) { closest = d; active = i; }
+        });
+        steps.forEach(function (step, i) {
+          step.classList.toggle("is-active", i <= active);
+        });
+        if (progress && active >= 0) {
+          var first = steps[0].querySelector(".wf-icon").getBoundingClientRect();
+          var cur = steps[active].querySelector(".wf-icon").getBoundingClientRect();
+          progress.style.height = Math.max(0, (cur.top + cur.height / 2) - (first.top + first.height / 2)) + "px";
+        } else if (progress) {
+          progress.style.height = "0px";
+        }
+      }
+
+      var ticking = false;
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(function () { update(); ticking = false; });
+      }
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll);
+      update();
+    })();
+  </script>
+  <script>
+    (function () {
+      var box = document.getElementById("lightbox");
+      var boxImg = document.getElementById("lightboxImg");
+      var closeBtn = document.getElementById("lightboxClose");
+      if (!box) return;
+
+      function open(src, alt) {
+        boxImg.src = src;
+        boxImg.alt = alt || "";
+        box.classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function close() {
+        box.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      document.querySelectorAll(".post-figure img").forEach(function (img) {
+        img.addEventListener("click", function () { open(img.src, img.alt); });
+      });
+      box.addEventListener("click", function (e) {
+        if (e.target !== boxImg) close();
+      });
+      closeBtn.addEventListener("click", close);
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && box.classList.contains("open")) close();
+      });
+    })();
+  </script>
+</body>
+
+</html>
