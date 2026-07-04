@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" href="../../images/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #f0f4ff;
@@ -47,7 +47,7 @@
     }
 
     body {
-      font-family: "Outfit", -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: "Lora", Georgia, serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
@@ -112,12 +112,16 @@
     }
 
     .post-title {
-      font-size: clamp(2.1rem, 5vw, 3rem);
+      font-family: "Dancing Script", cursive;
+      font-size: clamp(2.8rem, 6vw, 4.2rem);
       font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.15;
+      letter-spacing: 0;
+      line-height: 1.1;
       margin-bottom: 2.25rem;
-      color: var(--text);
+      background: linear-gradient(115deg, #ff8a00, #ff3e55, #9145ff, #32c8ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     .post-body p {
