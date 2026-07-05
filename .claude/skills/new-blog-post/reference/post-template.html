@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SE: {{TITLE}}</title>
+  <meta name="description" content="{{DESCRIPTION}}" />
+  <meta name="author" content="Sajith Edirisinghe" />
+  <link rel="canonical" href="{{CANONICAL_URL}}" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="{{TITLE}}" />
+  <meta property="og:description" content="{{DESCRIPTION}}" />
+  <meta property="og:image" content="{{OG_IMAGE_URL}}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="627" />
+  <meta property="og:url" content="{{CANONICAL_URL}}" />
+  <meta property="og:site_name" content="Sajith Edirisinghe" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{TITLE}}" />
+  <meta name="twitter:description" content="{{DESCRIPTION}}" />
+  <meta name="twitter:image" content="{{OG_IMAGE_URL}}" />
+
+  <link rel="icon" type="image/png" href="../../images/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f0f4ff;
+      --card-bg: #ffffff;
+      --text: #1a1a2e;
+      --text-soft: #4a4a68;
+      --accent: #6c5ce7;
+      --link: #6c5ce7;
+      --link-hover: #5a4bd6;
+      --chip-bg: #f3f0ff;
+      --chip-border: #e4dff7;
+      --shadow: 0 20px 60px rgba(108, 92, 231, 0.08), 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f0f1a;
+        --card-bg: #1a1a2e;
+        --text: #f0f0f5;
+        --text-soft: #a0a0b8;
+        --accent: #a29bfe;
+        --link: #a29bfe;
+        --link-hover: #c4bfff;
+        --chip-bg: #252540;
+        --chip-border: #33335a;
+        --shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 4px 20px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Lora", Georgia, serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 0 2rem;
+    }
+
+    .hero {
+      width: 100%;
+      height: clamp(220px, 34vw, 380px);
+      display: block;
+      overflow: hidden;
+    }
+
+    .hero svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .back-link {
+      position: fixed;
+      top: 1.5rem;
+      left: 1.5rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-soft);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      border-radius: 100px;
+      background: var(--chip-bg);
+      border: 1px solid var(--chip-border);
+      transition: color 0.2s, transform 0.2s;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .back-link:hover {
+      color: var(--text);
+      transform: translateX(-2px);
+    }
+
+    article {
+      width: min(680px, 100%);
+      margin-top: 3rem;
+      padding: 0 2rem;
+    }
+
+    .post-meta {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-soft);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-title {
+      font-family: "Dancing Script", cursive;
+      font-size: clamp(2.8rem, 6.5vw, 4rem);
+      font-weight: 700;
+      letter-spacing: 0;
+      line-height: 1.1;
+      margin-bottom: 2.25rem;
+      background: linear-gradient(115deg, #ff8a00, #ff3e55, #9145ff, #32c8ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .post-body p {
+      font-size: 1.2rem;
+      line-height: 1.85;
+      color: var(--text);
+      margin-bottom: 1.6rem;
+    }
+
+    .post-body a {
+      color: var(--link);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .post-body a:hover {
+      color: var(--link-hover);
+      text-decoration: underline;
+    }
+
+    .footer {
+      margin-top: auto;
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    @media (max-width: 600px) {
+      article {
+        margin-top: 2rem;
+        padding: 0 1.5rem;
+      }
+
+      .back-link {
+        top: 1rem;
+        left: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="../index.html" class="back-link">&larr; All posts</a>
+
+  <div class="hero">
+    {{HERO_SVG}}
+  </div>
+
+  <article>
+    <p class="post-meta">{{META}}</p>
+    <h1 class="post-title">{{TITLE}}</h1>
+    <div class="post-body">
+      {{BODY}}
+    </div>
+  </article>
+
+  <footer class="footer">
+    &copy; <span id="year"></span> Sajith Edirisinghe
+  </footer>
+
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+
+</html>

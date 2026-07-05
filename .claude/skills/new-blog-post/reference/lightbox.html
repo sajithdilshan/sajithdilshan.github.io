@@ -1,0 +1,39 @@
+<!-- If the post has images: place this markup right after the <footer>, and add
+     the script below before </body>. Pair with the .lightbox styles in
+     optional-styles.css. -->
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Expanded image">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+  <img id="lightboxImg" src="" alt="" />
+</div>
+
+<script>
+  (function () {
+    var box = document.getElementById("lightbox");
+    var boxImg = document.getElementById("lightboxImg");
+    var closeBtn = document.getElementById("lightboxClose");
+    if (!box) return;
+
+    function open(src, alt) {
+      boxImg.src = src;
+      boxImg.alt = alt || "";
+      box.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+    function close() {
+      box.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    document.querySelectorAll(".post-figure img").forEach(function (img) {
+      img.addEventListener("click", function () { open(img.src, img.alt); });
+    });
+    box.addEventListener("click", function (e) {
+      if (e.target !== boxImg) close();
+    });
+    closeBtn.addEventListener("click", close);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && box.classList.contains("open")) close();
+    });
+  })();
+</script>
