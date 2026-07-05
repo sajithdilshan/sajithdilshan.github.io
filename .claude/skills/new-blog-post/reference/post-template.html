@@ -4,24 +4,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SE: Hedonic Treadmill</title>
-  <meta name="description" content="When AI-powered productivity becomes the new normal, the thrill fades. A short reflection on the hedonic treadmill of constant improvement." />
+  <title>SE: {{TITLE}}</title>
+  <meta name="description" content="{{DESCRIPTION}}" />
   <meta name="author" content="Sajith Edirisinghe" />
-  <link rel="canonical" href="https://sajith.me/blog/2026/hedonic_treadmill.html" />
+  <link rel="canonical" href="{{CANONICAL_URL}}" />
 
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="Hedonic Treadmill" />
-  <meta property="og:description" content="When AI-powered productivity becomes the new normal, the thrill fades. A reflection on the hedonic treadmill of constant improvement." />
-  <meta property="og:image" content="https://sajith.me/blog/2026/images/og-hedonic.png" />
+  <meta property="og:title" content="{{TITLE}}" />
+  <meta property="og:description" content="{{DESCRIPTION}}" />
+  <meta property="og:image" content="{{OG_IMAGE_URL}}" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="627" />
-  <meta property="og:url" content="https://sajith.me/blog/2026/hedonic_treadmill.html" />
+  <meta property="og:url" content="{{CANONICAL_URL}}" />
   <meta property="og:site_name" content="Sajith Edirisinghe" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Hedonic Treadmill" />
-  <meta name="twitter:description" content="When AI-powered productivity becomes the new normal, the thrill fades. A reflection on the hedonic treadmill of constant improvement." />
-  <meta name="twitter:image" content="https://sajith.me/blog/2026/images/og-hedonic.png" />
+  <meta name="twitter:title" content="{{TITLE}}" />
+  <meta name="twitter:description" content="{{DESCRIPTION}}" />
+  <meta name="twitter:image" content="{{OG_IMAGE_URL}}" />
 
   <link rel="icon" type="image/png" href="../../images/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -186,48 +186,14 @@
   <a href="../index.html" class="back-link">&larr; All posts</a>
 
   <div class="hero">
-    <svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Abstract looping arcs">
-      <defs>
-        <linearGradient id="heroGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#ff8a00" />
-          <stop offset="0.4" stop-color="#ff3e55" />
-          <stop offset="0.7" stop-color="#9145ff" />
-          <stop offset="1" stop-color="#32c8ff" />
-        </linearGradient>
-      </defs>
-      <rect width="1200" height="400" fill="var(--card-bg)" />
-      <g fill="none" stroke="url(#heroGrad)" stroke-linecap="round" opacity="0.9">
-        <ellipse cx="600" cy="200" rx="520" ry="150" stroke-width="2" opacity="0.25" />
-        <ellipse cx="600" cy="200" rx="420" ry="120" stroke-width="2.5" opacity="0.4" />
-        <ellipse cx="600" cy="200" rx="320" ry="92" stroke-width="3" opacity="0.6" />
-        <ellipse cx="600" cy="200" rx="220" ry="64" stroke-width="3.5" opacity="0.8" />
-        <ellipse cx="600" cy="200" rx="120" ry="36" stroke-width="4" />
-      </g>
-      <circle cx="720" cy="164" r="7" fill="url(#heroGrad)" />
-    </svg>
+    {{HERO_SVG}}
   </div>
 
   <article>
-    <p class="post-meta">May 17, 2026 &middot; 3 min read</p>
-    <h1 class="post-title">Hedonic Treadmill</h1>
+    <p class="post-meta">{{META}}</p>
+    <h1 class="post-title">{{TITLE}}</h1>
     <div class="post-body">
-      <p>
-        Last October, I had a real epiphany using Claude Code at work. Suddenly, that initial inertia of starting
-        something — whether it's drafting a JIRA ticket, structuring a PR, or just brainstorming — completely vanished.
-      </p>
-      <p>
-        I started using Claude exclusively in plan mode, and within minutes, I'd have full clarity on exactly what I
-        wanted to do and how to do it. With the release of the Opus model, I felt 100% more productive because I stopped
-        spending time on menial tasks like manual coding or documentation. Instead, I shifted my focus to architecting,
-        problem solving, and reviewing code to make it perfect. I even wrote two PyCharm plugins to unify my workflow
-        (one to manage <a href="https://github.com/sajithdilshan/agent-cli-plugin" target="_blank" rel="noreferrer">Claude Code sessions as a first class citizen</a> and another to <a href="https://github.com/sajithdilshan/markitdown-plugin" target="_blank" rel="noreferrer">render Markdown</a> in a less eye
-        straining way) so I don't have to leave the IDE.
-      </p>
-      <p>
-        However, the novelty is starting to wear off. Six months ago, I would have truly admired how efficient and
-        productive the current version of myself has become, but now I just take it for granted. It has become the new
-        normal, and I'm finding myself bored and stuck in a vicious cycle of constantly needing to reach the next level.
-      </p>
+      {{BODY}}
     </div>
   </article>
 
