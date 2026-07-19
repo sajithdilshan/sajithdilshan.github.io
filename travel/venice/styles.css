@@ -1,0 +1,332 @@
+:root {
+  --bg: #f0f4ff;
+  --card-bg: #ffffff;
+  --text: #1a1a2e;
+  --text-soft: #4a4a68;
+  --accent: #6c5ce7;
+  --accent-2: #0984e3;
+  --accent-3: #00b894;
+  --chip-bg: #f3f0ff;
+  --chip-border: #e4dff7;
+  --chip-hover: #ece7ff;
+  --shadow: 0 8px 30px rgba(108, 92, 231, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --lightbox-bg: rgba(240, 244, 255, 0.96);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f0f1a;
+    --card-bg: #1a1a2e;
+    --text: #f0f0f5;
+    --text-soft: #a0a0b8;
+    --accent: #a29bfe;
+    --accent-2: #74b9ff;
+    --accent-3: #55efc4;
+    --chip-bg: #252540;
+    --chip-border: #33335a;
+    --chip-hover: #2f2f55;
+    --shadow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
+    --lightbox-bg: rgba(15, 15, 26, 0.96);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Outfit", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 4vw, 3rem);
+}
+
+/* ─── Header ─── */
+
+.back-link {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-soft);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
+  background: var(--chip-bg);
+  border: 1px solid var(--chip-border);
+  transition: color 0.2s, transform 0.2s;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+
+.back-link:hover {
+  color: var(--text);
+  transform: translateX(-2px);
+}
+
+/* ─── Hero ─── */
+
+.hero {
+  padding: 5rem 0 2rem;
+}
+
+.hero h1 {
+  font-family: "Dancing Script", cursive;
+  font-size: clamp(3rem, 7vw, 4.6rem);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  background: linear-gradient(115deg, #ff8a00, #ff3e55, #9145ff, #32c8ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.lead {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-soft);
+}
+
+.hero__meta {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.hero__meta span {
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  border: 1px solid var(--chip-border);
+  background: var(--chip-bg);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-soft);
+}
+
+/* ─── Gallery ─── */
+
+.shell {
+  padding: 1rem 0 3rem;
+}
+
+.gallery-panel {
+  padding: 0;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-auto-rows: 180px;
+  grid-auto-flow: dense;
+  gap: 0.5rem;
+}
+
+.gallery-item {
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+  border-radius: 12px;
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.gallery-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gallery-item--wide {
+  grid-column: span 2;
+}
+
+.gallery-item--tall {
+  grid-row: span 2;
+}
+
+.gallery-item--large {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-item:hover {
+  transform: translateY(-2px);
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+/* ─── Lightbox ─── */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: var(--lightbox-bg);
+  backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(1rem, 4vw, 2.5rem);
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox--open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox img {
+  max-width: min(90vw, 900px);
+  max-height: 75vh;
+  border-radius: 16px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+.lightbox__caption {
+  color: var(--text-soft);
+  margin: 0;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: clamp(1rem, 3vw, 2rem);
+  right: clamp(1rem, 3vw, 2rem);
+  border: none;
+  background: var(--chip-bg);
+  border: 1px solid var(--chip-border);
+  color: var(--text);
+  border-radius: 100px;
+  width: 40px;
+  height: 40px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.lightbox__close:hover {
+  background: var(--chip-hover);
+}
+
+/* ─── Footer ─── */
+
+.footer {
+  padding: 2rem 0 3rem;
+  text-align: center;
+  color: var(--text-soft);
+  font-size: 0.8rem;
+}
+
+/* ─── Responsive ─── */
+
+@media (max-width: 1024px) {
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-auto-rows: 160px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 4.5rem 0 1.5rem;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 150px;
+    gap: 0.4rem;
+  }
+
+  .gallery-item--wide,
+  .gallery-item--large {
+    grid-column: span 2;
+  }
+
+  .gallery-item--large,
+  .gallery-item--tall {
+    grid-row: span 2;
+  }
+
+  .back-link {
+    top: 1rem;
+    left: 1rem;
+  }
+}
+
+/* ─── Video tile ─── */
+
+.gallery-item--video .play-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  padding-left: 4px;
+  pointer-events: none;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s;
+}
+
+.gallery-item--video:hover .play-badge {
+  transform: translate(-50%, -50%) scale(1.1);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.lightbox video {
+  max-width: min(90vw, 900px);
+  max-height: 75vh;
+  border-radius: 16px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+  background: #000;
+  margin-bottom: 1rem;
+}
