@@ -4,449 +4,69 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SE: Six Months with Claude Code</title>
-  <meta name="description" content="How six months of Claude Code reshaped my dev workflow: brainstorming, Jira tickets, sandboxed execution, code review, and PRs — mostly agentic." />
-  <meta name="author" content="Sajith Edirisinghe" />
-  <link rel="canonical" href="https://sajith.me/blog/2026/six_months_with_claude_code.html" />
-
-  <meta property="og:type" content="article" />
-  <meta property="og:title" content="Six Months with Claude Code" />
-  <meta property="og:description" content="How six months of Claude Code reshaped my developer workflow — from Jira tickets to sandboxed execution, review, and PRs." />
-  <meta property="og:image" content="https://sajith.me/blog/2026/images/og-sixmonths.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="627" />
-  <meta property="og:url" content="https://sajith.me/blog/2026/six_months_with_claude_code.html" />
-  <meta property="og:site_name" content="Sajith Edirisinghe" />
-
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Six Months with Claude Code" />
-  <meta name="twitter:description" content="How six months of Claude Code reshaped my developer workflow — from Jira tickets to sandboxed execution, review, and PRs." />
-  <meta name="twitter:image" content="https://sajith.me/blog/2026/images/og-sixmonths.png" />
-
+  <title>Six Months with Claude Code — Sajith Edirisinghe</title>
+  <meta name="description" content="How my developer workflow changed after six months of leaning on Claude Code for nearly every part of the job." />
+  <meta name="color-scheme" content="light dark" />
   <link rel="icon" type="image/png" href="../../images/favicon.png" />
+  <script src="../../assets/js/head.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg: #f0f4ff;
-      --card-bg: #ffffff;
-      --text: #1a1a2e;
-      --text-soft: #4a4a68;
-      --accent: #6c5ce7;
-      --link: #6c5ce7;
-      --link-hover: #5a4bd6;
-      --chip-bg: #f3f0ff;
-      --chip-border: #e4dff7;
-      --shadow: 0 20px 60px rgba(108, 92, 231, 0.08), 0 4px 20px rgba(0, 0, 0, 0.04);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0f0f1a;
-        --card-bg: #1a1a2e;
-        --text: #f0f0f5;
-        --text-soft: #a0a0b8;
-        --accent: #a29bfe;
-        --link: #a29bfe;
-        --link-hover: #c4bfff;
-        --chip-bg: #252540;
-        --chip-border: #33335a;
-        --shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 4px 20px rgba(0, 0, 0, 0.2);
-      }
-    }
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: "Lora", Georgia, serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 0 0 2rem;
-    }
-
-    .hero {
-      width: 100%;
-      height: clamp(220px, 34vw, 380px);
-      display: block;
-      overflow: hidden;
-    }
-
-    .hero svg {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    .back-link {
-      position: fixed;
-      top: 1.5rem;
-      left: 1.5rem;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--text-soft);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.5rem 1rem;
-      border-radius: 100px;
-      background: var(--chip-bg);
-      border: 1px solid var(--chip-border);
-      transition: color 0.2s, transform 0.2s;
-      z-index: 100;
-      backdrop-filter: blur(10px);
-    }
-
-    .back-link:hover {
-      color: var(--text);
-      transform: translateX(-2px);
-    }
-
-    article {
-      width: min(680px, 100%);
-      margin-top: 3rem;
-      padding: 0 2rem;
-    }
-
-    .post-meta {
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--text-soft);
-      margin-bottom: 0.75rem;
-    }
-
-    .post-title {
-      font-family: "Dancing Script", cursive;
-      font-size: clamp(2.8rem, 6vw, 4.2rem);
-      font-weight: 700;
-      letter-spacing: 0;
-      line-height: 1.1;
-      margin-bottom: 2.25rem;
-      background: linear-gradient(115deg, #ff8a00, #ff3e55, #9145ff, #32c8ff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .post-body p {
-      font-size: 1.2rem;
-      line-height: 1.85;
-      color: var(--text);
-      margin-bottom: 1.6rem;
-    }
-
-    .post-body ol {
-      margin: 0 0 1.6rem 1.4rem;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .post-body li {
-      font-size: 1.2rem;
-      line-height: 1.75;
-      color: var(--text);
-      padding-left: 0.4rem;
-    }
-
-    .post-body strong {
-      color: var(--text);
-      font-weight: 600;
-    }
-
-    .post-body a {
-      color: var(--link);
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-
-    .post-body a:hover {
-      color: var(--link-hover);
-      text-decoration: underline;
-    }
-
-    .post-body code {
-      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
-      font-size: 0.9em;
-      background: var(--chip-bg);
-      border: 1px solid var(--chip-border);
-      border-radius: 6px;
-      padding: 0.1em 0.4em;
-    }
-
-    .workflow {
-      position: relative;
-      margin: 0.5rem 0 1.6rem;
-      display: grid;
-      grid-template-columns: 72px 1fr;
-      column-gap: 1.25rem;
-    }
-
-    /* the vertical rail sits under the icon column */
-    .workflow::before {
-      content: "";
-      position: absolute;
-      left: 35px;
-      top: 12px;
-      bottom: 12px;
-      width: 3px;
-      border-radius: 3px;
-      background: var(--chip-border);
-    }
-
-    .wf-progress {
-      position: absolute;
-      left: 35px;
-      top: 12px;
-      width: 3px;
-      height: 0;
-      border-radius: 3px;
-      background: linear-gradient(180deg, #ff8a00, #ff3e55, #9145ff, #32c8ff);
-      transition: height 0.25s linear;
-    }
-
-    .wf-step {
-      display: contents;
-    }
-
-    .wf-icon {
-      position: relative;
-      z-index: 1;
-      grid-column: 1;
-      width: 72px;
-      align-self: start;
-      display: grid;
-      place-items: center;
-      margin-bottom: 1rem;
-    }
-
-    .wf-dot {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: var(--chip-bg);
-      border: 2px solid var(--chip-border);
-      color: var(--text-soft);
-      transition: color 0.35s ease, background 0.35s ease, border-color 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
-    }
-
-    .wf-step.is-active .wf-dot {
-      border-color: var(--accent);
-      background: var(--accent);
-      color: #fff;
-      transform: scale(1.1);
-      box-shadow: 0 0 0 6px rgba(108, 92, 231, 0.15);
-    }
-
-    .wf-dot svg {
-      width: 24px;
-      height: 24px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .wf-body {
-      grid-column: 2;
-      margin-bottom: 1rem;
-      align-self: start;
-      padding-top: 0.35rem;
-      opacity: 0.5;
-      transition: opacity 0.35s ease;
-    }
-
-    .wf-step.is-active .wf-body {
-      opacity: 1;
-    }
-
-    .wf-title {
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 0.35rem;
-    }
-
-    .wf-desc {
-      font-size: 1.05rem;
-      line-height: 1.7;
-      color: var(--text-soft);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .wf-body { opacity: 1; }
-      .wf-dot { transition: none; }
-    }
-
-    @media (max-width: 600px) {
-      .workflow {
-        grid-template-columns: 52px 1fr;
-        column-gap: 0.9rem;
-      }
-      .workflow::before,
-      .wf-progress { left: 25px; }
-      .wf-icon { width: 52px; }
-      .wf-dot { width: 44px; height: 44px; }
-      .wf-dot svg { width: 20px; height: 20px; }
-    }
-
-    .post-figure {
-      margin: 0 0 1.6rem;
-    }
-
-    .post-figure img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 14px;
-      border: 1px solid var(--chip-border);
-      box-shadow: var(--shadow);
-      cursor: zoom-in;
-      transition: transform 0.2s;
-    }
-
-    .post-figure img:hover {
-      transform: scale(1.01);
-    }
-
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      background: rgba(10, 10, 20, 0.85);
-      backdrop-filter: blur(6px);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.25s ease, visibility 0.25s ease;
-      cursor: zoom-out;
-    }
-
-    .lightbox.open {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .lightbox img {
-      max-width: 100%;
-      max-height: 100%;
-      border-radius: 12px;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
-      transform: scale(0.96);
-      transition: transform 0.25s ease;
-    }
-
-    .lightbox.open img {
-      transform: scale(1);
-    }
-
-    .lightbox-close {
-      position: fixed;
-      top: 1.25rem;
-      right: 1.5rem;
-      width: 42px;
-      height: 42px;
-      border: none;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.15);
-      color: #fff;
-      font-size: 1.5rem;
-      line-height: 1;
-      cursor: pointer;
-      display: grid;
-      place-items: center;
-      transition: background 0.2s;
-    }
-
-    .lightbox-close:hover {
-      background: rgba(255, 255, 255, 0.28);
-    }
-
-    .footer {
-      margin-top: auto;
-      padding: 2rem;
-      font-size: 0.8rem;
-      color: var(--text-soft);
-    }
-
-    @media (max-width: 600px) {
-      article {
-        margin-top: 2rem;
-        padding: 0 1.5rem;
-      }
-
-      .back-link {
-        top: 1rem;
-        left: 1rem;
-      }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/css/main.css" />
+  <script src="../../assets/js/site.js" defer></script>
+  <script src="../../assets/js/gallery.js" defer></script>
+  <script src="../../assets/js/workflow.js" defer></script>
 </head>
 
 <body>
-  <a href="../index.html" class="back-link">&larr; All posts</a>
+  <div class="col">
+    <div class="bar up">
+      <a class="back-link" href="../../index.html"><span class="arrow">&larr;</span> Sajith Edirisinghe</a>
+      <button class="theme" type="button" aria-label="Switch theme">
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 1 1 9.5 3.5a7 7 0 0 0 11 11Z" /></svg>
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2" /><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6" /></svg>
+      </button>
+    </div>
 
-  <div class="hero">
+    <div class="post-hero up d1">
     <svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A laptop screen showing PyCharm with a file tree, Python code editor, and the agent-cli-plugin chat panel">
       <defs>
         <linearGradient id="heroGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#c4bfff" />
-          <stop offset="0.5" stop-color="#a29bfe" />
+          <stop offset="0" stop-color="#c3d6ee" />
+          <stop offset="0.5" stop-color="#9bb8e0" />
           <stop offset="1" stop-color="#6c5ce7" />
         </linearGradient>
       </defs>
-      <rect width="1200" height="400" fill="#141225" />
+      <rect width="1200" height="400" fill="#0f141e" />
 
       <!-- window top bar (full width) -->
-      <rect x="0" y="0" width="1200" height="34" fill="#1a1830" />
-      <g fill="#5a5680"><circle cx="24" cy="17" r="6"/><circle cx="46" cy="17" r="6"/><circle cx="68" cy="17" r="6"/></g>
+      <rect x="0" y="0" width="1200" height="34" fill="#151c28" />
+      <g fill="#5a6474"><circle cx="24" cy="17" r="6"/><circle cx="46" cy="17" r="6"/><circle cx="68" cy="17" r="6"/></g>
 
       <!-- left pane: file tree -->
-      <rect x="0" y="34" width="256" height="366" fill="#17152b" />
-      <g font-family="'Outfit', sans-serif">
-        <rect x="24" y="58" width="22" height="22" rx="5" fill="#28c840" />
+      <rect x="0" y="34" width="256" height="366" fill="#131a25" />
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+        <rect x="24" y="58" width="22" height="22" rx="5" fill="#4fb07a" />
         <text x="28" y="74" font-size="13" font-weight="700" fill="#fff">PC</text>
-        <text x="56" y="74" font-size="15" font-weight="600" fill="#e8e6f5">PyCharm</text>
-        <g font-size="14" fill="#a09cc0">
+        <text x="56" y="74" font-size="15" font-weight="600" fill="#e7eaf0">PyCharm</text>
+        <g font-size="14" fill="#98a0ae">
           <text x="28" y="116">&#128449; python.py</text>
           <text x="28" y="148">&#128193; agent_lib</text>
           <text x="28" y="180">&#128193; commands</text>
           <text x="28" y="212">&#128193; plugins</text>
-          <text x="44" y="244" fill="#c4bfff">&#128193; skills</text>
+          <text x="44" y="244" fill="#c3d6ee">&#128193; skills</text>
         </g>
       </g>
 
       <!-- center: code editor -->
-      <rect x="256" y="34" width="512" height="366" fill="#141225" />
-      <rect x="256" y="34" width="512" height="32" fill="#1c1935" />
-      <rect x="256" y="34" width="120" height="32" fill="#141225" />
-      <rect x="256" y="62" width="120" height="4" fill="#a29bfe" />
-      <text x="276" y="55" font-family="'Outfit', sans-serif" font-size="14" fill="#e8e6f5">python.py</text>
-      <text x="392" y="55" font-family="'Outfit', sans-serif" font-size="14" fill="#6a6690">utils.py</text>
+      <rect x="256" y="34" width="512" height="366" fill="#0f141e" />
+      <rect x="256" y="34" width="512" height="32" fill="#18202d" />
+      <rect x="256" y="34" width="120" height="32" fill="#0f141e" />
+      <rect x="256" y="62" width="120" height="4" fill="#9bb8e0" />
+      <text x="276" y="55" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#e7eaf0">python.py</text>
+      <text x="392" y="55" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#6d7684">utils.py</text>
       <g font-family="ui-monospace, 'SF Mono', Menlo, monospace" font-size="14">
-        <g fill="#4d4a70" text-anchor="end">
+        <g fill="#4b5563" text-anchor="end">
           <text x="300" y="110">1</text>
           <text x="300" y="138">2</text>
           <text x="300" y="166">3</text>
@@ -454,50 +74,50 @@
           <text x="300" y="238">13</text>
           <text x="300" y="266">14</text>
         </g>
-        <text x="320" y="110"><tspan fill="#a29bfe">def</tspan><tspan fill="#82e0c8"> test_function</tspan><tspan fill="#c9c6e0">():</tspan></text>
-        <text x="344" y="138"><tspan fill="#a29bfe">def</tspan><tspan fill="#82e0c8"> __init__</tspan><tspan fill="#c9c6e0">(self):</tspan></text>
-        <text x="344" y="166"><tspan fill="#c9c6e0">print(</tspan><tspan fill="#e0a55f">"Received hello"</tspan><tspan fill="#c9c6e0">)</tspan></text>
-        <text x="320" y="210"><tspan fill="#a29bfe">def</tspan><tspan fill="#82e0c8"> _close</tspan><tspan fill="#c9c6e0">(self):</tspan></text>
-        <text x="344" y="238"><tspan fill="#c9c6e0">out = </tspan><tspan fill="#e0a55f">"Writing code is neat"</tspan></text>
-        <text x="344" y="266"><tspan fill="#a29bfe">return</tspan><tspan fill="#c9c6e0"> _.close(cli)</tspan></text>
+        <text x="320" y="110"><tspan fill="#9bb8e0">def</tspan><tspan fill="#7fcfc0"> test_function</tspan><tspan fill="#c7cfda">():</tspan></text>
+        <text x="344" y="138"><tspan fill="#9bb8e0">def</tspan><tspan fill="#7fcfc0"> __init__</tspan><tspan fill="#c7cfda">(self):</tspan></text>
+        <text x="344" y="166"><tspan fill="#c7cfda">print(</tspan><tspan fill="#d9a66a">"Received hello"</tspan><tspan fill="#c7cfda">)</tspan></text>
+        <text x="320" y="210"><tspan fill="#9bb8e0">def</tspan><tspan fill="#7fcfc0"> _close</tspan><tspan fill="#c7cfda">(self):</tspan></text>
+        <text x="344" y="238"><tspan fill="#c7cfda">out = </tspan><tspan fill="#d9a66a">"Writing code is neat"</tspan></text>
+        <text x="344" y="266"><tspan fill="#9bb8e0">return</tspan><tspan fill="#c7cfda"> _.close(cli)</tspan></text>
       </g>
 
       <!-- right: chat panel -->
-      <rect x="768" y="34" width="432" height="366" fill="#17152b" />
-      <rect x="768" y="34" width="432" height="34" fill="#1c1935" />
-      <text x="792" y="56" font-family="'Outfit', sans-serif" font-size="14" font-weight="600" fill="#e8e6f5">agent-cli-plugin</text>
-      <g fill="#5a5680"><circle cx="1150" cy="51" r="4"/><circle cx="1166" cy="51" r="4"/><circle cx="1178" cy="46" r="4" fill="none" stroke="#5a5680" stroke-width="1.5"/></g>
+      <rect x="768" y="34" width="432" height="366" fill="#131a25" />
+      <rect x="768" y="34" width="432" height="34" fill="#18202d" />
+      <text x="792" y="56" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="600" fill="#e7eaf0">agent-cli-plugin</text>
+      <g fill="#5a6474"><circle cx="1150" cy="51" r="4"/><circle cx="1166" cy="51" r="4"/><circle cx="1178" cy="46" r="4" fill="none" stroke="#5a6474" stroke-width="1.5"/></g>
 
-      <g font-family="'Outfit', sans-serif">
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
         <!-- bubble 1 -->
         <circle cx="800" cy="108" r="14" fill="url(#heroGrad)" />
-        <text x="800" y="114" font-size="15" font-weight="700" fill="#141225" text-anchor="middle">A</text>
-        <rect x="824" y="92" width="352" height="54" rx="12" fill="#221f3d" />
-        <text x="842" y="114" font-size="13.5" font-weight="600" fill="#c4bfff">Claude Code</text>
-        <text x="842" y="134" font-size="13" fill="#a09cc0">Ready to implement your Jira tickets.</text>
+        <text x="800" y="114" font-size="15" font-weight="700" fill="#0f141e" text-anchor="middle">A</text>
+        <rect x="824" y="92" width="352" height="54" rx="12" fill="#1e2530" />
+        <text x="842" y="114" font-size="13.5" font-weight="600" fill="#c3d6ee">Claude Code</text>
+        <text x="842" y="134" font-size="13" fill="#98a0ae">Ready to implement your Jira tickets.</text>
 
         <!-- bubble 2 -->
         <circle cx="800" cy="184" r="14" fill="url(#heroGrad)" />
-        <text x="800" y="190" font-size="15" font-weight="700" fill="#141225" text-anchor="middle">A</text>
-        <rect x="824" y="168" width="352" height="54" rx="12" fill="#221f3d" />
-        <text x="842" y="190" font-size="13.5" font-weight="600" fill="#c4bfff">CLAUDE</text>
-        <text x="842" y="210" font-size="13" fill="#a09cc0">Reviewing the implementation plan now.</text>
+        <text x="800" y="190" font-size="15" font-weight="700" fill="#0f141e" text-anchor="middle">A</text>
+        <rect x="824" y="168" width="352" height="54" rx="12" fill="#1e2530" />
+        <text x="842" y="190" font-size="13.5" font-weight="600" fill="#c3d6ee">CLAUDE</text>
+        <text x="842" y="210" font-size="13" fill="#98a0ae">Reviewing the implementation plan now.</text>
 
         <!-- input area -->
-        <rect x="792" y="332" width="384" height="46" rx="12" fill="#141225" stroke="#2a2745" stroke-width="1.5" />
-        <text x="810" y="360" font-size="13.5" fill="#6a6690">Type a message...</text>
+        <rect x="792" y="332" width="384" height="46" rx="12" fill="#0f141e" stroke="#263040" stroke-width="1.5" />
+        <text x="810" y="360" font-size="13.5" fill="#6d7684">Type a message...</text>
         <rect x="1146" y="345" width="20" height="20" rx="6" fill="url(#heroGrad)" />
-        <path d="M1151 355 l10 0 M1157 350 l5 5 -5 5" stroke="#141225" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M1151 355 l10 0 M1157 350 l5 5 -5 5" stroke="#0f141e" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
       </g>
 
       <!-- glowing flow lines -->
       <g filter="url(#glow)">
-        <path d="M340 160 C 300 160, 240 238, 130 238" fill="none" stroke="#28c840" stroke-width="3" stroke-linecap="round" opacity="0.9" />
-        <circle cx="340" cy="160" r="6" fill="#28c840" />
-        <circle cx="130" cy="238" r="6" fill="#28c840" />
-        <path d="M824 200 C 700 200, 620 250, 500 250" fill="none" stroke="#a29bfe" stroke-width="3" stroke-linecap="round" opacity="0.9" />
-        <circle cx="824" cy="200" r="6" fill="#a29bfe" />
-        <circle cx="500" cy="250" r="6" fill="#a29bfe" />
+        <path d="M340 160 C 300 160, 240 238, 130 238" fill="none" stroke="#4fb07a" stroke-width="3" stroke-linecap="round" opacity="0.9" />
+        <circle cx="340" cy="160" r="6" fill="#4fb07a" />
+        <circle cx="130" cy="238" r="6" fill="#4fb07a" />
+        <path d="M824 200 C 700 200, 620 250, 500 250" fill="none" stroke="#9bb8e0" stroke-width="3" stroke-linecap="round" opacity="0.9" />
+        <circle cx="824" cy="200" r="6" fill="#9bb8e0" />
+        <circle cx="500" cy="250" r="6" fill="#9bb8e0" />
       </g>
       <defs>
         <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
@@ -508,7 +128,7 @@
     </svg>
   </div>
 
-  <article>
+  <article class="up d2">
     <p class="post-meta">Jun 24, 2026 &middot; 5 min read</p>
     <h1 class="post-title">Six Months with Claude Code: How My Developer Workflow Changed</h1>
     <div class="post-body">
@@ -645,92 +265,23 @@
     </div>
   </article>
 
-  <footer class="footer">
-    &copy; <span id="year"></span> Sajith Edirisinghe
-  </footer>
+  <nav class="post-nav up">
+      <a href="./hedonic_treadmill.html">
+        <small>Older post</small>
+        <span class="title">Hedonic Treadmill</span>
+      </a>
+    </nav>
 
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Expanded image">
-    <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
-    <img id="lightboxImg" src="" alt="" />
+    <footer class="footer">
+      &copy; <span id="year"></span> Sajith Edirisinghe
+    </footer>
   </div>
 
-  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
-  <script>
-    (function () {
-      var wf = document.querySelector(".workflow");
-      if (!wf) return;
-      var steps = Array.prototype.slice.call(wf.querySelectorAll(".wf-step"));
-      var progress = wf.querySelector(".wf-progress");
-      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reduce) {
-        steps.forEach(function (s) { s.classList.add("is-active"); });
-        if (progress) progress.style.height = "100%";
-        return;
-      }
-
-      function update() {
-        var mid = window.innerHeight / 2;
-        var active = -1;
-        var closest = Infinity;
-        steps.forEach(function (step, i) {
-          var r = step.querySelector(".wf-icon").getBoundingClientRect();
-          var c = r.top + r.height / 2;
-          var d = Math.abs(c - mid);
-          if (c - r.height / 2 < mid && d < closest) { closest = d; active = i; }
-        });
-        steps.forEach(function (step, i) {
-          step.classList.toggle("is-active", i <= active);
-        });
-        if (progress && active >= 0) {
-          var first = steps[0].querySelector(".wf-icon").getBoundingClientRect();
-          var cur = steps[active].querySelector(".wf-icon").getBoundingClientRect();
-          progress.style.height = Math.max(0, (cur.top + cur.height / 2) - (first.top + first.height / 2)) + "px";
-        } else if (progress) {
-          progress.style.height = "0px";
-        }
-      }
-
-      var ticking = false;
-      function onScroll() {
-        if (ticking) return;
-        ticking = true;
-        window.requestAnimationFrame(function () { update(); ticking = false; });
-      }
-      window.addEventListener("scroll", onScroll, { passive: true });
-      window.addEventListener("resize", onScroll);
-      update();
-    })();
-  </script>
-  <script>
-    (function () {
-      var box = document.getElementById("lightbox");
-      var boxImg = document.getElementById("lightboxImg");
-      var closeBtn = document.getElementById("lightboxClose");
-      if (!box) return;
-
-      function open(src, alt) {
-        boxImg.src = src;
-        boxImg.alt = alt || "";
-        box.classList.add("open");
-        document.body.style.overflow = "hidden";
-      }
-      function close() {
-        box.classList.remove("open");
-        document.body.style.overflow = "";
-      }
-
-      document.querySelectorAll(".post-figure img").forEach(function (img) {
-        img.addEventListener("click", function () { open(img.src, img.alt); });
-      });
-      box.addEventListener("click", function (e) {
-        if (e.target !== boxImg) close();
-      });
-      closeBtn.addEventListener("click", close);
-      document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape" && box.classList.contains("open")) close();
-      });
-    })();
-  </script>
+  <div class="lightbox" data-lightbox hidden>
+    <button class="lightbox__close" data-lightbox-close aria-label="Close">&#10005;</button>
+    <img src="" alt="" data-lightbox-image />
+    <p class="lightbox__caption" data-lightbox-caption></p>
+  </div>
 </body>
 
 </html>
