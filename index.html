@@ -3,66 +3,102 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SE: Sajith Edirisinghe</title>
+  <title>Sajith Edirisinghe</title>
+  <meta name="description" content="Sajith Edirisinghe — software engineer in Berlin, building trading infrastructure at lemon.markets." />
+  <meta name="color-scheme" content="light dark" />
   <link rel="icon" type="image/png" href="images/favicon.png" />
-  <link rel="stylesheet" href="assets/css/main.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <script src="assets/js/head.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <script src="assets/js/site.js" defer></script>
 </head>
 
 <body>
-  <main class="page">
-    <div class="card">
-      <div class="card-photo">
-        <img src="images/sajith.jpg" alt="Sajith Edirisinghe" />
-      </div>
-      <div class="card-body">
-        <p class="greeting">Hello, I'm</p>
-        <h1 class="name">Sajith Edirisinghe</h1>
-        <p class="tagline">Senior Software Engineer &bull; Berlin, Germany</p>
-        <p class="bio">
-          Originally from Sri Lanka. I studied Computer Science &amp; Engineering at the
-          <a href="http://www.mrt.ac.lk/web/" target="_blank" rel="noreferrer">University of Moratuwa</a>
-          (class of 2015) and currently build things at
-          <a href="https://www.lemon.markets/" target="_blank" rel="noreferrer">lemon.markets</a>.
-        </p>
-        <div class="links">
-          <a class="chip" href="https://www.linkedin.com/in/sajithdilshan/" target="_blank" rel="noreferrer">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            LinkedIn
-          </a>
-          <a class="chip email-link" href="#" data-email="sajithdilshan" data-domain="gmail.com">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
-            Email
-          </a>
-          <a class="chip" href="blog/index.html">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-            Blog
-          </a>
-          <a class="chip" href="travel/index.html">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4 12c0-.61.08-1.21.21-1.78L8.99 15v1c0 1.1.9 2 2 2v1.93C7.06 19.43 4 16.07 4 12zm13.89 5.4c-.26-.81-1-1.4-1.9-1.4h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41C17.92 5.77 20 8.65 20 12c0 2.08-.81 3.98-2.11 5.4z"/></svg>
-            Travel
-          </a>
-        </div>
-      </div>
+  <main class="col home">
+    <div class="home-top up">
+      <img class="face" src="images/sajith-avatar.jpg" width="400" height="400" alt="Sajith Edirisinghe" />
+      <button class="theme" type="button" aria-label="Switch theme">
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 1 1 9.5 3.5a7 7 0 0 0 11 11Z" /></svg>
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2" /><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6" /></svg>
+      </button>
     </div>
+
+    <h1 class="up d1">Hi, I&rsquo;m Sajith.</h1>
+
+    <p class="intro up d2">
+      I&rsquo;m a software engineer in Berlin. I build trading infrastructure at
+      <a href="https://www.lemon.markets/" target="_blank" rel="noreferrer">lemon.markets</a> &mdash; mostly
+      backend systems, mostly the parts nobody sees.
+    </p>
+
+    <p class="intro soft up d3">
+      I grew up in Sri Lanka and studied Computer Science &amp; Engineering at the
+      <a href="http://www.mrt.ac.lk/web/" target="_blank" rel="noreferrer">University of Moratuwa</a>, class of
+      2015. I write here occasionally, usually when something about the work, or life in general, changes &mdash;
+      and I keep the photographs from wherever I&rsquo;ve been.
+    </p>
+
+    <section class="up d4">
+      <h2 class="label">What I&rsquo;ve written</h2>
+      <ul class="entries">
+        <li>
+          <a class="q" href="blog/2026/six_months_with_claude_code.html">
+            <span class="entry-line">
+              <span class="title">Six Months with Claude Code</span>
+              <time datetime="2026-06-24">June 2026</time>
+            </span>
+            <p>How my developer workflow changed after six months of leaning on it for nearly every part of the job.</p>
+          </a>
+        </li>
+        <li>
+          <a class="q" href="blog/2026/hedonic_treadmill.html">
+            <span class="entry-line">
+              <span class="title">Hedonic Treadmill</span>
+              <time datetime="2026-05-17">May 2026</time>
+            </span>
+            <p>The novelty wore off, and the new normal feels strangely flat.</p>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="up d5">
+      <h2 class="label">Where I&rsquo;ve been</h2>
+      <div class="strip">
+        <a href="travel/venice/index.html">
+          <img src="travel/venice/images/thumbnails/8.JPG" alt="" loading="lazy" /><span>Venice</span>
+        </a>
+        <a href="travel/verona/index.html">
+          <img src="travel/verona/images/thumbnails/8.JPG" alt="" loading="lazy" /><span>Verona</span>
+        </a>
+        <a href="travel/bologna/index.html">
+          <img src="travel/bologna/images/thumbnails/24.JPG" alt="" loading="lazy" /><span>Bologna</span>
+        </a>
+        <a href="travel/naples/index.html">
+          <img src="travel/naples/images/thumbnails/7.JPG" alt="" loading="lazy" /><span>Naples</span>
+        </a>
+        <a href="travel/amalfi-coast/index.html">
+          <img src="travel/amalfi-coast/images/thumbnails/10.JPG" alt="" loading="lazy" /><span>Amalfi</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="up d6">
+      <h2 class="label">Say hello</h2>
+      <p class="soft">
+        Find me on
+        <a class="q" href="https://www.linkedin.com/in/sajithdilshan/" target="_blank" rel="noreferrer">LinkedIn</a>,
+        or just <a class="q email-link" href="#" data-email="sajithdilshan" data-domain="gmail.com">send an email</a>.
+      </p>
+    </section>
+
+    <footer class="footer up d7">
+      &copy; <span id="year"></span> Sajith Edirisinghe
+    </footer>
   </main>
-  <footer class="footer">
-    &copy; <span id="year"></span> Sajith Edirisinghe
-  </footer>
-
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-    const el = document.querySelector(".email-link");
-    if (el) {
-      const u = el.dataset.email, d = el.dataset.domain;
-      el.href = `mailto:${u}@${d}`;
-    }
-
-  </script>
 </body>
 
 </html>
