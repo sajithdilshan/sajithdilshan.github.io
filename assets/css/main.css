@@ -45,6 +45,9 @@
 
 html {
   scroll-behavior: smooth;
+  /* clip, not hidden: full-bleed children can't force a horizontal scrollbar,
+     and position: sticky keeps working */
+  overflow-x: clip;
 }
 
 body {
@@ -306,23 +309,24 @@ h1 {
   max-width: 44ch;
 }
 
-/* row of destination thumbnails */
+/* row of destination thumbnails — three to a row, centred */
 .strip {
-  display: flex;
-  gap: 0.6rem;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 8.5rem));
+  justify-content: center;
+  gap: 0.75rem 0.9rem;
 }
 
 .strip a {
   background-image: none;
   display: block;
   text-align: center;
-  width: 5.25rem;
 }
 
 .strip img {
-  width: 5.25rem;
-  height: 5.25rem;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
   object-fit: cover;
   border-radius: 3px;
   display: block;
@@ -701,6 +705,72 @@ pre code {
   transform: translate(-50%, -50%) scale(1.08);
 }
 
+/* ─── Chaptered gallery: centred text, centred reel of frames ─── */
+
+.chapter {
+  margin-top: clamp(2.75rem, 6vw, 4rem);
+}
+
+.chapter__head {
+  max-width: 34rem;
+  margin: 0 auto 1.5rem;
+}
+
+.chapter__title {
+  font-weight: 600;
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
+  letter-spacing: -0.012em;
+  line-height: 1.25;
+  margin: 0.1rem 0 0.6rem;
+}
+
+.chapter__text {
+  color: var(--soft);
+}
+
+/* the reel spans the viewport, not the measure */
+.reel {
+  margin-inline: calc(50% - 50vw);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  padding-block: 0.55rem;
+  scrollbar-width: thin;
+}
+
+/* auto margins centre the frames when they fit and collapse when they don't,
+   so a short chapter sits centred and a long one scrolls from its first frame */
+.reel__frames {
+  display: flex;
+  gap: 0.45rem;
+  width: max-content;
+  margin-inline: auto;
+  padding-inline: clamp(1.5rem, 6vw, 2rem);
+}
+
+.reel .gallery-item {
+  flex: 0 0 auto;
+  height: clamp(13rem, 30vw, 21rem);
+  aspect-ratio: 9 / 16;
+  scroll-snap-align: center;
+  border-radius: 2px;
+}
+
+/* the food frames were shot 4:5, not 9:16 */
+.reel .gallery-item--45 {
+  aspect-ratio: 4 / 5;
+}
+
+/* captions feed the lightbox and screen readers; they never draw on the reel */
+.gallery-item figcaption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 /* ─── Lightbox ─── */
 
 .lightbox {
@@ -816,17 +886,6 @@ pre code {
   .wf-dot {
     width: 44px;
     height: 44px;
-  }
-}
-
-@media (max-width: 420px) {
-  .strip a,
-  .strip img {
-    width: 4.5rem;
-  }
-
-  .strip img {
-    height: 4.5rem;
   }
 }
 
