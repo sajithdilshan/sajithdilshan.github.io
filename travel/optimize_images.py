@@ -9,6 +9,10 @@ For every city under travel/<city>/images/:
     --max-dimension) are skipped, so the script is safe to re-run after adding a new city.
   * missing thumbnails are written to images/thumbnails/<stem>.JPG (--force-thumbs
     rebuilds all of them). The video poster thumbnails/video.JPG is left alone.
+  * camera videos (.MOV/.MP4 from the camera, often 4K HEVC that Chrome can't play)
+    are transcoded with ffmpeg to an H.264/AAC <stem>.mp4 at --video-size on the long
+    side, web-optimised (+faststart). The original is deleted; point the gallery's
+    data-full at the new .mp4.
 
 Usage (from the repo root or travel/):
   python3 travel/optimize_images.py                # every city
@@ -23,6 +27,8 @@ from __future__ import annotations
 import argparse
 import io
 import os
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -31,6 +37,7 @@ from PIL import Image, ImageOps
 TRAVEL_DIR = Path(__file__).resolve().parent
 JPEG_EXTS = {".jpg", ".jpeg"}
 OTHER_EXTS = {".png", ".heic", ".heif"}
+VIDEO_EXTS = {".mov", ".m4v", ".mp4"}
 
 try:  # optional HEIC support
   import pillow_heif
@@ -49,6 +56,10 @@ def parse_args() -> argparse.Namespace:
   p.add_argument("--thumb-size", type=int, default=800, help="Long side of thumbnails, px.")
   p.add_argument("--thumb-quality", type=int, default=85, help="JPEG quality for thumbnails.")
   p.add_argument("--force-thumbs", action="store_true", help="Rebuild every thumbnail.")
+  p.add_argument("--video-size", type=int, default=1920, help="Long side of videos, px.")
+  p.add_argument("--video-crf", type=int, default=23, help="x264 CRF for videos (lower = better).")
+  p.add_argument("--video-maxrate", default="8M",
+                 help="Bitrate cap so busy scenes (water, foliage) don't balloon.")
   p.add_argument("--dry-run", action="store_true", help="Report what would change; write nothing.")
   return p.parse_args()
 
@@ -72,6 +83,40 @@ def write_atomic(path: Path, data: bytes) -> None:
   os.replace(tmp, path)
 
 
+def transcode_video(path: Path, args: argparse.Namespace) -> int:
+  """Re-encode a camera clip to a web-friendly MP4. Returns the resulting size."""
+  size = path.stat().st_size
+  out = path.with_suffix(".mp4")
+  if path.suffix.lower() == ".mp4" and size <= 25e6:
+    return size  # already an optimised web MP4
+  if not shutil.which("ffmpeg"):
+    print(f"  ! {path.name}: ffmpeg not found, video left as is")
+    return size
+  if size < 1024:
+    print(f"  ! {path.name}: looks like a Git LFS pointer, run `git lfs pull` first")
+    return size
+  if args.dry_run:
+    print(f"  {path.name}: {mb(size)} -> {out.name} (transcode)")
+    return size
+  tmp = path.with_name(f".{path.stem}.tmp.mp4")
+  long = args.video_size
+  subprocess.run([
+      "ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", str(path),
+      "-map", "0:v:0", "-map", "0:a:0?", "-map_metadata", "-1",
+      "-vf", f"scale='if(gt(iw,ih),{long},-2)':'if(gt(iw,ih),-2,{long})':flags=lanczos",
+      "-c:v", "libx264", "-preset", "slow", "-crf", str(args.video_crf),
+      "-maxrate", args.video_maxrate, "-bufsize", "16M",
+      "-profile:v", "high", "-pix_fmt", "yuv420p",
+      "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", str(tmp),
+  ], check=True)
+  os.replace(tmp, out)
+  if out != path:
+    path.unlink()
+  new = out.stat().st_size
+  print(f"  {path.name}: {mb(size)} -> {out.name} {mb(new)}")
+  return new
+
+
 def mb(n: int) -> str:
   return f"{n / 1e6:.1f} MB"
 
@@ -87,8 +132,11 @@ def process_city(city: Path, args: argparse.Namespace) -> tuple[int, int]:
     if ext in OTHER_EXTS:
       print(f"  ! {path.name}: not a JPG, left as is (convert it and update index.html)")
       continue
+    if ext in VIDEO_EXTS:
+      transcode_video(path, args)
+      continue
     if ext not in JPEG_EXTS:
-      continue  # videos etc.
+      continue
 
     size = path.stat().st_size
     before += size
