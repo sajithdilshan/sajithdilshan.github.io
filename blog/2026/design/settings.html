@@ -1,0 +1,43 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FitMax – Settings</title><meta name="description" content="FitMax – Settings — a design mockup for FitMax, a personal iOS workout tracker built with Claude Code."><link rel="icon" type="image/png" href="../../../images/favicon.png"><link rel="stylesheet" href="style.css"><script>document.documentElement.dataset.theme=localStorage.fmTheme||'';if(top!==self)document.documentElement.classList.add('embed')</script></head><body>
+<nav class="topnav"><a href="../first_ios_app.html">&larr; Back to the post</a></nav>
+<nav class="deck"><a href="index.html">All screens</a><span class="name">H. Settings</span><button onclick="document.documentElement.dataset.theme=localStorage.fmTheme=({'':'dark',dark:'light',light:''})[localStorage.fmTheme||'']">Light / dark</button></nav>
+<div class="phone">
+<div class="status"><span>9:41</span><span class="sys"><i class="ic i-signal"></i><i class="ic i-wifi"></i><span class="batt"></span></span></div>
+<div class="behind" style="background:var(--bg);padding:70px 16px"><div class="lt">October</div><div class="card" style="height:300px;margin-top:20px"></div></div>
+<div class="dim"></div>
+<div class="sheet" style="top:62px">
+  <div class="grab"></div>
+  <div class="head"><span style="width:44px"></span><b class="hl ttl">Settings</b><a class="btn prom icon" href="calendar.html" aria-label="Done"><i class="ic i-check"></i></a></div>
+  <div class="in">
+    <div class="sec" style="margin-top:6px"><span class="fn" style="font-weight:600">Privacy</span></div>
+    <section class="card flush">
+      <div class="row"><span class="lead"><span class="badge" style="background:var(--accent)"><i class="ic i-faceid"></i></span><span class="body">Require Face ID</span></span><span class="toggle"></span></div>
+      <div class="row"><span class="lead"><span class="badge" style="background:#8e8e93"><i class="ic i-timer"></i></span><span class="body">Lock after</span></span><span class="sub" style="display:flex;align-items:center;gap:6px">1 minute<i class="ic i-right chev"></i></span></div>
+    </section>
+    <p class="cap foot">FitMax locks when you leave it for longer than this.</p>
+    <div class="sec"><span class="fn" style="font-weight:600">Apple Health</span></div>
+    <section class="card flush">
+      <div class="row"><span class="lead"><span class="badge" style="background:var(--red)"><i class="ic i-heart"></i></span><span class="body">Health access</span></span><span class="chip acc"><i class="ic i-check"></i>Connected</span></div>
+      <div class="row"><span class="lead"><span class="badge" style="background:none"></span><span class="tt"><span class="body">Reads</span><span class="cap">Workouts, heart rate, active energy, body weight</span></span></span></div>
+      <div class="row"><span class="lead"><span class="badge" style="background:none"></span><span class="tt"><span class="body">Writes</span><span class="cap">Body weight you enter in FitMax</span></span></span></div>
+      <a class="row"><span class="lead"><span class="badge" style="background:none"></span><span class="body ink">Manage in Settings</span></span></a>
+    </section>
+    <div class="sec"><span class="fn" style="font-weight:600">iCloud</span></div>
+    <section class="card flush">
+      <div class="row"><span class="lead"><span class="badge" style="background:var(--blue)"><i class="ic i-cloud"></i></span><span class="body">iCloud sync</span></span><span class="sub">Off</span></div>
+    </section>
+    <p class="cap foot">This build stores data on this iPhone only. Sync turns on in the TestFlight build.</p>
+    <section class="card flush" style="margin-top:22px">
+      <div class="row"><span class="lead"><span class="body">Version</span></span><span class="sub num">1.0 (42)</span></div>
+    </section>
+    <div class="sec"><span class="fn" style="font-weight:600">Developer</span></div>
+    <section class="card flush">
+      <div class="row"><span class="lead"><span class="body"><span class="ink">Add sample workouts</span></span></span></div>
+      <div class="row"><span class="lead"><span class="body"><span class="ink">Add sample body weight to Health</span></span></span></div>
+      <div class="row"><span class="lead"><span class="body"><span style="color:var(--red)">Delete all FitMax data</span></span></span></div>
+    </section>
+    <p class="cap foot">Shown in debug builds only.</p>
+  </div>
+</div>
+</div>
+</body></html>

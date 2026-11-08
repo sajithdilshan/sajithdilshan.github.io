@@ -1,14 +1,11 @@
-<!-- Insert as the FIRST <li> in the correct year's .post-list (newest first).
-     Replace {{THUMB_SVG}} with the 100x100 thumbnail SVG (unique gradient id). -->
-<li class="post-item">
-  <a href="{{HREF}}">
-    <span class="post-thumb">
-      {{THUMB_SVG}}
-    </span>
-    <span class="post-info">
-      <span class="post-date">{{DATE_SHORT}}</span>
-      <span class="post-title">{{TITLE}}</span>
-      <span class="post-excerpt">{{EXCERPT}}</span>
-    </span>
-  </a>
-</li>
+<!-- Insert as the FIRST <li> of <ul class="entries"> under "What I've written" in the
+     ROOT index.html (newest first). There is no separate blog index any more. -->
+        <li>
+          <a class="q" href="blog/{{YEAR}}/{{SLUG}}.html">
+            <span class="entry-line">
+              <span class="title">{{TITLE}}</span>
+              <time datetime="{{ISO_DATE}}">{{MONTH_YEAR}}</time>
+            </span>
+            <p>{{EXCERPT}}</p>
+          </a>
+        </li>

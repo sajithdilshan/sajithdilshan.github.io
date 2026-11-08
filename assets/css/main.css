@@ -468,6 +468,34 @@ pre code {
   filter: var(--img-hover);
 }
 
+.post-figure a {
+  display: block;
+  background-image: none;
+}
+
+.post-figure a img {
+  cursor: pointer;
+}
+
+/* portrait screen recordings (e.g. iPhone), framed like a phone */
+.post-video {
+  width: min(300px, 72%);
+  margin: 1.75rem auto 2.25rem;
+  padding: 7px;
+  border-radius: 34px;
+  background: #0b0b0d;
+  box-shadow: 0 0 0 1px var(--ring), 0 18px 40px -18px rgba(0, 0, 0, 0.45);
+}
+
+.post-video video {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 27px;
+  background: #000;
+  cursor: pointer;
+}
+
 .post-figure figcaption {
   color: var(--faint);
   font-size: 0.875rem;

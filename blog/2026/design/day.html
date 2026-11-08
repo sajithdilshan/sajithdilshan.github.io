@@ -1,0 +1,73 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FitMax – Day</title><meta name="description" content="FitMax – Day — a design mockup for FitMax, a personal iOS workout tracker built with Claude Code."><link rel="icon" type="image/png" href="../../../images/favicon.png"><link rel="stylesheet" href="style.css"><script>document.documentElement.dataset.theme=localStorage.fmTheme||'';if(top!==self)document.documentElement.classList.add('embed')</script></head><body>
+<nav class="topnav"><a href="../first_ios_app.html">&larr; Back to the post</a></nav>
+<nav class="deck"><a href="index.html">All screens</a><span class="name">B. Day</span><button onclick="document.documentElement.dataset.theme=localStorage.fmTheme=({'':'dark',dark:'light',light:''})[localStorage.fmTheme||'']">Light / dark</button></nav>
+<div class="phone">
+<div class="status"><span>9:41</span><span class="sys"><i class="ic i-signal"></i><i class="ic i-wifi"></i><span class="batt"></span></span></div>
+<div class="edge"></div>
+<div class="bar">
+  <a class="btn icon glass" href="calendar.html" aria-label="Back to Calendar"><i class="ic i-left"></i></a>
+  <span class="mid"><b class="hl">Tue 27 Oct</b><div class="cap">Today</div></span>
+  <a class="btn glass">Edit</a>
+</div>
+<div class="scroll" style="padding-top:112px">
+
+  <section class="card wt">
+    <div class="wt-h"><span class="badge" style="background:var(--accent)"><i class="ic i-scale"></i></span><span class="hl">Body weight</span><span class="fn" style="margin-left:auto">Withings, 07:12</span></div>
+    <div class="wt-b">
+      <div class="score wt-n">72.4<small>kg</small></div>
+      <svg class="spark" viewBox="0 0 120 54" aria-label="Last 14 days">
+        <path d="M0 8 L9 12 L18 10 L27 18 L36 15 L45 22 L54 20 L63 28 L72 26 L81 31 L90 30 L99 37 L108 33 L117 40" fill="none" stroke="var(--sub)" stroke-width="1.5" stroke-linejoin="round" opacity=".5"/>
+        <path d="M0 10 C30 14 60 22 117 38" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="117" cy="38" r="4.5" fill="var(--accent)" stroke="var(--card)" stroke-width="2"/>
+      </svg>
+    </div>
+    <div class="wt-f"><span class="chip acc"><i class="ic i-right" style="transform:rotate(90deg);width:11px;height:11px"></i>0.3 kg since Sat</span><span class="fn">−0.6 kg in 14 days</span></div>
+  </section>
+
+  <section class="card aw">
+    <div class="wt-h"><span class="badge" style="background:var(--orange)"><i class="ic i-dumbbell"></i></span><div><div class="hl">Strength Training</div><div class="fn num">18:02–19:01</div></div><span class="chip" style="margin-left:auto;color:var(--orange)"><i class="ic i-watch"></i>Apple Watch</span></div>
+    <div class="aw-m">
+      <div><b class="score">59<small>min</small></b><span class="cap">Duration</span></div>
+      <div><b class="score">412<small>kcal</small></b><span class="cap">Active</span></div>
+      <div><b class="score">118</b><span class="cap">Avg bpm</span></div>
+      <div><b class="score" style="color:var(--red)">161</b><span class="cap">Max bpm</span></div>
+    </div>
+    <svg class="hr" viewBox="0 0 320 96" aria-label="Heart rate during workout">
+      <defs><linearGradient id="z" x1="0" y1="0" x2="0" y2="80" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff3b4e"/><stop offset=".3" stop-color="#ff7a1a"/><stop offset=".55" stop-color="#f2b200"/><stop offset=".8" stop-color="#2bc48a"/><stop offset="1" stop-color="#2f9bff"/></linearGradient></defs>
+      <g stroke="var(--line)" stroke-width="1"><path d="M0 12H320M0 44H320M0 76H320"/></g>
+      <path d="M0 74.4 L11 64 L22 56.8 L33 50.4 L44 37.6 L55 28 L66 42.4 L77 48 L88 26.4 L99 20 L110 40 L121 45.6 L132 23.2 L143 11.2 L154 36 L165 50.4 L176 56.8 L187 31.2 L198 21.6 L209 39.2 L220 47.2 L231 28 L242 18.4 L253 37.6 L264 52 L275 44 L286 29.6 L297 40.8 L308 55.2 L319 61.6 V80 H0Z" fill="url(#z)" opacity=".18"/>
+      <path d="M0 74.4 L11 64 L22 56.8 L33 50.4 L44 37.6 L55 28 L66 42.4 L77 48 L88 26.4 L99 20 L110 40 L121 45.6 L132 23.2 L143 11.2 L154 36 L165 50.4 L176 56.8 L187 31.2 L198 21.6 L209 39.2 L220 47.2 L231 28 L242 18.4 L253 37.6 L264 52 L275 44 L286 29.6 L297 40.8 L308 55.2 L319 61.6" fill="none" stroke="url(#z)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+      <circle cx="143" cy="11.2" r="4" fill="var(--red)" stroke="var(--card)" stroke-width="2"/>
+      <g font-size="10" fill="var(--sub)" font-family="-apple-system,system-ui"><text x="0" y="94">18:02</text><text x="160" y="94" text-anchor="middle">18:30</text><text x="320" y="94" text-anchor="end">19:01</text><text x="149" y="9">161</text></g>
+    </svg>
+    <div class="zones" aria-label="Time in heart rate zones"><b style="flex:12;background:#2f9bff"></b><b style="flex:28;background:#2bc48a"></b><b style="flex:34;background:#f2b200"></b><b style="flex:20;background:#ff7a1a"></b><b style="flex:6;background:#ff3b4e"></b></div>
+    <div class="fn" style="margin-top:8px">20 min in zone 3, peak 161 bpm at 18:33</div>
+  </section>
+  <div class="sec"><span class="hl">Exercises</span><span class="fn num">5 exercises, 13 sets</span></div>
+  <section class="card flush">
+    <a class="ex" href="entry-editor.html"><div class="ex-h"><b class="hl">Bench Press</b><i class="ic i-right chev"></i></div>
+      <div class="sets"><span class="set">10<i>×</i>60</span><span class="set">10<i>×</i>60</span><span class="set pr">8<i>×</i>62.5<i class="ic i-trophy"></i></span><span class="unit">kg</span></div>
+      <div class="cap num">Last time: 3×10 @ 60 kg</div></a>
+    <a class="ex" href="entry-editor.html"><div class="ex-h"><b class="hl">Burpees</b><i class="ic i-right chev"></i></div>
+      <div class="sets"><span class="set">30</span><span class="set">25</span><span class="unit">reps</span></div>
+      <div class="cap num">Last time: 30 reps</div></a>
+    <a class="ex" href="entry-editor-cardio.html"><div class="ex-h"><b class="hl">Rowing Machine</b><i class="ic i-right chev"></i></div>
+      <div class="sets"><span class="set">10</span><span class="set">12</span><span class="unit">cal</span></div>
+      <div class="cap num">Last time: 10 cal</div></a>
+    <a class="ex" href="entry-editor-cardio.html"><div class="ex-h"><b class="hl">Ski Erg</b><i class="ic i-right chev"></i></div>
+      <div class="sets"><span class="set">150</span><span class="unit">m</span></div>
+      <div class="cap num">Last time: 150 m</div></a>
+    <a class="ex" href="entry-editor.html"><div class="ex-h"><b class="hl">Barbell Row</b><i class="ic i-right chev"></i></div>
+      <div class="sets"><span class="set">10<i>×</i>55</span><span class="set">10<i>×</i>55</span><span class="set">10<i>×</i>55</span><span class="unit">kg</span></div>
+      <div class="cap num">Last time: 3×10 @ 52.5 kg</div></a>
+  </section>
+  <div class="acts"><a class="btn prom" href="exercise-picker.html" style="flex:1"><i class="ic i-plus"></i>Add exercise</a><a class="btn glass" href="copy-previous.html"><i class="ic i-copy"></i>Copy previous</a></div>
+
+  <div class="sec"><span class="hl">Progress photos</span><span class="fn"><i class="ic i-lock" style="width:11px;height:11px;vertical-align:-1px"></i> Private, not in Photos</span></div>
+  <div class="photos"><span class="photo" style="width:112px;height:150px"><span class="tag">19:08</span></span><span class="photo b" style="width:112px;height:150px"><span class="tag">19:09</span></span><a class="addph" aria-label="Add photo"><i class="ic i-camera"></i><span class="fn">Add</span></a></div>
+
+  <div class="sec"><span class="hl">Notes</span></div>
+  <section class="card"><span class="sub">How did it go?</span></section>
+</div>
+</div>
+</body></html>

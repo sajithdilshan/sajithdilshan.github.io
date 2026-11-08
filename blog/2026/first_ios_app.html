@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My First iOS App with Claude — Sajith Edirisinghe</title>
+  <meta name="description" content="I built a personal workout tracker for iPhone over a weekend with Claude Code, with zero Swift or app development experience." />
+  <meta name="author" content="Sajith Edirisinghe" />
+  <link rel="canonical" href="https://sajith.me/blog/2026/first_ios_app.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="My First iOS App with Claude" />
+  <meta property="og:description" content="I built a personal workout tracker for iPhone over a weekend with Claude Code, with zero Swift or app development experience." />
+  <meta property="og:image" content="https://sajith.me/blog/2026/images/og-first-ios-app.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="627" />
+  <meta property="og:url" content="https://sajith.me/blog/2026/first_ios_app.html" />
+  <meta property="og:site_name" content="Sajith Edirisinghe" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="My First iOS App with Claude" />
+  <meta name="twitter:description" content="I built a personal workout tracker for iPhone over a weekend with Claude Code, with zero Swift or app development experience." />
+  <meta name="twitter:image" content="https://sajith.me/blog/2026/images/og-first-ios-app.png" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" type="image/png" href="../../images/favicon.png" />
+  <script src="../../assets/js/head.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/css/main.css" />
+  <script src="../../assets/js/site.js" defer></script>
+</head>
+
+<body>
+  <div class="col">
+    <div class="bar up">
+      <a class="back-link" href="../../index.html"><span class="arrow">&larr;</span> Sajith Edirisinghe</a>
+      <button class="theme" type="button" aria-label="Switch theme">
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 1 1 9.5 3.5a7 7 0 0 0 11 11Z" /></svg>
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2" /><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6" /></svg>
+      </button>
+    </div>
+
+    <div class="post-hero up d1">
+      <svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An iPhone showing a workout calendar, syncing through iCloud with an Apple Watch">
+        <rect width="1200" height="400" fill="var(--wash)" />
+
+        <!-- dumbbell -->
+        <g fill="var(--accent)" opacity="0.55">
+          <rect x="262" y="176" width="14" height="48" rx="4" />
+          <rect x="280" y="166" width="18" height="68" rx="5" />
+          <rect x="298" y="194" width="84" height="12" rx="4" />
+          <rect x="382" y="166" width="18" height="68" rx="5" />
+          <rect x="404" y="176" width="14" height="48" rx="4" />
+        </g>
+
+        <!-- phone -->
+        <rect x="480" y="72" width="150" height="262" rx="26" fill="var(--paper)" stroke="var(--ink)" stroke-width="3" opacity="0.92" />
+        <rect x="532" y="84" width="46" height="12" rx="6" fill="var(--ink)" opacity="0.85" />
+        <rect x="500" y="112" width="60" height="8" rx="4" fill="var(--ink)" opacity="0.6" />
+        <g fill="var(--accent)">
+          <rect x="500" y="134" width="18" height="18" rx="4" opacity="0.15" /><rect x="522" y="134" width="18" height="18" rx="4" opacity="0.6" /><rect x="544" y="134" width="18" height="18" rx="4" opacity="0.15" /><rect x="566" y="134" width="18" height="18" rx="4" opacity="0.9" /><rect x="588" y="134" width="18" height="18" rx="4" opacity="0.15" />
+          <rect x="500" y="156" width="18" height="18" rx="4" opacity="0.4" /><rect x="522" y="156" width="18" height="18" rx="4" opacity="0.15" /><rect x="544" y="156" width="18" height="18" rx="4" opacity="0.8" /><rect x="566" y="156" width="18" height="18" rx="4" opacity="0.15" /><rect x="588" y="156" width="18" height="18" rx="4" opacity="0.55" />
+          <rect x="500" y="178" width="18" height="18" rx="4" opacity="0.15" /><rect x="522" y="178" width="18" height="18" rx="4" opacity="0.9" /><rect x="544" y="178" width="18" height="18" rx="4" opacity="0.15" /><rect x="566" y="178" width="18" height="18" rx="4" opacity="0.6" /><rect x="588" y="178" width="18" height="18" rx="4" opacity="0.15" />
+          <rect x="500" y="200" width="18" height="18" rx="4" opacity="0.7" /><rect x="522" y="200" width="18" height="18" rx="4" opacity="0.15" /><rect x="544" y="200" width="18" height="18" rx="4" opacity="1" /><rect x="566" y="200" width="18" height="18" rx="4" opacity="0.15" /><rect x="588" y="200" width="18" height="18" rx="4" opacity="0.8" />
+        </g>
+        <rect x="500" y="236" width="110" height="34" rx="8" fill="var(--accent)" opacity="0.12" />
+        <rect x="510" y="246" width="54" height="6" rx="3" fill="var(--ink)" opacity="0.55" />
+        <rect x="510" y="258" width="34" height="5" rx="2.5" fill="var(--ink)" opacity="0.3" />
+        <rect x="500" y="278" width="110" height="34" rx="8" fill="var(--accent)" opacity="0.12" />
+        <rect x="510" y="288" width="64" height="6" rx="3" fill="var(--ink)" opacity="0.55" />
+        <rect x="510" y="300" width="40" height="5" rx="2.5" fill="var(--ink)" opacity="0.3" />
+
+        <!-- iCloud -->
+        <path d="M712 128 a20 20 0 0 1 4 -39 a28 28 0 0 1 53 -6 a22 22 0 0 1 9 45 Z" fill="var(--paper)" stroke="var(--accent)" stroke-width="3" stroke-linejoin="round" />
+        <g fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="2 9" opacity="0.8">
+          <path d="M638 170 C 660 150, 680 136, 704 124" />
+          <path d="M784 124 C 810 140, 826 160, 834 182" />
+        </g>
+
+        <!-- watch -->
+        <rect x="806" y="152" width="58" height="34" rx="8" fill="var(--ink)" opacity="0.25" />
+        <rect x="806" y="282" width="58" height="34" rx="8" fill="var(--ink)" opacity="0.25" />
+        <rect x="790" y="182" width="90" height="104" rx="26" fill="var(--paper)" stroke="var(--ink)" stroke-width="3" opacity="0.95" />
+        <rect x="880" y="210" width="6" height="20" rx="3" fill="var(--ink)" opacity="0.6" />
+        <g fill="none" stroke-linecap="round" transform="rotate(-90 835 234)">
+          <circle cx="835" cy="234" r="30" stroke="var(--accent)" stroke-width="7" opacity="0.15" />
+          <circle cx="835" cy="234" r="30" stroke="var(--accent)" stroke-width="7" stroke-dasharray="150 189" />
+          <circle cx="835" cy="234" r="19" stroke="var(--accent)" stroke-width="7" opacity="0.15" />
+          <circle cx="835" cy="234" r="19" stroke="var(--accent)" stroke-width="7" stroke-dasharray="80 120" opacity="0.6" />
+        </g>
+      </svg>
+    </div>
+
+    <article class="up d2">
+      <p class="post-meta">8 Nov 2026 &middot; 3 min read</p>
+      <h1 class="post-title">My First iOS App with Claude</h1>
+      <div class="post-body">
+        <p>
+          Since I started working out, one thing I wished I had was a nice app to track my workouts, one that
+          syncs with iCloud and also pulls data from my Apple Watch workouts. When I looked into iOS apps, all
+          the good ones were free to try but then needed a subscription, and the free apps were either too basic
+          or came with unnecessary tutorials, exercise videos and other bloated features. I&rsquo;ve never built
+          an iOS app, but now that LLMs have become cheap enough, I wanted to give it a shot with Claude Code
+          over the weekend.
+        </p>
+        <p>
+          The first thing I did with Claude was a brainstorming session where I noted down my main requirements.
+          Basically, for a given day I want to note down the exercises I did, how many sets/reps or the
+          duration/calories for each exercise, upload a picture of my physique so I can compare the visual
+          change of my body against past pictures, pull data from my Apple Watch workouts, and have it all
+          synced to iCloud. I used Opus for this, and we went back and forth and came up with a <a
+          href="https://github.com/sajithdilshan/sajithdilshan.github.io/blob/master/blog/2026/plan.md"
+          target="_blank" rel="noreferrer">plan.md</a> file with a breakdown of how the app should
+          be implemented. I left it to the LLM to decide how the app should be structured and the iOS-specific
+          stuff, since I had no idea about Swift. But I did want to know how the data would be stored in iCloud
+          (basically the data layer), so I could make sure it was storing exactly what I need.
+        </p>
+        <p>
+          After that, I again used Opus, this time with the frontend-design plugin, to come up with <a
+          href="./design/index.html" target="_blank" rel="noreferrer">one-page HTML files containing the design
+          of the app</a>. For me this was the important part, since that&rsquo;s what I would be using, and it
+          had to be simple and easy to use. Surprisingly, after reading the <a href="https://github.com/sajithdilshan/sajithdilshan.github.io/blob/master/blog/2026/plan.md" target="_blank" rel="noreferrer">plan.md</a> file, Opus was
+          able to come up with a design pretty close to the final result without much guidance. I did go through
+          the screens and nitpicked a bit, but it was pretty good and captured my requirements.
+        </p>
+        <figure class="post-figure">
+          <a href="./design/index.html" target="_blank" rel="noreferrer"><img src="./images/designs.png" alt="The app screen designs Opus produced as one-page HTML files" loading="lazy" /></a>
+          <figcaption>The designs Opus came up with. Click through to browse the screens.</figcaption>
+        </figure>
+        <p>
+          Then I used Sonnet to implement the app step by step, and all the commands, app builds etc. were done
+          by Haiku agents. Granted, it&rsquo;s a pretty simple app, no backend, just a UI that syncs to iCloud,
+          but after using it for the first time I was ecstatic. As someone with zero app development experience,
+          being able to build a simple app from just an idea within a few hours and actually use it was quite
+          mind-blowing. I probably won&rsquo;t publish it to the App Store, since it&rsquo;s only for my use
+          case and I can&rsquo;t be bothered to go through Apple&rsquo;s app review process. But would I build
+          more apps for other niche use cases I have? Abso-fucking-lutely. This opens up a completely different
+          set of possibilities, and the next thing I&rsquo;m going to try is writing an Apple Watch app to go
+          together with the iOS app, so I can edit workout details directly from my watch.
+        </p>
+        <p>
+          A year ago, had I wanted to write an iOS app, it would have taken me weeks or months to learn Swift
+          and all the iOS gotchas, but now it can be done within hours with the help of AI. It&rsquo;s indeed a
+          vibe-coded app, because I don&rsquo;t know the Swift code underneath in detail, but that&rsquo;s the
+          fun part. Now I can go through it and figure out what it does, and if I don&rsquo;t understand
+          something or need it made clearer, I can always ask Claude to explain it to me.
+        </p>
+        <p>
+          <strong>PS:</strong> Here&rsquo;s a screen recording of the app running on my iPhone.
+        </p>
+        <figure class="post-video">
+          <video src="./images/first-ios-app-demo.mp4" poster="./images/first-ios-app-demo.jpg" width="540" height="1172"
+            muted loop playsinline preload="metadata" aria-label="Screen recording of the workout app on an iPhone"></video>
+        </figure>
+      </div>
+    </article>
+
+    <nav class="post-nav up d3">
+      <a href="./six_months_with_claude_code.html">
+        <small>Older post</small>
+        <span class="title">Six Months with Claude Code</span>
+      </a>
+    </nav>
+
+    <footer class="footer up d4">
+      &copy; <span id="year"></span> Sajith Edirisinghe
+    </footer>
+  </div>
+  <script>
+    /* play the recording like a silent loop while it's on screen; tap to pause */
+    (function () {
+      var v = document.querySelector(".post-video video");
+      if (!v) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+        v.controls = true;
+        return;
+      }
+      var paused = false;
+      new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting && !paused) v.play().catch(function () { v.controls = true; });
+        else v.pause();
+      }, { threshold: 0.35 }).observe(v);
+      v.addEventListener("click", function () {
+        paused = !v.paused;
+        paused ? v.pause() : v.play();
+      });
+    })();
+  </script>
+</body>
+
+</html>

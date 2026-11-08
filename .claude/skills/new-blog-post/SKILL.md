@@ -1,132 +1,66 @@
 ---
 name: new-blog-post
-description: Convert a Markdown blog post into a fully styled HTML page for sajith.me — generates a bespoke SVG hero, a matching index thumbnail, a 1200x627 LinkedIn/OG preview image, wires up all Open Graph + Twitter meta tags, and adds the post card to blog/index.html. Use when the user has written a new .md post under blog/ and wants it published, or says "convert this post", "publish this blog post", "add this post to the blog". Accepts the Markdown file path as input.
+description: Convert a Markdown blog post into a fully styled HTML page for sajith.me — generates a bespoke theme-aware SVG hero, a 1200x627 LinkedIn/OG preview image, wires up Open Graph + Twitter meta tags, links it into the older post's prev/next nav, and adds it to the "What I've written" list on the root index.html. Use when the user has written a new .md post under blog/ and wants it published, or says "convert this post", "publish this blog post", "add this post to the blog". Accepts the Markdown file path as input.
 ---
 
 # New Blog Post Publisher
 
-Turns a Markdown draft into a published post on `sajith.me`, matching the exact
-look of the existing posts. The domain is **https://sajith.me** and posts live at
-`blog/<year>/<slug>.html`.
+Turns a Markdown draft into a published post on `https://sajith.me`. Posts live at `blog/<year>/<slug>.html`. The site shares one stylesheet (`assets/css/main.css`) and small JS files (`assets/js/`), so posts contain markup only — no inline `<style>` blocks. Typeface is Source Serif 4 throughout; light/dark is handled by CSS variables plus the theme toggle.
+
+The most recent post (newest `blog/<year>/*.html`) is the ground truth for structure. If it disagrees with these references, follow the post and update the references.
 
 ## Input
 
 The Markdown file path, e.g. `blog/2026/my_new_post.md`. If not given, ask for it.
 
-## Step 0 — Gather metadata (ask interactively)
+## Step 0 — Metadata
 
-Read the Markdown file first. Then ask the user for these, showing a sensible
-suggestion derived from the content that they can accept or override:
+Read the Markdown. It may start with a list-style header (`- title: …`, `- date: YYYY-MM-DD`); otherwise use the `# H1`. Ask only for what's missing, offering a suggestion:
 
-- **Title** — default: the top-level `# H1` in the Markdown.
-- **Date** — the publish date (e.g. "Jul 5, 2026"). No default; ask.
-- **Kicker** — short uppercase category shown above the title on the OG card and
-  as the eyebrow, e.g. "Essay", "Developer Workflow", "Notes". Suggest one.
-- **Description** — one compelling sentence, **≤ 155 characters**, for the meta
-  description / OG description / index excerpt. Suggest a draft from the intro.
-- **Reading time** — default: estimate at ~200 words/min, rounded up ("3 min read").
+- **Title**, **Date** (shown as `8 Nov 2026`).
+- **Kicker** for the OG card, e.g. "Essay", "Developer Workflow", "Side Project" (rendered as `KICKER · YEAR`).
+- **Description** — one sentence, **≤ 155 chars**, used for meta/OG/Twitter.
+- **Excerpt** for the index list — one short sentence (may differ from the description).
+- **Reading time** — ~200 words/min, rounded up.
 
-Derive the **slug** from the Markdown filename (without extension). Derive the
-**year** from the folder the `.md` sits in (e.g. `blog/2026/`). The HTML output
-path is the same folder + `<slug>.html`.
+Slug = filename without extension; year = the folder.
 
-## Step 1 — Design a bespoke hero SVG
+## Step 1 — Hero SVG
 
-Create a unique 1200×400 `viewBox` SVG themed to the post's topic (like the
-looping arcs for "Hedonic Treadmill" or the IDE mockup for the Claude Code post).
-Guidelines:
+A unique `viewBox="0 0 1200 400"` SVG with `preserveAspectRatio="xMidYMid slice"`, a `role="img"` and `aria-label`. It's displayed 160–260px tall, so keep the subject inside roughly y 70–330 and x 250–950.
 
-- Use the brand gradient `#ff8a00 → #ff3e55 → #9145ff → #32c8ff` for arcs/accents,
-  or the purple set `#c4bfff → #a29bfe → #6c5ce7` for UI-style scenes.
-- Background rect uses `fill="var(--card-bg)"` so it adapts to light/dark themes.
-- Keep it abstract or lightly illustrative; readable at small sizes.
-- Also design a **matching mini thumbnail** as a 100×100 `viewBox` SVG (simplified
-  version of the hero motif) for the index card. Use a unique gradient id per post
-  (e.g. `t3`, `t4`, …) so ids don't collide on the index page.
+- Make it theme-aware: background `<rect fill="var(--wash)">`, strokes/fills with `var(--accent)`, `var(--ink)`, `var(--paper)`, `var(--rule)` and opacity for tints (see `hedonic_treadmill.html`, `first_ios_app.html`). Hard-coded colours are fine for a dark "screenshot" scene (see `six_months_with_claude_code.html`).
+- Abstract or lightly illustrative; readable small. No thumbnail is needed.
 
-See `reference/post-template.html` for exactly where the hero SVG goes.
+## Step 2 — Body
 
-## Step 2 — Convert Markdown body to HTML
+Convert the body to `.post-body` markup using `reference/body-snippets.html` (paragraphs, links with `target="_blank" rel="noreferrer"`, figures, linked figures, phone videos, lightbox, workflow timeline). Preserve the author's wording verbatim; use `&rsquo;` for apostrophes. Load `gallery.js` / `workflow.js` only when the post uses them.
 
-Convert the Markdown body (everything after the H1) into the `.post-body` markup:
+## Step 3 — Page
 
-- Paragraphs → `<p>…</p>`.
-- Links `[text](url)` → `<a href="url" target="_blank" rel="noreferrer">text</a>`.
-- Inline code `` `x` `` → `<code>x</code>` (add the `.post-body code` style block
-  from `reference/optional-styles.css` only if the post uses inline code).
-- Images `![alt](path)` → a `<figure class="post-figure"><img …></figure>` (add the
-  `.post-figure` styles + the lightbox markup/JS from `reference/optional-styles.css`
-  and `reference/lightbox.html` only if the post has images).
-- Lists → `<ol>`/`<ul>`. For a numbered process/workflow, consider the scroll
-  timeline pattern, but a plain list is fine — keep it simple unless asked.
-- Preserve the author's wording verbatim; do not rewrite prose.
+Copy `reference/post-template.html`, fill the `{{PLACEHOLDERS}}` (canonical URL `https://sajith.me/blog/<year>/<slug>.html`, OG image `https://sajith.me/blog/<year>/images/og-<slug>.png`, meta line `8 Nov 2026 &middot; 3 min read`) and write `blog/<year>/<slug>.html`. The post nav links to the previous newest post as "Older post".
 
-## Step 3 — Assemble the HTML page
-
-Copy `reference/post-template.html` verbatim and fill the `{{PLACEHOLDERS}}`:
-
-- `{{TITLE}}` — post title (used in `.post-title`, `<title>` as `SE: {{TITLE}}`,
-  `og:title`, `twitter:title`).
-- `{{DESCRIPTION}}` — the ≤155-char description (meta description, og/twitter desc).
-- `{{CANONICAL_URL}}` — `https://sajith.me/blog/<year>/<slug>.html`.
-- `{{OG_IMAGE_URL}}` — `https://sajith.me/blog/<year>/images/og-<slug>.png`.
-- `{{META}}` — the eyebrow line, e.g. `Jul 5, 2026 &middot; 4 min read`.
-- `{{HERO_SVG}}` — the hero SVG from Step 1.
-- `{{BODY}}` — the converted body from Step 2.
-
-Write the result to `blog/<year>/<slug>.html`.
-
-## Step 4 — Generate the OG / LinkedIn preview image (1200×627)
-
-Use the helper script — it builds an OG source HTML from the hero SVG + a title
-band, rasterizes it with headless Chrome (waiting for the webfont), and writes the
-PNG. Run:
+## Step 4 — OG / LinkedIn image
 
 ```
-scripts/make-og-image.sh <year> <slug> "<title>" "<kicker>" "<subtitle-or-empty>"
+.claude/skills/new-blog-post/scripts/make-og-image.sh blog/<year>/<slug>.html blog/<year>/images/og-<slug>.png "<Kicker> · <year>" ["<short title>"]
 ```
 
-- `<subtitle>` is optional flavor text under the title (the Claude Code card used
-  "How my developer workflow changed"). Pass `""` for none.
-- Output: `blog/<year>/images/og-<slug>.png`, exactly 1200×627.
-- The script needs the hero SVG. Before running it, write the hero SVG (the inner
-  markup, using gradient id `heroGrad`) to `blog/<year>/images/.hero-<slug>.svg`;
-  the script injects it. The script deletes this temp file and the temp source HTML
-  when done.
+The script takes the hero and title straight from the HTML and renders them in the dark palette. Pass a short title override if the H1 is long. Read the PNG to confirm it's 1200×627, the title fits on one or two lines, and the font is Source Serif (not a fallback; re-run if so).
 
-After it runs, verify the PNG is 1200×627 (`sips -g pixelWidth -g pixelHeight`) and
-Read it to confirm the title rendered in the Dancing Script cursive (not a serif
-fallback). If it fell back, the font didn't load — re-run; the script already uses
-`--virtual-time-budget`.
+## Step 5 — Link it in
 
-## Step 5 — Add the post to blog/index.html
-
-Insert a new `<li class="post-item">` as the **first** child of the `.post-list`
-(newest first) inside the correct `.year-section`. If a `.year-section` for the
-post's year doesn't exist yet, create one (copy the existing `<section
-class="year-section">` structure with the new `<h2 class="year-label">YEAR</h2>`).
-
-Use `reference/index-card.html` as the card template and fill:
-
-- `{{HREF}}` — `./<year>/<slug>.html`.
-- `{{THUMB_SVG}}` — the 100×100 thumbnail SVG from Step 1 (unique gradient id).
-- `{{DATE_SHORT}}` — short date + reading time, e.g. `Jul 5, 2026 &middot; 4 min`.
-- `{{TITLE}}` — post title.
-- `{{EXCERPT}}` — the description (can reuse the ≤155-char description).
+- Root `index.html`: insert `reference/index-card.html` as the first `<li>` of `<ul class="entries">`.
+- The previous newest post: add a "Newer post" link in its `<nav class="post-nav">` (after any "Older post" link).
 
 ## Step 6 — Verify
 
-- Open the new post and the index in the browser (`open blog/<year>/<slug>.html
-  blog/index.html`) and confirm hero, body, and the new index card render.
-- Confirm the OG PNG looks right (Step 4).
-- Report the file paths created/changed and remind the user: OG tags only take
-  effect once pushed live to sajith.me — re-scrape via LinkedIn Post Inspector
-  (https://www.linkedin.com/post-inspector/).
+- Check every relative `href`/`src`/`poster` in the new page resolves.
+- Screenshot the page with headless Chrome (`--window-size=900,2600 --virtual-time-budget=5000`) and Read it.
+- Report files created/changed. Remind the user that OG tags only work once pushed; re-scrape via https://www.linkedin.com/post-inspector/.
 
 ## Constraints
 
-- Match the existing posts' styling exactly (self-contained inline `<style>` per
-  page — do not extract a shared stylesheet).
-- Titles are Dancing Script; body is Lora; code is monospace.
-- Keep OG title text short so nothing truncates; description ≤155 chars.
-- Do not push to git or commit unless the user asks.
+- No inline `<style>`; add any new shared rule to `assets/css/main.css`.
+- Description ≤ 155 chars; keep the OG title short.
+- Do not commit or push unless asked.

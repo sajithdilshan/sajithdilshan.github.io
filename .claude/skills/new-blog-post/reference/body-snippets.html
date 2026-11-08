@@ -1,0 +1,59 @@
+<!-- Building blocks for .post-body. All styles live in assets/css/main.css; do NOT
+     add inline <style> blocks to posts. Use a snippet only if the post needs it. -->
+
+<!-- Paragraph / link / inline code (styles already global) -->
+<p>Text with a <a href="https://example.com" target="_blank" rel="noreferrer">link</a> and <code>code</code>.</p>
+
+<!-- Image that opens in the lightbox: load ../../assets/js/gallery.js (defer) in <head>
+     and put the lightbox markup below just before </body>. -->
+<figure class="post-figure">
+  <img src="./images/example.png" alt="Describe the image" loading="lazy" />
+  <figcaption>Optional caption.</figcaption>
+</figure>
+
+<div class="lightbox" data-lightbox hidden>
+  <button class="lightbox__close" data-lightbox-close aria-label="Close">&#10005;</button>
+  <img src="" alt="" data-lightbox-image />
+  <p class="lightbox__caption" data-lightbox-caption></p>
+</div>
+
+<!-- Image that links somewhere instead (e.g. a demo page). Do NOT load gallery.js on the
+     page, or the lightbox will hijack the click. -->
+<figure class="post-figure">
+  <a href="./demo/index.html" target="_blank" rel="noreferrer"><img src="./images/example.png" alt="..." loading="lazy" /></a>
+  <figcaption>Click through to ...</figcaption>
+</figure>
+
+<!-- Portrait phone screen recording, framed like a phone. Transcode first with ffmpeg:
+       ffmpeg -i in.mov -an -vf "scale=540:-2:flags=lanczos,fps=30" -c:v libx264 -preset slow \
+         -crf 27 -pix_fmt yuv420p -movflags +faststart blog/<year>/images/<slug>-demo.mp4
+       ffmpeg -ss 0.2 -i blog/<year>/images/<slug>-demo.mp4 -frames:v 1 -q:v 4 blog/<year>/images/<slug>-demo.jpg
+     Set width/height to the encoded size. Add the script below just before </body>. -->
+<figure class="post-video">
+  <video src="./images/example-demo.mp4" poster="./images/example-demo.jpg" width="540" height="1172"
+    muted loop playsinline preload="metadata" aria-label="Screen recording of ..."></video>
+</figure>
+
+<script>
+  /* play the recording like a silent loop while it's on screen; tap to pause */
+  (function () {
+    var v = document.querySelector(".post-video video");
+    if (!v) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+      v.controls = true;
+      return;
+    }
+    var paused = false;
+    new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting && !paused) v.play().catch(function () { v.controls = true; });
+      else v.pause();
+    }, { threshold: 0.35 }).observe(v);
+    v.addEventListener("click", function () {
+      paused = !v.paused;
+      paused ? v.pause() : v.play();
+    });
+  })();
+</script>
+
+<!-- Numbered process: scroll timeline (needs ../../assets/js/workflow.js). Copy the
+     <div class="workflow"> block from blog/2026/six_months_with_claude_code.html. -->
