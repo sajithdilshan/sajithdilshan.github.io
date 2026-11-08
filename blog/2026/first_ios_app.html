@@ -150,7 +150,9 @@
         </p>
         <figure class="post-video">
           <video src="./images/first-ios-app-demo.mp4" poster="./images/first-ios-app-demo.jpg" width="540" height="1172"
-            muted loop playsinline preload="metadata" aria-label="Screen recording of the workout app on an iPhone"></video>
+            muted loop playsinline preload="metadata" disablepictureinpicture disableremoteplayback
+            aria-label="Screen recording of the workout app on an iPhone"></video>
+          <button class="post-video__toggle" type="button" aria-label="Pause recording"></button>
         </figure>
       </div>
     </article>
@@ -167,23 +169,40 @@
     </footer>
   </div>
   <script>
-    /* play the recording like a silent loop while it's on screen; tap to pause */
+    /* Silent looping recording: autoplays (muted) while on screen, one tap target to
+       pause/play. No native controls, so iOS never shows its mute button. */
     (function () {
-      var v = document.querySelector(".post-video video");
-      if (!v) return;
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
-        v.controls = true;
-        return;
+      var fig = document.querySelector(".post-video");
+      if (!fig) return;
+      var v = fig.querySelector("video");
+      var btn = fig.querySelector(".post-video__toggle");
+      var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var userPaused = reduced; // reduced motion: wait for a tap
+
+      v.muted = true; // iOS checks the property, not just the attribute
+
+      function sync() {
+        fig.classList.toggle("is-paused", v.paused);
+        btn.setAttribute("aria-label", v.paused ? "Play recording" : "Pause recording");
       }
-      var paused = false;
-      new IntersectionObserver(function (entries) {
-        if (entries[0].isIntersecting && !paused) v.play().catch(function () { v.controls = true; });
-        else v.pause();
-      }, { threshold: 0.35 }).observe(v);
-      v.addEventListener("click", function () {
-        paused = !v.paused;
-        paused ? v.pause() : v.play();
+      function play() {
+        var p = v.play();
+        if (p && p.catch) p.catch(sync); // blocked (e.g. Low Power Mode): show the play button
+      }
+
+      v.addEventListener("play", sync);
+      v.addEventListener("pause", sync);
+      btn.addEventListener("click", function () {
+        if (v.paused) { userPaused = false; play(); }
+        else { userPaused = true; v.pause(); }
       });
+
+      if (reduced) sync();
+      if (!("IntersectionObserver" in window)) { if (!userPaused) play(); return; }
+      new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) { if (!userPaused) play(); }
+        else if (!v.paused) v.pause();
+      }, { threshold: 0.35 }).observe(v);
     })();
   </script>
 </body>

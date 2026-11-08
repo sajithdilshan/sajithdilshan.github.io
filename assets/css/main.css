@@ -493,7 +493,42 @@ pre code {
   display: block;
   border-radius: 27px;
   background: #000;
+  pointer-events: none; /* taps go to the toggle, never to native video UI */
+}
+
+.post-video {
+  position: relative;
+}
+
+.post-video__toggle {
+  position: absolute;
+  inset: 7px;
+  border: 0;
+  padding: 0;
+  border-radius: 27px;
+  background: transparent;
   cursor: pointer;
+  display: grid;
+  place-items: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.post-video__toggle::before {
+  content: "";
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8.5 5.5v13l10.5-6.5z' fill='white'/%3E%3C/svg%3E") 55% 50% / 28px no-repeat;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.post-video.is-paused .post-video__toggle::before {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .post-figure figcaption {
