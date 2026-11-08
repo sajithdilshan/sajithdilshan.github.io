@@ -521,6 +521,7 @@ pre code {
   background: rgba(0, 0, 0, 0.55) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8.5 5.5v13l10.5-6.5z' fill='white'/%3E%3C/svg%3E") 55% 50% / 28px no-repeat;
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18), 0 6px 18px rgba(0, 0, 0, 0.35);
   opacity: 0;
   transform: scale(0.9);
   transition: opacity 0.2s, transform 0.2s;
@@ -529,6 +530,25 @@ pre code {
 .post-video.is-paused .post-video__toggle::before {
   opacity: 1;
   transform: scale(1);
+}
+
+/* always-visible small play/pause control, bottom right */
+.post-video__ctrl {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 5h3.5v14H7zM13.5 5H17v14h-3.5z' fill='white'/%3E%3C/svg%3E") center / 16px no-repeat;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.post-video.is-paused .post-video__ctrl {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8.5 5.5v13l10.5-6.5z' fill='white'/%3E%3C/svg%3E");
+  background-position: 55% 50%;
 }
 
 .post-figure figcaption {

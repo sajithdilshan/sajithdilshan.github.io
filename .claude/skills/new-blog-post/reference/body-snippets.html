@@ -29,11 +29,11 @@
          -crf 27 -pix_fmt yuv420p -movflags +faststart blog/<year>/images/<slug>-demo.mp4
        ffmpeg -ss 0.2 -i blog/<year>/images/<slug>-demo.mp4 -frames:v 1 -q:v 4 blog/<year>/images/<slug>-demo.jpg
      Set width/height to the encoded size. Add the script below just before </body>. -->
-<figure class="post-video">
+<figure class="post-video is-paused">
   <video src="./images/example-demo.mp4" poster="./images/example-demo.jpg" width="540" height="1172"
     muted loop playsinline preload="metadata" disablepictureinpicture disableremoteplayback
     aria-label="Screen recording of ..."></video>
-  <button class="post-video__toggle" type="button" aria-label="Pause recording"></button>
+  <button class="post-video__toggle" type="button" aria-label="Play recording"><span class="post-video__ctrl" aria-hidden="true"></span></button>
 </figure>
 
 <!-- Never set v.controls: on iOS the native controls show a mute button, autoplay
