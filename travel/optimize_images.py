@@ -12,7 +12,8 @@ For every city under travel/<city>/images/:
   * camera videos (.MOV/.MP4 from the camera, often 4K HEVC that Chrome can't play)
     are transcoded with ffmpeg to an H.264/AAC <stem>.mp4 at --video-size on the long
     side, web-optimised (+faststart). The original is deleted; point the gallery's
-    data-full at the new .mp4.
+    data-full at the new .mp4. A poster thumbnails/<stem>.JPG is made from the
+    1 s frame unless the gallery already has one.
 
 Usage (from the repo root or travel/):
   python3 travel/optimize_images.py                # every city
@@ -117,6 +118,25 @@ def transcode_video(path: Path, args: argparse.Namespace) -> int:
   return new
 
 
+def make_poster(video: Path, thumbs: Path, args: argparse.Namespace) -> None:
+  """Write thumbnails/<stem>.JPG from the 1 s frame, unless a poster already exists."""
+  poster = thumbs / f"{video.stem}.JPG"
+  legacy = thumbs / "video.JPG"  # older galleries use one hand-made poster
+  if args.dry_run or not video.exists() or poster.exists() or legacy.exists():
+    return
+  if not shutil.which("ffmpeg"):
+    return
+  thumbs.mkdir(exist_ok=True)
+  size = args.thumb_size
+  subprocess.run([
+      "ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-ss", "1", "-i", str(video),
+      "-frames:v", "1", "-q:v", "3",
+      "-vf", f"scale='if(gt(iw,ih),{size},-2)':'if(gt(iw,ih),-2,{size})':flags=lanczos",
+      str(poster),
+  ], check=True)
+  print(f"  poster {poster.name}")
+
+
 def mb(n: int) -> str:
   return f"{n / 1e6:.1f} MB"
 
@@ -134,6 +154,7 @@ def process_city(city: Path, args: argparse.Namespace) -> tuple[int, int]:
       continue
     if ext in VIDEO_EXTS:
       transcode_video(path, args)
+      make_poster(path.with_suffix(".mp4"), thumbs, args)
       continue
     if ext not in JPEG_EXTS:
       continue
